@@ -11,7 +11,7 @@
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.</p>
 </br>
 
-
+[![](https://jitpack.io/v/Jumman04/Jummania-Slider.svg)](https://jitpack.io/#Jumman04/Jummania-Slider)
 # Usage
 
 ## XML
