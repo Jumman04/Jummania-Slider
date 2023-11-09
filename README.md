@@ -1,5 +1,5 @@
 
-<a href="https://github.com/denzcoskun/ImageSlideshow">  
+<a href="https://github.com/Jumman04/Jummania-Slider">  
 <img align="left" src="https://github.com/Jumman04/Jummania-Slider/assets/113237846/902a7d76-6934-4acb-bdba-cb9af795984a"/>  
 </a>  
 <h1 align="center">J-Slider for Android</h1>  
