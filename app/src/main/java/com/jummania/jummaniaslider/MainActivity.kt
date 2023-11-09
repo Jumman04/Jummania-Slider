@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.jummania.j_slider.JSlider
+import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
     private var arrayList = arrayListOf<DataModel>()
@@ -14,45 +17,52 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val jSlider: JSlider = findViewById(R.id.jSlider)
-
-        createList()
         jSlider.setSlider(Slider())
+        createList()
+
+        //  jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
+        // jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
+        // jSlider.setSlideAnimation(AnimationTypes.DEPTH_SLIDE2)
+        // jSlider.setSlideAnimation(AnimationTypes.DEPTH_SLIDE)
+        jSlider.setSlider(Slider())
+
 
     }
 
     private inner class Slider : JSlider.Slide() {
         override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
-            return layoutInflater.inflate(R.layout.activity_main, parent, false)
+            return layoutInflater.inflate(R.layout.item_slider, parent, false)
         }
 
         override fun onSliderCreate(view: View, position: Int) {
 
+            val list = arrayList[position]
+
+            val textView: TextView = view.findViewById(R.id.text_view)
+            val imageView: ImageView = view.findViewById(R.id.image_view)
+
+            Picasso.get().load("https://img.youtube.com/vi/" + list.id + "/sddefault.jpg")
+                .error(R.drawable.default_error)
+                .placeholder(R.drawable.default_loading).into(imageView)
+            textView.text = list.title
+
+
         }
 
         override fun getCount(): Int {
-            return 9
+            return arrayList.size
         }
 
     }
 
     private fun createList() {
-        add(
-            "Sharif Uddin Jumman",
-            "https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg"
-        )
-        add("Anindya Das", "https://jummania.com/App/BanglaNatokSamahar/Images/Aninda das.jpg")
-        add("MD Abdullah", "https://avatars.githubusercontent.com/u/110069678?v=4")
-        add(
-            "MD Sarowar Hosain Shuvo",
-            "https://scontent.fdac142-1.fna.fbcdn.net/v/t1.6435-9/120902465_785023465615624_7635398377734730401_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=be3454&_nc_ohc=azvmlXXjIDEAX8eil0Z&_nc_ht=scontent.fdac142-1.fna&oh=00_AfCRLl3dlz8aqhEmHWqEUtaUcvq65g2gdx67Nlr0IsTttA&oe=6550B2AD"
-        )
-        add(
-            "Sharif Uddin Jumman",
-            "https://jummania.com/App/BanglaNatokSamahar/Images/Profile%20Photo.jpg"
-        )
+        add("0GVExpdmoDs", "Maroon 5 - Animals (Lyrics)")
+        add("4IenX7OHumk", "Win or Die (Full Episode)")
+        add("AhP5Tg_BLIk", "Amazon Wildlife")
     }
 
-    private fun add(name: String, photo: String) {
-        arrayList.add(DataModel(name, photo))
+
+    private fun add(id: String, title: String) {
+        arrayList.add(DataModel(id, title))
     }
 }

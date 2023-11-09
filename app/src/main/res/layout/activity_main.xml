@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jummania.j_slider.JSlider xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/jSlider"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" />
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.jummania.j_slider.JSlider
+        android:id="@+id/jSlider"
+        android:layout_width="match_parent"
+        android:layout_height="277dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        app:defaultIndicatorColor="#70000000"
+        app:indicatorPaddingBottom="22dp"
+        app:selectedIndicatorColor="@color/black"
+        app:slidingDuration="2222" />
+
+</LinearLayout>
