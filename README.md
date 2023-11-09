@@ -1,19 +1,17 @@
-# JSlider: The Universal Slider Library for Android
 
-[Image of JSlider logo]
+<a href="https://github.com/Jumman04/Jummania-Slider">  
+<img align="left" src="https://github.com/Jumman04/Jummania-Slider/assets/113237846/902a7d76-6934-4acb-bdba-cb9af795984a"/>  
+</a>  
+<h1 align="center">J-Slider for Android</h1>  
+<p align="center">Just inflate the layout you want to slide.</p>  
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Easy to use. <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Automatic scrolling for the time you set. <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Inflate any layout or view.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; 17 different slide animations.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.</p>
+</br>
 
-## Enhance Your UI with Seamless Slides
-
-Empower your mobile app's user interface with JSlider, a lightweight and highly customizable slider library for Android. JSlider simplifies the process of integrating seamless, responsive sliders into your app, empowering developers to create engaging and intuitive user experiences.
-
-## Key Features
-
-* **Unmatched Customizability:** JSlider offers a plethora of customization options, allowing you to tailor the slider's appearance and behavior to perfectly match your app's design and functionality.
-
-* **Effortless Integration:** Integrating JSlider into your existing Android project is a breeze. Simply add the dependency to your build.gradle file and follow the concise usage instructions.
-
-* **Smooth and Responsive:** JSlider delivers smooth and responsive slider animations, ensuring a delightful user experience.
-
+[![](https://jitpack.io/v/Jumman04/Jummania-Slider.svg)](https://jitpack.io/#Jumman04/Jummania-Slider)
 # Usage
 
 ## XML
@@ -100,7 +98,7 @@ jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
 jSlider.setPageTransformer(boolean, TransformerClass())
 ```
 
-## Setup
+# Setup
 
 ```xml  ##
 allprojects {
@@ -116,7 +114,7 @@ dependencies {
 }
 ```
 
-## 📄 License
+# 📄 License
 MIT License
 
 Copyright (c) 2023 Sharif Uddin Jumman
