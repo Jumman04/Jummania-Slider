@@ -2,14 +2,15 @@
 <a href="https://github.com/denzcoskun/ImageSlideshow">  
 <img align="left" src="https://github.com/Jumman04/Jummania-Slider/assets/113237846/902a7d76-6934-4acb-bdba-cb9af795984a"/>  
 </a>  
-<h1 align="center">Jummania Slider for Android</h1>  
+<h1 align="center">J-Slider for Android</h1>  
 <p align="center">Just inflate the layout you want to slide.</p>  
-<li>&nbsp; &nbsp; &nbsp; &nbsp;Easy to use. </li>
-<li>&nbsp; &nbsp; &nbsp; &nbsp;Automatic scrolling for the time you set. </li>
-<li>&nbsp; &nbsp; &nbsp; &nbsp;Inflate any layout or view.</li>
-<li>&nbsp; &nbsp; &nbsp; &nbsp;17 different slide animations.</li>
-<li>&nbsp; &nbsp; &nbsp; &nbsp;Use with Java or Kotlin.</p>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Easy to use. <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Automatic scrolling for the time you set. <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Inflate any layout or view.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; 17 different slide animations.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.</p>
 </br>
+
 
 # Usage
 
