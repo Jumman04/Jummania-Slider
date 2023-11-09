@@ -37,6 +37,7 @@ dependencies {
     implementation("androidx.viewpager:viewpager:1.0.0@aar")
 }
 
+
 afterEvaluate {
     publishing {
         publications {
@@ -52,3 +53,4 @@ afterEvaluate {
         }
     }
 }
+
