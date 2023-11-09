@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.jummania.j_slider.JSlider
+import com.jummania.j_slider.animations.AnimationTypes
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
@@ -17,11 +19,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val jSlider: JSlider = findViewById(R.id.jSlider)
-        jSlider.setSlider(Slider())
         createList()
 
         //  jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
-        // jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
+        jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
         // jSlider.setSlideAnimation(AnimationTypes.DEPTH_SLIDE2)
         // jSlider.setSlideAnimation(AnimationTypes.DEPTH_SLIDE)
         jSlider.setSlider(Slider())
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private inner class Slider : JSlider.Slide() {
         override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
-            return layoutInflater.inflate(R.layout.item_slider, parent, false)
+            return layoutInflater.inflate(R.layout.item_slider2, parent, false)
         }
 
         override fun onSliderCreate(view: View, position: Int) {
@@ -42,15 +43,19 @@ class MainActivity : AppCompatActivity() {
             val imageView: ImageView = view.findViewById(R.id.image_view)
 
             Picasso.get().load("https://img.youtube.com/vi/" + list.id + "/sddefault.jpg")
-                .error(R.drawable.default_error)
-                .placeholder(R.drawable.default_loading).into(imageView)
+                .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
+                .into(imageView)
             textView.text = list.title
+
+            view.setOnClickListener {
+                Toast.makeText(this@MainActivity, list.title, Toast.LENGTH_SHORT).show()
+            }
 
 
         }
 
         override fun getCount(): Int {
-            return arrayList.size
+            return 2
         }
 
     }

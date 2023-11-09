@@ -114,7 +114,6 @@ class JSlider @JvmOverloads constructor(
     fun setSlider(slider: Slide) {
         addView(jSlider)
         addView(dotIndicatorLayout)
-
         jSlider.setSlider(slider, dotIndicatorLayout)
     }
 
@@ -284,6 +283,9 @@ class JSlider @JvmOverloads constructor(
 
                 }
 
+                if (autoSlidingBoolean) autoSlidingBoolean = sliders > 1
+
+
                 update = Runnable {
                     if (!isDragging && autoSlidingBoolean) {
                         var currentPage: Int = currentItem
@@ -367,10 +369,12 @@ class JSlider @JvmOverloads constructor(
         }
 
         override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
-            if (hasWindowFocus && autoSlidingBoolean) {
-                updateHandler.removeCallbacks(update)
-                updateHandler.postDelayed(update, slidingDuration)
-            } else updateHandler.removeCallbacks(update)
+            if (this@Slider::update.isInitialized) {
+                if (hasWindowFocus && autoSlidingBoolean) {
+                    updateHandler.removeCallbacks(update)
+                    updateHandler.postDelayed(update, slidingDuration)
+                } else updateHandler.removeCallbacks(update)
+            }
             super.onWindowFocusChanged(hasWindowFocus)
         }
 
@@ -402,5 +406,45 @@ class JSlider @JvmOverloads constructor(
                 invalidate() // Request a redraw to reflect the changes
             }
         }
+
+        override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+
+            var measureSpec = heightMeasureSpec
+            val mode = MeasureSpec.getMode(measureSpec)
+            if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST) {
+                super.onMeasure(widthMeasureSpec, measureSpec)
+                var height = 0
+                for (i in 0 until childCount) {
+                    val child = getChildAt(i)
+                    child.measure(
+                        widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+                    )
+                    val h = child.measuredHeight
+                    if (h > height) height = h
+                }
+                measureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+            }
+            super.onMeasure(widthMeasureSpec, measureSpec)
+        }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+
+        var measureSpec = heightMeasureSpec
+        val mode = MeasureSpec.getMode(measureSpec)
+        if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST) {
+            super.onMeasure(widthMeasureSpec, measureSpec)
+            var height = 0
+            for (i in 0 until childCount) {
+                val child = getChildAt(i)
+                child.measure(
+                    widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+                )
+                val h = child.measuredHeight
+                if (h > height) height = h
+            }
+            measureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+        }
+        super.onMeasure(widthMeasureSpec, measureSpec)
     }
 }

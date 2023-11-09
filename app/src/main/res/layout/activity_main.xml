@@ -4,18 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.jummania.j_slider.JSlider
         android:id="@+id/jSlider"
         android:layout_width="match_parent"
-        android:layout_height="277dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        app:defaultIndicatorColor="#70000000"
+        android:layout_height="wrap_content"
         app:indicatorPaddingBottom="22dp"
-        app:selectedIndicatorColor="@color/black"
         app:slidingDuration="2222" />
 
 </LinearLayout>
