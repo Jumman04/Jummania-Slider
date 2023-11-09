@@ -1,8 +1,8 @@
 package com.jummania.j_slider.animations
 
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.PageTransformer
-import com.jummania.j_slider.Slider
 import kotlin.math.abs
 
 /**
@@ -10,7 +10,7 @@ import kotlin.math.abs
  * Email: denzcoskun@hotmail.com
  * Istanbul, TURKEY.
  */
-class DepthSlide2 internal constructor(slider: Slider) : PageTransformer {
+class DepthSlide2 internal constructor(slider: ViewPager) : PageTransformer {
 
     init {
         slider.apply {
