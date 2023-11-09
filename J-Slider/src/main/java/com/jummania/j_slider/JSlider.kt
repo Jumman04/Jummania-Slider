@@ -409,7 +409,6 @@ class JSlider @JvmOverloads constructor(
 
         override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
-            var measureSpec = heightMeasureSpec
             val mode = MeasureSpec.getMode(measureSpec)
             if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST) {
                 super.onMeasure(widthMeasureSpec, measureSpec)
@@ -422,15 +421,15 @@ class JSlider @JvmOverloads constructor(
                     val h = child.measuredHeight
                     if (h > height) height = h
                 }
-                measureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
-            }
-            super.onMeasure(widthMeasureSpec, measureSpec)
+                super.onMeasure(
+                    widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+                )
+            } else super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-
-        var measureSpec = heightMeasureSpec
+        measureSpec = heightMeasureSpec
         val mode = MeasureSpec.getMode(measureSpec)
         if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST) {
             super.onMeasure(widthMeasureSpec, measureSpec)
@@ -446,5 +445,9 @@ class JSlider @JvmOverloads constructor(
             measureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
         }
         super.onMeasure(widthMeasureSpec, measureSpec)
+    }
+
+    companion object {
+        private var measureSpec: Int = 0
     }
 }

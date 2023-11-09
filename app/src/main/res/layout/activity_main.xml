@@ -12,7 +12,7 @@
     <com.jummania.j_slider.JSlider
         android:id="@+id/jSlider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="188dp"
         app:indicatorPaddingBottom="22dp"
         app:slidingDuration="2222" />
 

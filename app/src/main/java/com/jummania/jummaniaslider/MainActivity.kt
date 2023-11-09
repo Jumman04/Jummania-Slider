@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         // jSlider.setSlideAnimation(AnimationTypes.DEPTH_SLIDE)
         jSlider.setSlider(Slider())
 
-
     }
 
     private inner class Slider : JSlider.Slide() {
@@ -42,7 +41,8 @@ class MainActivity : AppCompatActivity() {
             val textView: TextView = view.findViewById(R.id.text_view)
             val imageView: ImageView = view.findViewById(R.id.image_view)
 
-            Picasso.get().load("https://img.youtube.com/vi/" + list.id + "/sddefault.jpg")
+            Picasso.get()
+                .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
                 .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
                 .into(imageView)
             textView.text = list.title
