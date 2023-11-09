@@ -91,7 +91,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
     }
 ```
--   You can add animation like that, <b>14 Animations added</b>. You can check in <a href="https://github.com/denzcoskun/ImageSlideshow/blob/master/imageslider/src/main/java/com/denzcoskun/imageslider/constants/AnimationTypes.kt"> Animation List </a>
+-   You can add animation like that, <b>14 Animations added</b>. You can check in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/j_slider/animations/AnimationTypes.kt"> Animation List </a>
 ```kt  
 jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
 ```
