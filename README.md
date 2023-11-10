@@ -110,7 +110,7 @@ allprojects {
 ```
 ```xml
 dependencies {
-	implementation("com.github.Jumman04:Jummania-Slider:1.1")
+	implementation("com.github.Jumman04:Jummania-Slider:2.0")
 }
 ```
 
