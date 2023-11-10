@@ -4,6 +4,7 @@ import android.graphics.Camera
 import android.graphics.Matrix
 import android.view.View
 import androidx.viewpager.widget.ViewPager.PageTransformer
+import kotlin.math.abs
 
 /**
  * Created by Jummania on 08,November,2023.
@@ -16,7 +17,7 @@ class TabletSlide : PageTransformer {
     private val camera: Camera = Camera()
     private val floats = FloatArray(2)
     override fun transformPage(page: View, position: Float) {
-        val rotation: Float = (if (position < 0) 30f else -30f) * Math.abs(position)
+        val rotation: Float = (if (position < 0) 30f else -30f) * abs(position)
         page.translationX = getOffsetX(rotation, page.width, page.height)
         page.pivotX = page.width * 0.5f
         page.pivotY = 0F
@@ -26,7 +27,7 @@ class TabletSlide : PageTransformer {
     private fun getOffsetX(rotation: Float, width: Int, height: Int): Float {
         matrix.reset()
         camera.save()
-        camera.rotateY(Math.abs(rotation))
+        camera.rotateY(abs(rotation))
         camera.getMatrix(matrix)
         camera.restore()
         matrix.preTranslate(-width * 0.5f, -height * 0.5f)
