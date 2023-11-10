@@ -9,11 +9,42 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <com.jummania.j_slider.JSlider
         android:id="@+id/jSlider"
         android:layout_width="match_parent"
-        android:layout_height="188dp"
+        android:layout_height="wrap_content"
         app:indicatorPaddingBottom="22dp"
         app:slidingDuration="2222" />
+
+    <!--
+Change Duration of Slidng:
+     app:slidingDuration="2222"
+
+Change indicator Size.
+    app:indicatorSize="15dp"
+
+Add padding in Slider:
+    app:sliderPaddingRight="0dp"
+    app:sliderPaddingLeft="0dp"
+    app:sliderPaddingTop="0dp"
+    app:sliderPaddingBottom="0dp"
+
+Change Indicator Padding bottom:
+    app:indicatorPaddingBottom="22dp"
+
+You can hide or show Indicator:
+    app:enableIndicator="true"
+
+You can enable or desable auto sliding:
+    app:enableAutoSliding="true"
+
+Change Default Indicator Color:
+    app:defaultIndicatorColor="@color/defaultColor"
+
+Change Selected Indicator Color:
+    app:selectedIndicatorColor="@color/selectedColor"
+     -->
+
 
 </LinearLayout>

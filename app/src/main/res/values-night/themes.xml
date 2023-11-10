@@ -1,7 +1,12 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.JummaniaSlider" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <!-- make the indicator color responsive with theme value -->
+        <item name="defaultIndicatorColor">#80FFFFFF</item>
+        <item name="selectedIndicatorColor">@android:color/white</item>
+
     </style>
 </resources>

@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="180dp"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -23,9 +23,10 @@
             android:layout_gravity="top"
             android:ellipsize="end"
             android:gravity="top"
-            android:padding="11dp"
+            android:paddingHorizontal="11dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="44dp"
             android:singleLine="true"
-            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
