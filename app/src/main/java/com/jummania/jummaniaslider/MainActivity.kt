@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.jummania.j_slider.animations.AnimationTypes
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,13 +43,49 @@ class MainActivity : AppCompatActivity() {
          *     TABLET_SLIDE
          */
 
-        /*You can also set ViewPager.PageTransformer by:
-            jSlider.setPageTransformer(boolean, TransformerClass())
+        /** You can also set ViewPager.PageTransformer by:
+         * jSlider.setPageTransformer(boolean, TransformerClass())
          */
 
+        /** add 'addOnPageChangeListener' if you really need
+         *//*
+        jSlider.addOnSlideChangeListener(object : JSlider.OnSlideChangeListener {
+            override fun onSliderScrolled(
+                position: Int, positionOffset: Float, positionOffsetPixels: Int
+            ) {
+                Log.d(
+                    "JSlider",
+                    "position: $position, positionOffset: $positionOffset, positionOffsetPixels: $positionOffsetPixels"
+                )
+            }
+
+            override fun onSliderSelected(position: Int) {
+                Log.d("JSlider", "position: $position")
+            }
+
+            override fun onSliderScrollStateChanged(state: Int) {
+                Log.d("JSlider", "state: $state")
+            }
+
+        })
+        */
 
 
         jSlider.setSlider(Slider()) //Setup the slider
+
+        val start: Button = findViewById(R.id.start)
+        val stop: Button = findViewById(R.id.stop)
+
+        start.setOnClickListener {
+            jSlider.startSliding()
+            Toast.makeText(this@MainActivity, "Slider is now in motion", Toast.LENGTH_SHORT).show()
+        }
+
+        stop.setOnClickListener {
+            jSlider.stopSliding()
+            Toast.makeText(this@MainActivity, "Slider has come to a halt", Toast.LENGTH_SHORT)
+                .show()
+        }
 
     }
 
@@ -69,6 +107,7 @@ class MainActivity : AppCompatActivity() {
             textView.text = getString(R.string.Developer_Name)
 
             view.setOnClickListener {
+
                 Toast.makeText(
                     this@MainActivity, getString(R.string.Developer_Name), Toast.LENGTH_SHORT
                 ).show()

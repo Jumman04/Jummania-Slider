@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -92,6 +93,8 @@ class JSlider @JvmOverloads constructor(
         var autoSlidingBoolean = true
     }
 
+    private lateinit var listener: OnSlideChangeListener
+
     init {
         val typedArray: TypedArray = context.theme.obtainStyledAttributes(
             attrs, R.styleable.JSlider, defStyleAttr, defStyleAttr
@@ -174,10 +177,14 @@ class JSlider @JvmOverloads constructor(
                     override fun onPageScrolled(
                         position: Int, positionOffset: Float, positionOffsetPixels: Int
                     ) {
-
+                        if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
+                            position, positionOffset, positionOffsetPixels
+                        )
                     }
 
                     override fun onPageSelected(position: Int) {
+
+                        if (this@JSlider::listener.isInitialized) listener.onSliderSelected(position)
                         if (indicatorBoolean && dots.isNotEmpty()) {
 
                             for (dot in dots) dot.setColor(defaultIndicatorColor)
@@ -190,6 +197,11 @@ class JSlider @JvmOverloads constructor(
                     }
 
                     override fun onPageScrollStateChanged(state: Int) {
+
+                        if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
+                            state
+                        )
+
                         if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
                             updateHandler.removeCallbacks(update)
                             updateHandler.postDelayed(update, slidingDuration)
@@ -236,16 +248,23 @@ class JSlider @JvmOverloads constructor(
         IntObject.slidingDuration = slidingDuration
     }
 
+    fun getSlidingDuration(): Long = slidingDuration
+
     fun setIndicatorSize(size: Int) {
         exception()
         IntObject.size = size
     }
+
+    fun getIndicatorSize(): Int = size
 
     fun setIndicatorColor(defaultColor: Int, selectedColor: Int) {
         exception()
         defaultIndicatorColor = defaultColor
         selectedIndicatorColor = selectedColor
     }
+
+    fun getDefaultIndicatorColor(): Int = defaultIndicatorColor
+    fun getSelectedIndicatorColor(): Int = selectedIndicatorColor
 
     fun enableIndicator(boolean: Boolean) {
         exception()
@@ -263,6 +282,22 @@ class JSlider @JvmOverloads constructor(
 
     fun setSliderPadding(left: Int, top: Int, right: Int, bottom: Int) {
         jSlider.setPadding(left, top, right, bottom)
+    }
+
+    fun startSliding() {
+        autoSlidingBoolean = true
+        if (this@JSlider::update.isInitialized) {
+            updateHandler.removeCallbacks(update)
+            updateHandler.postDelayed(update, slidingDuration)
+        } else if (jSlider.adapter == null) Log.d(
+            this@JSlider.javaClass.simpleName,
+            "After setting the slider it will start sliding automatically."
+        )
+    }
+
+    fun stopSliding() {
+        autoSlidingBoolean = false
+        if (this@JSlider::update.isInitialized) updateHandler.removeCallbacks(update)
     }
 
 
@@ -421,5 +456,15 @@ class JSlider @JvmOverloads constructor(
 
     companion object {
         private var measureSpec: Int = 0
+    }
+
+    interface OnSlideChangeListener {
+        fun onSliderScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int)
+        fun onSliderSelected(position: Int)
+        fun onSliderScrollStateChanged(state: Int)
+    }
+
+    fun addOnSlideChangeListener(listener: OnSlideChangeListener) {
+        this@JSlider.listener = listener
     }
 }

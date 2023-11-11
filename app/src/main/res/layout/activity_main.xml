@@ -17,6 +17,30 @@
         app:indicatorPaddingBottom="22dp"
         app:slidingDuration="2222" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="11dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="9dp"
+            android:text="Start Sliding" />
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="9dp"
+            android:text="Stop Sliding" />
+
+    </LinearLayout>
+
     <!--
 Change Duration of Slidng:
      app:slidingDuration="2222"
