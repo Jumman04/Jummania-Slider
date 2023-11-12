@@ -1,4 +1,4 @@
-package com.jummania.j_slider
+package com.jummania
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -19,30 +19,32 @@ import android.widget.Scroller
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.SCROLL_STATE_DRAGGING
-import com.jummania.j_slider.JSlider.BooleanObject.autoSlidingBoolean
-import com.jummania.j_slider.JSlider.BooleanObject.indicatorBoolean
-import com.jummania.j_slider.JSlider.BooleanObject.isDragging
-import com.jummania.j_slider.JSlider.IntObject.defaultIndicatorColor
-import com.jummania.j_slider.JSlider.IntObject.selectedIndicatorColor
-import com.jummania.j_slider.JSlider.IntObject.size
-import com.jummania.j_slider.JSlider.IntObject.slidingDuration
-import com.jummania.j_slider.animations.AnimationTypes
-import com.jummania.j_slider.animations.BackgroundToForeground
-import com.jummania.j_slider.animations.CubeIn
-import com.jummania.j_slider.animations.CubeOut
-import com.jummania.j_slider.animations.DepthSlide
-import com.jummania.j_slider.animations.DepthSlide2
-import com.jummania.j_slider.animations.FidgetSpinner
-import com.jummania.j_slider.animations.FlipHorizontal
-import com.jummania.j_slider.animations.FlipVertical
-import com.jummania.j_slider.animations.ForegroundToBackground
-import com.jummania.j_slider.animations.Gate
-import com.jummania.j_slider.animations.RotateDown
-import com.jummania.j_slider.animations.RotateUp
-import com.jummania.j_slider.animations.TabletSlide
-import com.jummania.j_slider.animations.Toss
-import com.jummania.j_slider.animations.ZoomIn
-import com.jummania.j_slider.animations.ZoomOut
+import com.jummania.JSlider.BooleanObject.autoSlidingBoolean
+import com.jummania.JSlider.BooleanObject.indicatorBoolean
+import com.jummania.JSlider.BooleanObject.isDragging
+import com.jummania.JSlider.IntObject.defaultIndicatorColor
+import com.jummania.JSlider.IntObject.indicatorMarginHorizontal
+import com.jummania.JSlider.IntObject.measureSpec
+import com.jummania.JSlider.IntObject.selectedIndicatorColor
+import com.jummania.JSlider.IntObject.size
+import com.jummania.JSlider.IntObject.slidingDuration
+import com.jummania.animations.AnimationTypes
+import com.jummania.animations.BackgroundToForeground
+import com.jummania.animations.CubeIn
+import com.jummania.animations.CubeOut
+import com.jummania.animations.DepthSlide
+import com.jummania.animations.DepthSlide2
+import com.jummania.animations.FidgetSpinner
+import com.jummania.animations.FlipHorizontal
+import com.jummania.animations.FlipVertical
+import com.jummania.animations.ForegroundToBackground
+import com.jummania.animations.Gate
+import com.jummania.animations.RotateDown
+import com.jummania.animations.RotateUp
+import com.jummania.animations.TabletSlide
+import com.jummania.animations.Toss
+import com.jummania.animations.ZoomIn
+import com.jummania.animations.ZoomOut
 import kotlin.math.min
 
 /**
@@ -81,8 +83,10 @@ class JSlider @JvmOverloads constructor(
     private lateinit var update: Runnable
 
     private object IntObject {
+        var measureSpec: Int = 0
         var slidingDuration: Long = 1555
         var size = 30
+        var indicatorMarginHorizontal = 6
         var selectedIndicatorColor = Color.WHITE
         var defaultIndicatorColor = Color.parseColor("#80ffffff")
     }
@@ -132,24 +136,31 @@ class JSlider @JvmOverloads constructor(
             typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingBottom, 55)
         )
 
+        setIndicatorMarginHorizontal(
+            typedArray.getDimensionPixelSize(
+                R.styleable.JSlider_indicatorMarginHorizontal, 6
+            )
+        )
+
         addView(jSlider)
         addView(dotIndicatorLayout)
     }
 
-    fun setSlider(slider: Slide) {
+    fun setSlider(slider: DefaultSlider) {
         jSlider.apply {
-            if (slider.count > 0) {
+            val sliders = slider.count
+            if (sliders > 0) {
                 adapter = slider
 
-                val sliders = slider.count
                 val dots: MutableList<JLayout> by lazy { mutableListOf() }
 
                 if (indicatorBoolean) {
                     val dotLayoutParams = LinearLayout.LayoutParams(size, size)
+                    dotLayoutParams.marginStart = indicatorMarginHorizontal
+                    dotLayoutParams.marginEnd = indicatorMarginHorizontal
+
                     for (i in 0 until sliders) {
                         val dot = JLayout(context)
-                        dotLayoutParams.marginStart = 6
-                        dotLayoutParams.marginEnd = 6
                         dot.layoutParams = dotLayoutParams
                         dot.setBackgroundResource(R.drawable.indicator)
                         dot.setColor(defaultIndicatorColor)
@@ -165,12 +176,9 @@ class JSlider @JvmOverloads constructor(
 
 
                 update = Runnable {
-                    if (!isDragging && autoSlidingBoolean) {
-                        var currentPage: Int = currentItem
-                        if (currentPage == sliders - 1) currentPage = 0
-                        else currentPage += 1
-                        setCurrentItem(currentPage, true)
-                    }
+                    if (!isDragging && autoSlidingBoolean) setCurrentItem(
+                        if (currentItem == sliders - 1) 0 else currentItem + 1, true
+                    )
                 }
 
                 addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -184,9 +192,7 @@ class JSlider @JvmOverloads constructor(
 
                     override fun onPageSelected(position: Int) {
 
-                        if (this@JSlider::listener.isInitialized) listener.onSliderSelected(position)
                         if (indicatorBoolean && dots.isNotEmpty()) {
-
                             for (dot in dots) dot.setColor(defaultIndicatorColor)
                             dots[position].setColor(selectedIndicatorColor)
                         }
@@ -194,19 +200,22 @@ class JSlider @JvmOverloads constructor(
                             updateHandler.removeCallbacks(update)
                             updateHandler.postDelayed(update, slidingDuration)
                         }
+
+                        if (this@JSlider::listener.isInitialized) listener.onSliderSelected(position)
                     }
 
                     override fun onPageScrollStateChanged(state: Int) {
-
-                        if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
-                            state
-                        )
 
                         if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
                             updateHandler.removeCallbacks(update)
                             updateHandler.postDelayed(update, slidingDuration)
                         }
                         isDragging = state == SCROLL_STATE_DRAGGING
+
+                        if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
+                            state
+                        )
+
                     }
                 })
 
@@ -221,19 +230,134 @@ class JSlider @JvmOverloads constructor(
         }
     }
 
-    abstract class Slide : PagerAdapter() {
+    fun setSlider(slider: InfinitySlider) {
+        jSlider.apply {
+            val sliders = slider.itemCount()
+            if (sliders > 0) {
+                adapter = slider
+                val dots: MutableList<JLayout> by lazy { mutableListOf() }
+
+                if (indicatorBoolean) {
+                    val dotLayoutParams = LinearLayout.LayoutParams(size, size)
+                    dotLayoutParams.marginStart = indicatorMarginHorizontal
+                    dotLayoutParams.marginEnd = indicatorMarginHorizontal
+
+                    for (i in 0 until sliders) {
+                        val dot = JLayout(context)
+                        dot.layoutParams = dotLayoutParams
+                        dot.setBackgroundResource(R.drawable.indicator)
+                        dot.setColor(defaultIndicatorColor)
+
+                        dotIndicatorLayout.addView(dot)
+                        dots.add(dot)
+                    }
+                    if (dots.isNotEmpty()) dots[0].setColor(selectedIndicatorColor)
+
+                }
+
+                if (autoSlidingBoolean) autoSlidingBoolean = sliders > 1
+
+
+                update = Runnable {
+                    if (!isDragging && autoSlidingBoolean) setCurrentItem(
+                        (currentItem % slider.count) + 1, true
+                    )
+
+                }
+
+                addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                    override fun onPageScrolled(
+                        position: Int, positionOffset: Float, positionOffsetPixels: Int
+                    ) {
+                        if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
+                            position, positionOffset, positionOffsetPixels
+                        )
+                    }
+
+                    override fun onPageSelected(position: Int) {
+
+                        if (indicatorBoolean && dots.isNotEmpty()) {
+                            for (dot in dots) dot.setColor(defaultIndicatorColor)
+                            dots[position % slider.itemCount()].setColor(selectedIndicatorColor)
+                        }
+                        if (autoSlidingBoolean) {
+                            updateHandler.removeCallbacks(update)
+                            updateHandler.postDelayed(update, slidingDuration)
+                        }
+
+                        if (this@JSlider::listener.isInitialized) listener.onSliderSelected(position)
+                    }
+
+                    override fun onPageScrollStateChanged(state: Int) {
+
+                        if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
+                            updateHandler.removeCallbacks(update)
+                            updateHandler.postDelayed(update, slidingDuration)
+                        }
+                        isDragging = state == SCROLL_STATE_DRAGGING
+
+                        if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
+                            state
+                        )
+
+                    }
+                })
+
+                try {
+                    val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
+                    viewPagerScroller.isAccessible = true
+                    viewPagerScroller[this] = MyScroller(context)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    abstract class DefaultSlider : PagerAdapter() {
 
         /**
          * Created by Jummania on 08,November,2023.
          * Email: sharifuddinjumman@gmail.com
          * Dhaka, Bangladesh.
          */
+        override fun getCount(): Int {
+            return 9
+        }
+
         abstract fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View
         abstract fun onSliderCreate(view: View, position: Int)
         override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
         override fun instantiateItem(parent: ViewGroup, position: Int): View {
             val view = getView(LayoutInflater.from(parent.context), parent)
             onSliderCreate(view, position)
+            parent.addView(view)
+            return view
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as View)
+        }
+    }
+
+    abstract class InfinitySlider : PagerAdapter() {
+
+        /**
+         * Created by Jummania on 08,November,2023.
+         * Email: sharifuddinjumman@gmail.com
+         * Dhaka, Bangladesh.
+         */
+        abstract fun itemCount(): Int
+        override fun getCount(): Int {
+            return Int.MAX_VALUE
+        }
+
+        abstract fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View
+        abstract fun onSliderCreate(view: View, position: Int)
+        override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
+        override fun instantiateItem(parent: ViewGroup, position: Int): View {
+            val view = getView(LayoutInflater.from(parent.context), parent)
+            onSliderCreate(view, position % itemCount())
             parent.addView(view)
             return view
         }
@@ -284,7 +408,12 @@ class JSlider @JvmOverloads constructor(
         jSlider.setPadding(left, top, right, bottom)
     }
 
-    fun startSliding() {
+    fun setIndicatorMarginHorizontal(marginHorizontal: Int) {
+        exception()
+        indicatorMarginHorizontal = marginHorizontal
+    }
+
+    fun startAutoSliding() {
         autoSlidingBoolean = true
         if (this@JSlider::update.isInitialized) {
             updateHandler.removeCallbacks(update)
@@ -295,9 +424,29 @@ class JSlider @JvmOverloads constructor(
         )
     }
 
-    fun stopSliding() {
+    fun stopAutoSliding() {
         autoSlidingBoolean = false
         if (this@JSlider::update.isInitialized) updateHandler.removeCallbacks(update)
+    }
+
+    fun slideNext() {
+        val slider = jSlider.adapter
+        if (slider is DefaultSlider) jSlider.setCurrentItem(
+            if (jSlider.currentItem == slider.count - 1) 0 else jSlider.currentItem + 1, true
+        )
+        else if (slider is InfinitySlider) jSlider.setCurrentItem(
+            (jSlider.currentItem % slider.count) + 1, true
+        )
+    }
+
+    fun slidePrevious() {
+        val slider = jSlider.adapter
+        if (slider is DefaultSlider) jSlider.setCurrentItem(
+            if (jSlider.currentItem == 0) slider.count - 1 else jSlider.currentItem - 1, true
+        )
+        else if (slider is InfinitySlider) jSlider.setCurrentItem(
+            (jSlider.currentItem % slider.count) - 1, true
+        )
     }
 
 
@@ -452,10 +601,6 @@ class JSlider @JvmOverloads constructor(
             measureSpec = MeasureSpec.makeMeasureSpec(child.measuredHeight, MeasureSpec.EXACTLY)
         }
         super.onMeasure(widthMeasureSpec, measureSpec)
-    }
-
-    companion object {
-        private var measureSpec: Int = 0
     }
 
     interface OnSlideChangeListener {
