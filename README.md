@@ -12,11 +12,11 @@
 </br>
 
 [![](https://jitpack.io/v/Jumman04/Jummania-Slider.svg)](https://jitpack.io/#Jumman04/Jummania-Slider)
-# Usage
+## Usage
 
-## XML
+#### XML
 ```xml
-<com.jummania.j_slider.JSlider
+<com.jummania.JSlider
     android:id="@+id/jSlider"
     android:layout_width="match_parent"
     android:layout_height="222dp" />
@@ -40,6 +40,10 @@
 -   Change Indicator Padding bottom:
 ```xml  
     app:indicatorPaddingBottom="22dp"
+```
+-   Change Indicator MarginHorizontal:
+```xml  
+    app:indicatorMarginHorizontal="3dp"
 ```  
 -   You can hide or show Indicator: 
 ```xml  
@@ -59,7 +63,7 @@
     app:selectedIndicatorColor="@color/selectedColor"
 ```
 
-## In Activity
+#### In Activity
 -   Add ImageSlider to your **Activity**
   ```kt
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,12 +71,12 @@ override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_main)
 
         val jSlider: JSlider = findViewById(R.id.jSlider)
-        jSlider.setSlider(Slider())
+        jSlider.setSlider(DefaultSlider())
 
     }
 
     //Out of onCreate, Create a Class for Slider
-    private inner class Slider : JSlider.Slide() {
+    private inner class DefaultSlider : JSlider.DefaultSlider() {
         override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
             return layoutInflater.inflate(R.layout.item_slider, parent, false)
         }
@@ -97,8 +101,74 @@ jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
 ```kt  
 jSlider.setPageTransformer(boolean, TransformerClass())
 ```
+-   To start or stop autoSliding:
+```kt  
+jSlider.startAutoSliding()
+jSlider.stopAutoSliding()
+```
+-   to slide next or previuse:
+```kt  
+ jSlider.slideNext()
+ jSlider.slidePrevious()
+```
 
-# Setup
+-   You can add 'addOnPageChangeListener' if you really need
+```kt  
+ jSlider.addOnSlideChangeListener(object : JSlider.OnSlideChangeListener {
+            override fun onSliderScrolled(
+                position: Int, positionOffset: Float, positionOffsetPixels: Int
+            ) {
+                Log.d(
+                    "JSlider",
+                    "position: $position, positionOffset: $positionOffset, positionOffsetPixels: $positionOffsetPixels"
+                )
+            }
+
+            override fun onSliderSelected(position: Int) {
+                Log.d("JSlider", "position: $position")
+            }
+
+            override fun onSliderScrollStateChanged(state: Int) {
+                Log.d("JSlider", "state: $state")
+            }
+
+        })
+```
+
+-   If you want to Reverse-less slide:
+```kt  
+ private inner class InfinitySlider : JSlider.InfinitySlider() {
+        override fun itemCount(): Int {
+            return 3
+        }
+
+        override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
+            return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
+        }
+
+        override fun onSliderCreate(view: View, position: Int) {
+            val textView: TextView = view.findViewById(R.id.text_view) //find your child
+            val imageView: ImageView = view.findViewById(R.id.image_view)
+
+            Picasso.get()
+                .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
+                .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
+                .into(imageView)
+
+            textView.text = getString(R.string.Developer_Name)
+
+            view.setOnClickListener {
+
+                Toast.makeText(
+                    this@MainActivity, getString(R.string.Developer_Name), Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    }
+```
+
+## Setup
 
 ```xml  ##
 allprojects {
@@ -110,30 +180,23 @@ allprojects {
 ```
 ```xml
 dependencies {
-	implementation("com.github.Jumman04:Jummania-Slider:2.0")
+	implementation("com.github.Jumman04:Jummania-Slider:3.0")
 }
 ```
 
-# 📄 License
-MIT License
+## Feature Requests
 
-Copyright (c) 2023 Sharif Uddin Jumman
+If you have a feature request or a suggestion for improving this library, please feel free to [open an issue](https://github.com/Jumman04/Jummania-Slider/issues/new) and let us know! We appreciate your feedback and are always looking to make our library better.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+#### How to Request a Feature
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. Click on the [Issues tab](https://github.com/Jumman04/Jummania-Slider/issues).
+2. Click the green "New Issue" button.
+3. Choose the "Feature Request" template.
+4. Fill in the requested information and submit the issue.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Thank you for helping us improve the library!
 
+
+## 📄 License
+This project is licensed under the MIT License (https://github.com/Jumman04/Jummania-Slider/blob/master/LICENSE.md) - see the [LICENSE.md](https://github.com/Jumman04/Jummania-Slider/blob/master/LICENSE.md) file for details.
