@@ -31,7 +31,7 @@
 </p>
 ## Usage
 
-#### XML
+### XML
 ```xml
 <com.jummania.JSlider
     android:id="@+id/jSlider"
