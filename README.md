@@ -78,17 +78,33 @@ override fun onCreate(savedInstanceState: Bundle?) {
     //Out of onCreate, Create a Class for Slider
     private inner class DefaultSlider : JSlider.DefaultSlider() {
         override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
-            return layoutInflater.inflate(R.layout.item_slider, parent, false)
+            return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
         }
 
         override fun onSliderCreate(view: View, position: Int) {
 
-            //Your code here
+            val textView: TextView = view.findViewById(R.id.text_view) //find your child
+            val imageView: ImageView = view.findViewById(R.id.image_view)
+
+            Picasso.get()
+                .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
+                .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
+                .into(imageView)
+
+            textView.text = getString(R.string.Developer_Name)
+
+            view.setOnClickListener {
+
+                Toast.makeText(
+                    this@MainActivity, getString(R.string.Developer_Name), Toast.LENGTH_SHORT
+                ).show()
+            }
+
 
         }
 
         override fun getCount(): Int {
-            return arrayList.size
+            return 3
         }
 
     }
