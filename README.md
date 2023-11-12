@@ -12,6 +12,7 @@
 </br>
 
 <p align="center"><br>
+	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"
 	 <a href="https://jitpack.io/#Jumman04/Jummania-Slider">
     <img src="https://jitpack.io/v/Jumman04/Jummania-Slider.svg"/>
   </a>
