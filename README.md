@@ -29,6 +29,7 @@
     <img src="https://img.shields.io/github/license/Jumman04/Jummania-Slider"/>
   </a>
 </p>
+
 ## Usage
 
 ### XML
