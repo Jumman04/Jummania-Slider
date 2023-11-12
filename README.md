@@ -146,7 +146,7 @@ jSlider.stopAutoSliding()
  jSlider.slidePrevious()
 ```
 
--   You can add 'addOnPageChangeListener' if you really need
+-   You can add 'addOnSlideChangeListener' if you really need
 ```kt  
  jSlider.addOnSlideChangeListener(object : JSlider.OnSlideChangeListener {
             override fun onSliderScrolled(
