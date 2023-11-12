@@ -12,9 +12,9 @@
 </br>
 
 <p align="center"><br>
-	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"
+	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
 	 <a href="https://jitpack.io/#Jumman04/Jummania-Slider">
-    <img src="https://jitpack.io/v/Jumman04/Jummania-Slider.svg"/>
+    <img src="https://jitpack.io/v/Jumman04/Jummania-Slider.svg"/> </a>
   </a>
   <a href="https://github.com/Jumman04/Jummania-Slider/issues">
     <img src="https://img.shields.io/github/issues/Jumman04/Jummania-Slider"/>
