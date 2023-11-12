@@ -5,8 +5,8 @@ plugins {
 }
 
 android {
-    namespace = "com.jummania.j_slider"
-    compileSdk = 34
+    namespace = "com.jummania"
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 17
@@ -37,14 +37,13 @@ dependencies {
     implementation("androidx.viewpager:viewpager:1.0.0@aar")
 }
 
-
 afterEvaluate {
     publishing {
         publications {
             register<MavenPublication>("release") {
                 groupId = "com.github.Jumman04"
                 artifactId = "Jummania-Slider"
-                version = "2.1"
+                version = "3.0"
 
                 afterEvaluate {
                     from(components["release"])
@@ -53,4 +52,3 @@ afterEvaluate {
         }
     }
 }
-

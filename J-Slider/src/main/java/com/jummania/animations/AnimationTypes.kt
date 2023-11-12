@@ -1,4 +1,4 @@
-package com.jummania.j_slider.animations
+package com.jummania.animations
 
 enum class AnimationTypes {
     ZOOM_IN,

@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.jummania.j_slider.JSlider
-import com.jummania.j_slider.animations.AnimationTypes
+import com.jummania.JSlider
+import com.jummania.animations.AnimationTypes
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
@@ -71,25 +71,26 @@ class MainActivity : AppCompatActivity() {
         */
 
 
-        jSlider.setSlider(Slider()) //Setup the slider
+        jSlider.setSlider(DefaultSlider()) // DefaultSlider
+        // jSlider.setSlider(InfinitySlider()) // InfinitySlider
 
         val start: Button = findViewById(R.id.start)
         val stop: Button = findViewById(R.id.stop)
 
         start.setOnClickListener {
-            jSlider.startSliding()
+            jSlider.startAutoSliding()
             Toast.makeText(this@MainActivity, "Slider is now in motion", Toast.LENGTH_SHORT).show()
         }
 
         stop.setOnClickListener {
-            jSlider.stopSliding()
+            jSlider.stopAutoSliding()
             Toast.makeText(this@MainActivity, "Slider has come to a halt", Toast.LENGTH_SHORT)
                 .show()
         }
 
     }
 
-    private inner class Slider : JSlider.Slide() {
+    private inner class DefaultSlider : JSlider.DefaultSlider() {
         override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
             return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
         }
@@ -118,6 +119,36 @@ class MainActivity : AppCompatActivity() {
 
         override fun getCount(): Int {
             return 3
+        }
+
+    }
+
+    private inner class InfinitySlider : JSlider.InfinitySlider() {
+        override fun itemCount(): Int {
+            return 3
+        }
+
+        override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
+            return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
+        }
+
+        override fun onSliderCreate(view: View, position: Int) {
+            val textView: TextView = view.findViewById(R.id.text_view) //find your child
+            val imageView: ImageView = view.findViewById(R.id.image_view)
+
+            Picasso.get()
+                .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
+                .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
+                .into(imageView)
+
+            textView.text = getString(R.string.Developer_Name)
+
+            view.setOnClickListener {
+
+                Toast.makeText(
+                    this@MainActivity, getString(R.string.Developer_Name), Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
     }

@@ -1,4 +1,4 @@
-package com.jummania.j_slider.animations
+package com.jummania.animations
 
 import android.graphics.Camera
 import android.graphics.Matrix

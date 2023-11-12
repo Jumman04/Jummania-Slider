@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="JSlider">
-
         <attr name="slidingDuration" format="integer" />
 
         <attr name="indicatorSize" format="dimension" />
+        <attr name="sliderPaddingTop" format="dimension" />
         <attr name="sliderPaddingLeft" format="dimension" />
         <attr name="sliderPaddingRight" format="dimension" />
-        <attr name="sliderPaddingTop" format="dimension" />
         <attr name="sliderPaddingBottom" format="dimension" />
         <attr name="indicatorPaddingBottom" format="dimension" />
+        <attr name="indicatorMarginHorizontal" format="dimension" />
+
 
         <attr name="enableIndicator" format="boolean" />
         <attr name="enableAutoSliding" format="boolean" />
 
-        <attr name="selectedIndicatorColor" format="color|reference" />
         <attr name="defaultIndicatorColor" format="color|reference" />
+        <attr name="selectedIndicatorColor" format="color|reference" />
 
     </declare-styleable>
 </resources>

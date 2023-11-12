@@ -11,8 +11,8 @@ android {
         applicationId = "com.jummania.jummaniaslider"
         minSdk = 17
         targetSdk = 34
-        versionCode = 2
-        versionName = "2.1"
+        versionCode = 3
+        versionName = "3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,8 +40,8 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
-
     implementation(project(":J-Slider"))
+
     implementation("com.squareup.picasso:picasso:2.8")
 
     //./gradlew assembleRelease

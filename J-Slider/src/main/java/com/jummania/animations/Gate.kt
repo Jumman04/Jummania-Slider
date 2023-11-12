@@ -1,4 +1,4 @@
-package com.jummania.j_slider.animations
+package com.jummania.animations
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager.PageTransformer
@@ -9,10 +9,10 @@ import kotlin.math.abs
  * Email: denzcoskun@hotmail.com
  * Istanbul, TURKEY.
  */
-class DepthSlide: PageTransformer {
-    private val minScale = 0.75f
+class Gate: PageTransformer {
+
     override fun transformPage(view: View, position: Float) {
-        val pageWidth: Int = view.width
+        view.translationX = -position * view.width
 
         when {
             position < -1 -> {
@@ -20,23 +20,18 @@ class DepthSlide: PageTransformer {
             }
             position <= 0 -> {
                 view.alpha = 1f
-                view.translationX = 0f
-                view.scaleX = 1f
-                view.scaleY = 1f
+                view.pivotX = 0f
+                view.rotationY = 90 * abs(position)
             }
             position <= 1 -> {
-                view.alpha = 1 - position
-
-                view.translationX = pageWidth * -position
-
-                val scaleFactor: Float = (minScale
-                        + (1 - minScale) * (1 - abs(position)))
-                view.scaleX = scaleFactor
-                view.scaleY = scaleFactor
+                view.alpha = 1f
+                view.pivotX = view.width.toFloat()
+                view.rotationY = -90 * abs(position)
             }
             else -> {
                 view.alpha = 0f
             }
         }
     }
+
 }

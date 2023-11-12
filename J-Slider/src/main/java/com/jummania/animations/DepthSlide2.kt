@@ -1,4 +1,4 @@
-package com.jummania.j_slider.animations
+package com.jummania.animations
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager

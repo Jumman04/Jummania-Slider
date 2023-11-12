@@ -1,4 +1,4 @@
-package com.jummania.j_slider.animations
+package com.jummania.animations
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager.PageTransformer
@@ -8,16 +8,12 @@ import androidx.viewpager.widget.ViewPager.PageTransformer
  * Email: denzcoskun@hotmail.com
  * Istanbul, TURKEY.
  */
-class RotateDown: PageTransformer {
+class CubeIn: PageTransformer {
 
     override fun transformPage(view: View, position: Float) {
-        val width = view.width
-        val rotation = -15f * position
-
-        view.pivotX = width * 0.5f
+        view.pivotX = if (position > 0) 0f else view.width.toFloat()
         view.pivotY = 0f
-        view.translationX = 0f
-        view.rotation = rotation
+        view.rotationY = -90f * position
     }
 
 }
