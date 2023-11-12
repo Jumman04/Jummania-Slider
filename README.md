@@ -11,7 +11,23 @@
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.</p>
 </br>
 
-[![](https://jitpack.io/v/Jumman04/Jummania-Slider.svg)](https://jitpack.io/#Jumman04/Jummania-Slider)
+<p align="center"><br>
+	 <a href="https://jitpack.io/#Jumman04/Jummania-Slider">
+    <img src="https://jitpack.io/v/Jumman04/Jummania-Slider.svg"/>
+  </a>
+  <a href="https://github.com/Jumman04/Jummania-Slider/issues">
+    <img src="https://img.shields.io/github/issues/Jumman04/Jummania-Slider"/>
+  </a>
+  <a href="https://github.com/Jumman04/Jummania-Slider/network/members">
+    <img src="https://img.shields.io/github/forks/Jumman04/Jummania-Slider"/>
+  </a>
+  <a href="https://github.com/Jumman04/Jummania-Slider/stargazers">
+    <img src="https://img.shields.io/github/stars/Jumman04/Jummania-Slider"/>
+  </a>
+    <a href="https://github.com/Jumman04/Jummania-Slider/LICENSE">
+    <img src="https://img.shields.io/github/license/Jumman04/Jummania-Slider"/>
+  </a>
+</p>
 ## Usage
 
 #### XML
