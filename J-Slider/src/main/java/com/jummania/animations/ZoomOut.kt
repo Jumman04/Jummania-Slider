@@ -10,10 +10,10 @@ import kotlin.math.max
  * Email: denzcoskun@hotmail.com
  * Istanbul, TURKEY.
  */
-class ZoomOut: PageTransformer {
+class ZoomOut : PageTransformer {
 
-    private val scale = 0.85f
-    private val alpha = 0.5f
+    private val scale = 0.85f // Scale factor for zooming out
+    private val alpha = 0.5f // Alpha value for fading
 
     override fun transformPage(view: View, position: Float) {
         val pageWidth: Int = view.width
@@ -21,12 +21,17 @@ class ZoomOut: PageTransformer {
 
         when {
             position < -1 -> {
+                // If the page is off-screen to the left, make it completely transparent
                 view.alpha = 0f
             }
+
             position <= 1 -> {
+                // If the page is within the visible range
                 val scaleFactor = max(scale, 1 - abs(position))
                 val vertMargin = pageHeight * (1 - scaleFactor) / 2
                 val horzMargin = pageWidth * (1 - scaleFactor) / 2
+
+                // Adjust translation and scale based on position
                 if (position < 0) {
                     view.translationX = horzMargin - vertMargin / 2
                 } else {
@@ -34,11 +39,13 @@ class ZoomOut: PageTransformer {
                 }
                 view.scaleX = scaleFactor
                 view.scaleY = scaleFactor
-                view.alpha = alpha +
-                        (scaleFactor - scale) /
-                        (1 - scale) * (1 - alpha)
+
+                // Adjust alpha for fading effect
+                view.alpha = alpha + (scaleFactor - scale) / (1 - scale) * (1 - alpha)
             }
+
             else -> {
+                // If the page is off-screen to the right, make it completely transparent
                 view.alpha = 0f
             }
         }

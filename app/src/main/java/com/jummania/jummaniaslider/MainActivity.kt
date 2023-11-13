@@ -151,5 +151,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    }
+    } //If you want to slide reverseLess
 }

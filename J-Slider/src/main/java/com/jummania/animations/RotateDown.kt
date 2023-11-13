@@ -8,16 +8,21 @@ import androidx.viewpager.widget.ViewPager.PageTransformer
  * Email: denzcoskun@hotmail.com
  * Istanbul, TURKEY.
  */
-class RotateDown: PageTransformer {
+class RotateDown : PageTransformer {
 
+    // This method is called for each page during the transformation process.
     override fun transformPage(view: View, position: Float) {
+        // Get the width of the view.
         val width = view.width
+        // Calculate the rotation angle based on the position.
         val rotation = -15f * position
 
+        // Set the pivot point to the center horizontally and to the top vertically.
         view.pivotX = width * 0.5f
         view.pivotY = 0f
+        // Reset translationX to 0 to avoid horizontal movement.
         view.translationX = 0f
+        // Apply the rotation around the pivot point.
         view.rotation = rotation
     }
-
 }

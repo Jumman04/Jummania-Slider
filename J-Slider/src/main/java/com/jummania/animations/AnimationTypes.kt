@@ -1,5 +1,6 @@
 package com.jummania.animations
 
+// Enum class defining different animation types
 enum class AnimationTypes {
     ZOOM_IN,
     ZOOM_OUT,

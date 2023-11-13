@@ -11,9 +11,12 @@ import kotlin.math.abs
  */
 class FidgetSpinner : PageTransformer {
 
+    // This method is called for each page during the transformation process.
     override fun transformPage(view: View, position: Float) {
+        // Translate the page horizontally based on its position.
         view.translationX = -position * view.width
 
+        // Handle visibility and scale based on the absolute position.
         if (abs(position) < 0.5) {
             view.visibility = View.VISIBLE
             view.scaleX = 1 - abs(position)
@@ -22,6 +25,7 @@ class FidgetSpinner : PageTransformer {
             view.visibility = View.GONE
         }
 
+        // Apply rotation based on the position for a fidget spinner effect.
         when {
             position < -1 -> {
                 view.alpha = 0f
@@ -29,6 +33,7 @@ class FidgetSpinner : PageTransformer {
 
             position <= 0 -> {
                 view.alpha = 1f
+                // Rotate clockwise for the left half of the spinner.
                 view.rotation =
                     36000 * (abs(position) * abs(position) * abs(position) * abs(position) * abs(
                         position
@@ -37,6 +42,7 @@ class FidgetSpinner : PageTransformer {
 
             position <= 1 -> {
                 view.alpha = 1f
+                // Rotate counterclockwise for the right half of the spinner.
                 view.rotation =
                     -36000 * (abs(position) * abs(position) * abs(position) * abs(position) * abs(
                         position
@@ -47,7 +53,5 @@ class FidgetSpinner : PageTransformer {
                 view.alpha = 0f
             }
         }
-
     }
-
 }
