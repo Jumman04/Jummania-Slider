@@ -1,6 +1,7 @@
 package com.jummania
 
 import android.content.Context
+import android.content.res.Resources
 import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Color
@@ -225,8 +226,12 @@ class JSlider @JvmOverloads constructor(
                     dotLayoutParams.marginStart = indicatorMarginHorizontal
                     dotLayoutParams.marginEnd = indicatorMarginHorizontal
 
+                    val max =
+                        (Resources.getSystem().displayMetrics.widthPixels / (size + indicatorMarginHorizontal * 2)) - 1
+
                     // Create indicator dots and add them to the layout
                     for (i in 0 until sliders) {
+                        if (i == max) break
                         val dot = JLayout(context)
                         dot.layoutParams = dotLayoutParams
                         dot.setBackgroundResource(R.drawable.indicator)
@@ -254,21 +259,30 @@ class JSlider @JvmOverloads constructor(
                     )
                 }
 
+                val max = dots.size - 1
                 // Add a listener to track page changes and update indicators
                 addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                     override fun onPageScrolled(
-                        position: Int, positionOffset: Float, positionOffsetPixels: Int
+                        i: Int, positionOffset: Float, positionOffsetPixels: Int
                     ) {
                         // Update the selected dot position if indicator is enabled
                         if (indicatorBoolean && dots.isNotEmpty()) {
-                            val targetX = dots[position].x
-                            selectedDot.x =
-                                targetX + positionOffset * ((if (position < dots.size - 1) dots[position + 1].x else targetX) - targetX)
+                            val position = i % dots.size
+                            if (position == max) {
+                                val targetX = dots[0].x
+                                selectedDot.x =
+                                    targetX + (1 - positionOffset) * (dots[max].x - targetX)
+                            } else {
+                                val targetX = dots[position].x
+                                selectedDot.x =
+                                    targetX + positionOffset * ((if (position < max) dots[position + 1].x else targetX) - targetX)
+                            }
+
                         }
 
                         // Notify the external listener about the page scroll event
                         if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
-                            position, positionOffset, positionOffsetPixels
+                            i, positionOffset, positionOffsetPixels
                         )
                     }
 
@@ -334,12 +348,22 @@ class JSlider @JvmOverloads constructor(
 
                 // Set up indicator dots if indicator is enabled
                 if (indicatorBoolean) {
+                    selectedDot.setBackgroundResource(R.drawable.indicator)
+                    selectedDot.setColor(selectedIndicatorColor)
+                    selectedDot.layoutParams.width = size
+                    selectedDot.layoutParams.height = size
+
                     val dotLayoutParams = LinearLayout.LayoutParams(size, size)
                     dotLayoutParams.marginStart = indicatorMarginHorizontal
                     dotLayoutParams.marginEnd = indicatorMarginHorizontal
 
+
+                    val max =
+                        (Resources.getSystem().displayMetrics.widthPixels / (size + indicatorMarginHorizontal * 2)) - 1
+
                     // Create indicator dots and add them to the layout
                     for (i in 0 until sliders) {
+                        if (i == max) break
                         val dot = JLayout(context)
                         dot.layoutParams = dotLayoutParams
                         dot.setBackgroundResource(R.drawable.indicator)
@@ -349,7 +373,12 @@ class JSlider @JvmOverloads constructor(
                     }
 
                     // Set the color of the first indicator dot to the selected color
-                    if (dots.isNotEmpty()) dots[0].setColor(selectedIndicatorColor)
+                    if (dots.isNotEmpty()) {
+                        selectedDot.post {
+                            selectedDot.x = dots[0].x
+                        }
+                        this@JSlider.addView(selectedDot)
+                    }
                 }
 
                 // Check if auto-sliding is enabled based on the number of sliders
@@ -362,23 +391,33 @@ class JSlider @JvmOverloads constructor(
                     )
                 }
 
+                val max = dots.size - 1
                 // Add a listener to track page changes and update indicators
                 addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                     override fun onPageScrolled(
-                        position: Int, positionOffset: Float, positionOffsetPixels: Int
+                        i: Int, positionOffset: Float, positionOffsetPixels: Int
                     ) {
+                        // Update the selected dot position if indicator is enabled
+                        if (indicatorBoolean && dots.isNotEmpty()) {
+                            val position = i % dots.size
+                            if (position == max) {
+                                val targetX = dots[0].x
+                                selectedDot.x =
+                                    targetX + (1 - positionOffset) * (dots[max].x - targetX)
+                            } else {
+                                val targetX = dots[position].x
+                                selectedDot.x =
+                                    targetX + positionOffset * ((if (position < max) dots[position + 1].x else targetX) - targetX)
+                            }
+
+                        }
                         // Notify the external listener about the page scroll event
                         if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
-                            position, positionOffset, positionOffsetPixels
+                            i, positionOffset, positionOffsetPixels
                         )
                     }
 
                     override fun onPageSelected(position: Int) {
-                        // Update indicator colors based on the selected page
-                        if (indicatorBoolean && dots.isNotEmpty()) {
-                            for (dot in dots) dot.setColor(defaultIndicatorColor)
-                            dots[position % slider.itemCount()].setColor(selectedIndicatorColor)
-                        }
 
                         // Handle auto-sliding when a new page is selected
                         if (autoSlidingBoolean) {

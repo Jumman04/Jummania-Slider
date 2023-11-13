@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.jummania.JSlider
-import com.jummania.animations.AnimationTypes
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val jSlider: JSlider = findViewById(R.id.jSlider)  //find
         //  val jSlider:JSlider = JSlider(this)           // or bind the slider
 
-        jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
+        // jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
 
         /** You can add animation like that, 16 Animations added. check below the list of animation:
          *     ZOOM_IN,
@@ -110,7 +109,9 @@ class MainActivity : AppCompatActivity() {
             view.setOnClickListener {
 
                 Toast.makeText(
-                    this@MainActivity, getString(R.string.Developer_Name), Toast.LENGTH_SHORT
+                    this@MainActivity,
+                    getString(R.string.Developer_Name) + "\nItem Position: $position",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
 
@@ -133,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onSliderCreate(view: View, position: Int) {
+
             val textView: TextView = view.findViewById(R.id.text_view) //find your child
             val imageView: ImageView = view.findViewById(R.id.image_view)
 
@@ -144,9 +146,10 @@ class MainActivity : AppCompatActivity() {
             textView.text = getString(R.string.Developer_Name)
 
             view.setOnClickListener {
-
                 Toast.makeText(
-                    this@MainActivity, getString(R.string.Developer_Name), Toast.LENGTH_SHORT
+                    this@MainActivity,
+                    getString(R.string.Developer_Name) + "\nItem Position: $position",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }
