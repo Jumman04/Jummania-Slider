@@ -11,7 +11,7 @@
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Inflate any layout or view.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; 17 different slide animations.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.</p>
-</br><br><br><br><br>
+</br><br><br>
 
 <p align="center"><br>
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
