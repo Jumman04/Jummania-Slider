@@ -147,6 +147,10 @@ jSlider.stopAutoSliding()
  jSlider.slideNext()
  jSlider.slidePrevious()
 ```
+-   Check if the Slider is currently sliding:
+```kt  
+jSlider.isSliding() // True if sliding, false otherwise.
+```
 
 -   You can add 'addOnSlideChangeListener' if you really need
 ```kt  
