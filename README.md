@@ -21,6 +21,11 @@
   <a href="https://github.com/Jumman04/Jummania-Slider/issues">
     <img src="https://img.shields.io/github/issues/Jumman04/Jummania-Slider"/>
   </a>
+ <a href="https://github.com/Jumman04/Jummania-Slider/graphs/contributors" alt="Contributors">
+        <img src="https://img.shields.io/github/contributors/Jumman04/Jummania-Slider" /></a>
+    <a href="https://github.com/Jumman04/Jummania-Slider/pulse" alt="Activity">
+        <img src="https://img.shields.io/github/commit-activity/m/Jumman04/Jummania-Slider" /></a>
+  
   <a href="https://github.com/Jumman04/Jummania-Slider/network/members">
     <img src="https://img.shields.io/github/forks/Jumman04/Jummania-Slider"/>
   </a>
@@ -31,6 +36,7 @@
     <img src="https://img.shields.io/github/license/Jumman04/Jummania-Slider"/>
   </a>
 </p>
+
 
 ## Usage
 
