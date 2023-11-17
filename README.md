@@ -106,21 +106,21 @@
     app:selectedIndicatorColor="@color/selectedColor"
 ```
 
-- Choose how the indicator updates.:
+- Choose how the indicator updates:
 
 ```xml
            app:indicatorUpdateMode="ANIMATED"
 <!-- More Options STATIC | SYNC -->
 ```
 
-- Set the alignment of the indicator..:
+- Set the alignment of the indicator:
 
 ```xml
                 app:indicatorAlign="ALIGN_BOTTOM"
 <!-- more option  ALIGN_TOP | ALIGN_START | ALIGN_END | ALIGN_LEFT | ALIGN_RIGHT | CENTER_HORIZONTAL | CENTER_VERTICAL | CENTER_IN_PARENT-->
 ```
 
-- Specify the gravity of the indicator.i:
+- Specify the gravity of the indicator:
 
 ```xml
                app:indicatorGravity="bottom"
@@ -280,7 +280,7 @@ allprojects {
 
 ```xml
 dependencies {
-	implementation("com.github.Jumman04:Jummania-Slider:3.2")
+	implementation("com.github.Jumman04:Jummania-Slider:3.3")
 }
 ```
 
