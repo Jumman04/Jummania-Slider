@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.jummania.JSlider
-import com.jummania.animations.AnimationTypes
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
@@ -22,25 +21,49 @@ class MainActivity : AppCompatActivity() {
         val jSlider: JSlider = findViewById(R.id.jSlider)  //find
         //  val jSlider:JSlider = JSlider(this)           // or bind the slider
 
-         jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
+        // jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
+
 
         /** You can add animation like that, 16 Animations added. check below the list of animation:
-         *     ZOOM_IN,
-         *     ZOOM_OUT,
-         *     DEPTH_SLIDE,
+         *     ANTI_CLOCK_SPIN,
+         *     BACKGROUND_TO_FOREGROUND,
+         *     CARD_STACK,
+         *     CLOCK_SPIN,
+         *     CUBE_IN_DEPTH,
+         *     CUBE_IN_ROTATION,
+         *     CUBE_IN_SCALING,
+         *     CUBE_OUT_DEPTH,
+         *     CUBE_OUT_ROTATION,
+         *     CUBE_OUT_SCALING,
          *     CUBE_IN,
          *     CUBE_OUT,
+         *     DEPTH_PAGE,
+         *     DEPTH_SLIDE,
+         *     DEPTH_SLIDE2,
+         *     DEPTH_TRANSFORMATION,
+         *     DEPTH_ZOOM_OUT,
+         *     FADEOUT,
+         *     FADE_PAGE,
+         *     FAN_TRANSFORMATION,
+         *     FIDGET_SPINNER,
          *     FLIP_HORIZONTAL,
          *     FLIP_VERTICAL,
+         *     FOLD_PAGE,
          *     FOREGROUND_TO_BACKGROUND,
-         *     BACKGROUND_TO_FOREGROUND,
-         *     ROTATE_UP,
-         *     ROTATE_DOWN,
          *     GATE,
+         *     HINGE,
+         *     POP,
+         *     ROTATE_DOWN,
+         *     ROTATE_UP,
+         *     SPINNER,
+         *     SPINNER_TRANSFORMATION,
+         *     TABLET_SLIDE,
          *     TOSS,
-         *     FIDGET_SPINNER,
-         *     DEPTH_SLIDE2,
-         *     TABLET_SLIDE
+         *     VERTICAL_FLIP,
+         *     VERTICAL_SHUT,
+         *     ZOOM_FADE,
+         *     ZOOM_IN,
+         *     ZOOM_OUT
          */
 
         /** You can also set ViewPager.PageTransformer by:
@@ -89,6 +112,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     private inner class DefaultSlider : JSlider.DefaultSlider() {
         override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
@@ -156,4 +180,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     } //If you want to slide reverseLess
+
 }

@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Jummania Slider</string>
     <string name="Developer_Name">Sharif Uddin Jumman</string>
+    <string name="start_sliding">Start Sliding</string>
+    <string name="stop_sliding">Stop Sliding</string>
 </resources>

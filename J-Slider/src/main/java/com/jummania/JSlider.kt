@@ -27,36 +27,61 @@ import com.jummania.JSlider.BooleanObject.isDragging
 import com.jummania.JSlider.BooleanObject.isSliding
 import com.jummania.JSlider.IntObject.defaultIndicatorColor
 import com.jummania.JSlider.IntObject.indicatorMarginHorizontal
+import com.jummania.JSlider.IntObject.indicatorUpdateType
 import com.jummania.JSlider.IntObject.measureSpec
+import com.jummania.JSlider.IntObject.rules
 import com.jummania.JSlider.IntObject.selectedIndicatorColor
 import com.jummania.JSlider.IntObject.size
 import com.jummania.JSlider.IntObject.slidingDuration
-import com.jummania.animations.AnimationTypes
+import com.jummania.animations.AntiClockSpin
 import com.jummania.animations.BackgroundToForeground
+import com.jummania.animations.CardStack
+import com.jummania.animations.ClockSpin
 import com.jummania.animations.CubeIn
+import com.jummania.animations.CubeInDepth
+import com.jummania.animations.CubeInRotation
+import com.jummania.animations.CubeInScaling
 import com.jummania.animations.CubeOut
+import com.jummania.animations.CubeOutDepth
+import com.jummania.animations.CubeOutRotation
+import com.jummania.animations.CubeOutScaling
 import com.jummania.animations.DepthSlide
 import com.jummania.animations.DepthSlide2
+import com.jummania.animations.DepthTransformation
+import com.jummania.animations.DepthZoomOut
+import com.jummania.animations.FadeOut
+import com.jummania.animations.FadePage
+import com.jummania.animations.FanTransformation
 import com.jummania.animations.FidgetSpinner
 import com.jummania.animations.FlipHorizontal
 import com.jummania.animations.FlipVertical
+import com.jummania.animations.FoldPage
 import com.jummania.animations.ForegroundToBackground
 import com.jummania.animations.Gate
+import com.jummania.animations.Hinge
+import com.jummania.animations.Pop
 import com.jummania.animations.RotateDown
 import com.jummania.animations.RotateUp
+import com.jummania.animations.Spinner
+import com.jummania.animations.SpinnerTransformation
 import com.jummania.animations.TabletSlide
 import com.jummania.animations.Toss
+import com.jummania.animations.VerticalFlip
+import com.jummania.animations.VerticalShut
+import com.jummania.animations.ZoomFade
 import com.jummania.animations.ZoomIn
 import com.jummania.animations.ZoomOut
+import com.jummania.types.AnimationTypes
+import com.jummania.types.IndicatorUpdateTypes
 import kotlin.math.min
 
-/**
- * Created by Jummania on 08,November,2023.
- * Email: sharifuddinjumman@gmail.com
- * Dhaka, Bangladesh.
- */
 
 /**
+ *  * Created by Jummania on 08,November,2023.
+ *  * Email: sharifuddinjumman@gmail.com
+ *  * Dhaka, Bangladesh.
+ *
+ *
  * Custom Slider class that provides additional features and customization options.
  * This class extends RelativeLayout and provides a customizable slider view
  * with indicator dots.
@@ -81,19 +106,6 @@ class JSlider @JvmOverloads constructor(
         Slider(context)
     }
 
-    // Lazy initialization of the selected dot indicator
-    private val selectedDot by lazy {
-        JLayout(context).apply {
-            // Set the layout parameters for the selected dot indicator
-            layoutParams = LayoutParams(
-                size, size
-            )
-            (layoutParams as LayoutParams).addRule(ALIGN_PARENT_BOTTOM) // Align to the bottom of the parent view
-            gravity = Gravity.CENTER // Center the selected dot indicator
-            orientation = LinearLayout.HORIZONTAL // Set the orientation to horizontal
-        }
-    }
-
     // Lazy initialization of the dot indicator layout
     private val dotIndicatorLayout: LinearLayout by lazy {
         LinearLayout(context).apply {
@@ -101,14 +113,23 @@ class JSlider @JvmOverloads constructor(
             layoutParams = LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
             )
-            (layoutParams as LayoutParams).addRule(ALIGN_PARENT_BOTTOM) // Align to the bottom of the parent view
-            gravity = Gravity.CENTER // Center the dot indicator layout
+            orientation = LinearLayout.HORIZONTAL // Set the orientation to horizontal
+        }
+    }
+
+    // Lazy initialization of the dot indicator layout
+    private val selectedIndicatorLayout: LinearLayout by lazy {
+        LinearLayout(context).apply {
+            // Set the layout parameters for the dot indicator layout
+            layoutParams = LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
+            )
             orientation = LinearLayout.HORIZONTAL // Set the orientation to horizontal
         }
     }
 
     // Handler for updating the dot indicator position during auto-sliding
-    val updateHandler by lazy {
+    private val updateHandler by lazy {
         Handler(Looper.getMainLooper())
     }
 
@@ -124,6 +145,23 @@ class JSlider @JvmOverloads constructor(
         var selectedIndicatorColor = Color.WHITE // Color of the selected dot indicator
         var defaultIndicatorColor =
             Color.parseColor("#80ffffff") // Default color of the dot indicators
+
+        // Type of indicator update
+        var indicatorUpdateType: Int = 0
+
+        // List of RelativeLayout rules for positioning the dot indicator
+        val rules: List<Int> = listOf(
+            ALIGN_PARENT_LEFT,
+            ALIGN_PARENT_TOP,
+            ALIGN_PARENT_RIGHT,
+            ALIGN_PARENT_BOTTOM,
+            CENTER_IN_PARENT,
+            CENTER_HORIZONTAL,
+            CENTER_VERTICAL,
+            ALIGN_PARENT_START,
+            ALIGN_PARENT_END
+        )
+
     }
 
     // Object to store boolean values related to the slider behavior
@@ -177,10 +215,10 @@ class JSlider @JvmOverloads constructor(
         )
 
         // Set padding for the indicator based on left, top, right, and bottom attributes
-        indicatorPadding(
-            0,
-            0,
-            0,
+        setIndicatorPadding(
+            typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingLeft, 0),
+            typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingTop, 0),
+            typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingRight, 0),
             typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingBottom, 55)
         )
 
@@ -191,9 +229,32 @@ class JSlider @JvmOverloads constructor(
             )
         )
 
+        // Set slide animation based on the specified attribute
+        setSlideAnimation(
+            AnimationTypes.values()[typedArray.getInt(
+                R.styleable.JSlider_slideAnimation, AnimationTypes.values().size - 1
+            )]
+        )
+
+        // Set indicator alignment based on the specified attribute
+        setIndicatorAlign(
+            typedArray.getInt(
+                R.styleable.JSlider_indicatorAlign, ALIGN_PARENT_BOTTOM
+            )
+        )
+        // Set indicator gravity based on the specified attribute
+        setIndicatorGravity(typedArray.getInt(R.styleable.JSlider_indicatorGravity, Gravity.CENTER))
+
+        // Set indicator update mode based on the specified attribute
+        setIndicatorUpdateMode(
+            IndicatorUpdateTypes.values()[typedArray.getInt(
+                R.styleable.JSlider_indicatorUpdateMode, 0
+            )]
+        )
         // Add the slider and indicator layout to the view
         addView(jSlider)
         addView(dotIndicatorLayout)
+        addView(selectedIndicatorLayout)
     }
 
 
@@ -212,45 +273,7 @@ class JSlider @JvmOverloads constructor(
                 // Set the adapter to the provided DefaultSlider
                 adapter = slider
 
-                // Initialize a list to hold indicator dots
-                val dots: MutableList<JLayout> by lazy { mutableListOf() }
-
-                // Set up selected dot for the current position if indicator is enabled
-                if (indicatorBoolean) {
-                    selectedDot.setBackgroundResource(R.drawable.indicator)
-                    selectedDot.setColor(selectedIndicatorColor)
-                    selectedDot.layoutParams.width = size
-                    selectedDot.layoutParams.height = size
-
-                    val dotLayoutParams = LinearLayout.LayoutParams(size, size)
-                    dotLayoutParams.marginStart = indicatorMarginHorizontal
-                    dotLayoutParams.marginEnd = indicatorMarginHorizontal
-
-                    val max =
-                        (Resources.getSystem().displayMetrics.widthPixels / (size + indicatorMarginHorizontal * 2)) - 1
-
-                    // Create indicator dots and add them to the layout
-                    for (i in 0 until sliders) {
-                        if (i == max) break
-                        val dot = JLayout(context)
-                        dot.layoutParams = dotLayoutParams
-                        dot.setBackgroundResource(R.drawable.indicator)
-                        dot.setColor(defaultIndicatorColor)
-                        dotIndicatorLayout.addView(dot)
-                        dots.add(dot)
-                    }
-
-                    // Set the initial position of the selected dot
-                    if (dots.isNotEmpty()) {
-                        selectedDot.post {
-                            selectedDot.x = dots[0].x
-                        }
-                        this@JSlider.addView(selectedDot)
-                    }
-                }
-
-                // Check if auto-sliding is enabled based on the number of sliders
-                if (autoSlidingBoolean) autoSlidingBoolean = sliders > 1
+                onSliderSet(sliders)
 
                 // Set up the auto-sliding update runnable
                 update = Runnable {
@@ -259,72 +282,145 @@ class JSlider @JvmOverloads constructor(
                     )
                 }
 
-                val max = dots.size - 1
-                // Add a listener to track page changes and update indicators
-                addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                    override fun onPageScrolled(
-                        i: Int, positionOffset: Float, positionOffsetPixels: Int
-                    ) {
-                        // Update the selected dot position if indicator is enabled
-                        if (indicatorBoolean && dots.isNotEmpty()) {
-                            val position = i % dots.size
-                            if (position == max) {
-                                val targetX = dots[0].x
-                                selectedDot.x =
-                                    targetX + (1 - positionOffset) * (dots[max].x - targetX)
-                            } else {
-                                val targetX = dots[position].x
-                                selectedDot.x =
-                                    targetX + positionOffset * ((if (position < max) dots[position + 1].x else targetX) - targetX)
-                            }
-
-                        }
-
-                        // Notify the external listener about the page scroll event
-                        if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
-                            i, positionOffset, positionOffsetPixels
-                        )
-                    }
-
-                    override fun onPageSelected(position: Int) {
-                        // Handle auto-sliding when a new page is selected
-                        if (autoSlidingBoolean) {
-                            updateHandler.removeCallbacks(update)
-                            updateHandler.postDelayed(update, slidingDuration)
-                        }
-
-                        // Notify the external listener about the page selection event
-                        if (this@JSlider::listener.isInitialized) listener.onSliderSelected(position)
-                    }
-
-                    override fun onPageScrollStateChanged(state: Int) {
-                        // Handle auto-sliding when dragging stops
-                        if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
-                            updateHandler.removeCallbacks(update)
-                            updateHandler.postDelayed(update, slidingDuration)
-                        }
-
-                        // Update flags based on the scroll state
-                        isDragging = state == SCROLL_STATE_DRAGGING
-                        isSliding = state == SCROLL_STATE_IDLE
-
-                        // Notify the external listener about the scroll state change
-                        if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
-                            state
-                        )
-                    }
-                })
-
-                // Set a custom scroller for smoother scrolling
-                try {
-                    val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
-                    viewPagerScroller.isAccessible = true
-                    viewPagerScroller[this] = MyScroller(context)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
             }
         }
+    }
+
+    private fun onSliderSet(sliders: Int) {
+
+        // Initialize a list to hold indicator dots
+        val dots: MutableList<JLayout> by lazy { mutableListOf() }
+        // Lazy initialization of the selected dot indicator
+        val selectedDot by lazy {
+            JLayout(context).apply {
+                // Set the layout parameters for the selected dot indicator
+                layoutParams = LayoutParams(
+                    size, size
+                )
+                (layoutParams as LayoutParams).addRule(ALIGN_PARENT_BOTTOM) // Align to the bottom of the parent view
+                gravity = Gravity.CENTER // Center the selected dot indicator
+                orientation = LinearLayout.HORIZONTAL // Set the orientation to horizontal
+                setBackgroundResource(R.drawable.indicator)
+                setColor(selectedIndicatorColor)
+            }
+        }
+
+        // Set up dot for the current position if indicator is enabled
+        if (indicatorBoolean) {
+
+            val dotLayoutParams = LinearLayout.LayoutParams(size, size)
+            dotLayoutParams.marginStart = indicatorMarginHorizontal
+            dotLayoutParams.marginEnd = indicatorMarginHorizontal
+
+            val max =
+                (Resources.getSystem().displayMetrics.widthPixels / (size + indicatorMarginHorizontal * 2)) - 1
+
+            // Create indicator dots and add them to the layout
+            for (i in 0 until sliders) {
+                if (i == max) break
+                val dot = JLayout(context)
+                dot.layoutParams = dotLayoutParams
+                dot.setBackgroundResource(R.drawable.indicator)
+                dot.setColor(defaultIndicatorColor)
+                dotIndicatorLayout.addView(dot)
+                dots.add(dot)
+            }
+
+            // Set the initial position of the selected dot
+            if (dots.isNotEmpty()) {
+                selectedDot.post {
+                    selectedDot.x = dots[0].x
+                }
+                selectedIndicatorLayout.addView(selectedDot)
+            }
+        }
+
+        val max = dots.size - 1
+        // Add a listener to track page changes and update indicators
+        jSlider.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                i: Int, positionOffset: Float, positionOffsetPixels: Int
+            ) {
+                // Update the selected dot position if indicator is enabled
+                if (indicatorBoolean && dots.isNotEmpty() && indicatorUpdateType == 0) {
+                    val position = i % dots.size
+
+                    // Calculate the selected dot's X position based on the current position and offset
+                    if (position == max) {
+                        val targetX = dots[0].x
+                        selectedDot.x = targetX + (1 - positionOffset) * (dots[max].x - targetX)
+                    } else {
+                        val targetX = dots[position].x
+                        selectedDot.x =
+                            targetX + positionOffset * ((if (position < max) dots[position + 1].x else targetX) - targetX)
+                    }
+
+                }
+
+                // Notify the external listener about the page scroll event
+                if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
+                    i, positionOffset, positionOffsetPixels
+                )
+            }
+
+            override fun onPageSelected(i: Int) {
+
+                // Update the selected dot position if the indicator is enabled and the update type is not zero
+                if (indicatorBoolean && dots.isNotEmpty() && indicatorUpdateType != 0) {
+                    val position = i % dots.size
+
+                    // Check the indicator update type and update the selected dot's X position accordingly
+                    when (indicatorUpdateType) {
+                        1 -> selectedDot.x = dots[position].x // Instantly set the X position
+                        2 ->
+                            // Animate the transition to the new X position
+                            selectedDot.animate().x(dots[position].x).start()
+
+                        // Add more cases if additional update types are introduced in the future
+                    }
+                }
+
+
+                // Handle auto-sliding when a new page is selected
+                if (autoSlidingBoolean) {
+                    updateHandler.removeCallbacks(update)
+                    updateHandler.postDelayed(update, slidingDuration)
+                }
+
+                // Notify the external listener about the page selection event
+                if (this@JSlider::listener.isInitialized) listener.onSliderSelected(i)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                // Handle auto-sliding when dragging stops
+                if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
+                    updateHandler.removeCallbacks(update)
+                    updateHandler.postDelayed(update, slidingDuration)
+                }
+
+                // Update flags based on the scroll state
+                isDragging = state == SCROLL_STATE_DRAGGING
+                isSliding = state == SCROLL_STATE_IDLE
+
+                // Notify the external listener about the scroll state change
+                if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
+                    state
+                )
+            }
+        })
+
+        // Set a custom scroller for smoother scrolling
+        try {
+            val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
+            viewPagerScroller.isAccessible = true
+            viewPagerScroller[jSlider] = MyScroller(context)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Check if auto-sliding is enabled based on the number of sliders
+        if (autoSlidingBoolean) autoSlidingBoolean = sliders > 1
+
     }
 
 
@@ -343,46 +439,7 @@ class JSlider @JvmOverloads constructor(
                 // Set the adapter to the provided InfinitySlider
                 adapter = slider
 
-                // Initialize a list to hold indicator dots
-                val dots: MutableList<JLayout> by lazy { mutableListOf() }
-
-                // Set up indicator dots if indicator is enabled
-                if (indicatorBoolean) {
-                    selectedDot.setBackgroundResource(R.drawable.indicator)
-                    selectedDot.setColor(selectedIndicatorColor)
-                    selectedDot.layoutParams.width = size
-                    selectedDot.layoutParams.height = size
-
-                    val dotLayoutParams = LinearLayout.LayoutParams(size, size)
-                    dotLayoutParams.marginStart = indicatorMarginHorizontal
-                    dotLayoutParams.marginEnd = indicatorMarginHorizontal
-
-
-                    val max =
-                        (Resources.getSystem().displayMetrics.widthPixels / (size + indicatorMarginHorizontal * 2)) - 1
-
-                    // Create indicator dots and add them to the layout
-                    for (i in 0 until sliders) {
-                        if (i == max) break
-                        val dot = JLayout(context)
-                        dot.layoutParams = dotLayoutParams
-                        dot.setBackgroundResource(R.drawable.indicator)
-                        dot.setColor(defaultIndicatorColor)
-                        dotIndicatorLayout.addView(dot)
-                        dots.add(dot)
-                    }
-
-                    // Set the color of the first indicator dot to the selected color
-                    if (dots.isNotEmpty()) {
-                        selectedDot.post {
-                            selectedDot.x = dots[0].x
-                        }
-                        this@JSlider.addView(selectedDot)
-                    }
-                }
-
-                // Check if auto-sliding is enabled based on the number of sliders
-                if (autoSlidingBoolean) autoSlidingBoolean = sliders > 1
+                onSliderSet(sliders)
 
                 // Set up the auto-sliding update runnable
                 update = Runnable {
@@ -391,70 +448,6 @@ class JSlider @JvmOverloads constructor(
                     )
                 }
 
-                val max = dots.size - 1
-                // Add a listener to track page changes and update indicators
-                addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                    override fun onPageScrolled(
-                        i: Int, positionOffset: Float, positionOffsetPixels: Int
-                    ) {
-                        // Update the selected dot position if indicator is enabled
-                        if (indicatorBoolean && dots.isNotEmpty()) {
-                            val position = i % dots.size
-                            if (position == max) {
-                                val targetX = dots[0].x
-                                selectedDot.x =
-                                    targetX + (1 - positionOffset) * (dots[max].x - targetX)
-                            } else {
-                                val targetX = dots[position].x
-                                selectedDot.x =
-                                    targetX + positionOffset * ((if (position < max) dots[position + 1].x else targetX) - targetX)
-                            }
-
-                        }
-                        // Notify the external listener about the page scroll event
-                        if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
-                            i, positionOffset, positionOffsetPixels
-                        )
-                    }
-
-                    override fun onPageSelected(position: Int) {
-
-                        // Handle auto-sliding when a new page is selected
-                        if (autoSlidingBoolean) {
-                            updateHandler.removeCallbacks(update)
-                            updateHandler.postDelayed(update, slidingDuration)
-                        }
-
-                        // Notify the external listener about the page selection event
-                        if (this@JSlider::listener.isInitialized) listener.onSliderSelected(position)
-                    }
-
-                    override fun onPageScrollStateChanged(state: Int) {
-                        // Handle auto-sliding when dragging stops
-                        if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
-                            updateHandler.removeCallbacks(update)
-                            updateHandler.postDelayed(update, slidingDuration)
-                        }
-
-                        // Update flags based on the scroll state
-                        isDragging = state == SCROLL_STATE_DRAGGING
-                        isSliding = state == SCROLL_STATE_IDLE
-
-                        // Notify the external listener about the scroll state change
-                        if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
-                            state
-                        )
-                    }
-                })
-
-                // Set a custom scroller for smoother scrolling
-                try {
-                    val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
-                    viewPagerScroller.isAccessible = true
-                    viewPagerScroller[this] = MyScroller(context)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
             }
         }
     }
@@ -789,10 +782,25 @@ class JSlider @JvmOverloads constructor(
      * @param right The right padding in pixels.
      * @param bottom The bottom padding in pixels.
      */
-    fun indicatorPadding(left: Int, top: Int, right: Int, bottom: Int) {
-        val layoutParams = (selectedDot.layoutParams as? MarginLayoutParams)
-        layoutParams?.setMargins(left, top, right, bottom)
+    fun setIndicatorPadding(left: Int, top: Int, right: Int, bottom: Int) {
+        selectedIndicatorLayout.setPadding(left, top, right, bottom)
         dotIndicatorLayout.setPadding(left, top, right, bottom)
+    }
+
+    fun setIndicatorGravity(gravity: Int) {
+        dotIndicatorLayout.gravity = gravity
+        selectedIndicatorLayout.gravity = gravity
+    }
+
+    fun setIndicatorAlign(gravity: Int) {
+        val dotLayoutParams = dotIndicatorLayout.layoutParams as LayoutParams
+        val selectedDotLayoutParams = selectedIndicatorLayout.layoutParams as LayoutParams
+
+        for (rule in rules) dotLayoutParams.removeRule(rule)
+        for (rule in rules) selectedDotLayoutParams.removeRule(rule)
+
+        dotLayoutParams.addRule(gravity)
+        selectedDotLayoutParams.addRule(gravity)
     }
 
     /**
@@ -802,44 +810,72 @@ class JSlider @JvmOverloads constructor(
      */
     fun setSlideAnimation(animationType: AnimationTypes) {
         when (animationType) {
-            AnimationTypes.ZOOM_IN -> jSlider.setPageTransformer(true, ZoomIn())
-
-            AnimationTypes.ZOOM_OUT -> jSlider.setPageTransformer(true, ZoomOut())
-
-            AnimationTypes.DEPTH_SLIDE -> jSlider.setPageTransformer(true, DepthSlide())
-
-            AnimationTypes.DEPTH_SLIDE2 -> jSlider.setPageTransformer(
-                true, DepthSlide2(jSlider)
-            )
-
-            AnimationTypes.CUBE_IN -> jSlider.setPageTransformer(true, CubeIn())
-
-            AnimationTypes.CUBE_OUT -> jSlider.setPageTransformer(true, CubeOut())
-
-            AnimationTypes.FLIP_HORIZONTAL -> jSlider.setPageTransformer(true, FlipHorizontal())
-
-            AnimationTypes.FLIP_VERTICAL -> jSlider.setPageTransformer(true, FlipVertical())
-
-            AnimationTypes.ROTATE_UP -> jSlider.setPageTransformer(true, RotateUp())
-
-            AnimationTypes.ROTATE_DOWN -> jSlider.setPageTransformer(true, RotateDown())
-
-            AnimationTypes.FOREGROUND_TO_BACKGROUND -> jSlider.setPageTransformer(
-                true, ForegroundToBackground()
-            )
-
+            AnimationTypes.ANTI_CLOCK_SPIN -> jSlider.setPageTransformer(true, AntiClockSpin())
             AnimationTypes.BACKGROUND_TO_FOREGROUND -> jSlider.setPageTransformer(
                 true, BackgroundToForeground()
             )
 
-            AnimationTypes.TOSS -> jSlider.setPageTransformer(true, Toss())
+            AnimationTypes.CARD_STACK -> jSlider.setPageTransformer(true, CardStack())
+            AnimationTypes.CLOCK_SPIN -> jSlider.setPageTransformer(true, ClockSpin())
+            AnimationTypes.CUBE_IN_DEPTH -> jSlider.setPageTransformer(true, CubeInDepth())
+            AnimationTypes.CUBE_IN_ROTATION -> jSlider.setPageTransformer(true, CubeInRotation())
+            AnimationTypes.CUBE_IN_SCALING -> jSlider.setPageTransformer(true, CubeInScaling())
+            AnimationTypes.CUBE_OUT_DEPTH -> jSlider.setPageTransformer(true, CubeOutDepth())
+            AnimationTypes.CUBE_OUT_ROTATION -> jSlider.setPageTransformer(true, CubeOutRotation())
+            AnimationTypes.CUBE_OUT_SCALING -> jSlider.setPageTransformer(true, CubeOutScaling())
+            AnimationTypes.CUBE_IN -> jSlider.setPageTransformer(true, CubeIn())
+            AnimationTypes.CUBE_OUT -> jSlider.setPageTransformer(true, CubeOut())
+            AnimationTypes.DEPTH_SLIDE -> jSlider.setPageTransformer(true, DepthSlide())
+            AnimationTypes.DEPTH_SLIDE2 -> jSlider.setPageTransformer(true, DepthSlide2(jSlider))
+            AnimationTypes.DEPTH_TRANSFORMATION -> jSlider.setPageTransformer(
+                true, DepthTransformation()
+            )
 
-            AnimationTypes.GATE -> jSlider.setPageTransformer(true, Gate())
+            AnimationTypes.DEPTH_ZOOM_OUT -> jSlider.setPageTransformer(true, DepthZoomOut())
+            AnimationTypes.FADEOUT -> jSlider.setPageTransformer(true, FadeOut())
+            AnimationTypes.FADE_PAGE -> jSlider.setPageTransformer(true, FadePage())
+            AnimationTypes.FAN_TRANSFORMATION -> jSlider.setPageTransformer(
+                true, FanTransformation()
+            )
 
             AnimationTypes.FIDGET_SPINNER -> jSlider.setPageTransformer(true, FidgetSpinner())
+            AnimationTypes.FLIP_HORIZONTAL -> jSlider.setPageTransformer(true, FlipHorizontal())
+            AnimationTypes.FLIP_VERTICAL -> jSlider.setPageTransformer(true, FlipVertical())
+            AnimationTypes.FOLD_PAGE -> jSlider.setPageTransformer(true, FoldPage())
+            AnimationTypes.FOREGROUND_TO_BACKGROUND -> jSlider.setPageTransformer(
+                true, ForegroundToBackground()
+            )
+
+            AnimationTypes.GATE -> jSlider.setPageTransformer(true, Gate())
+            AnimationTypes.HINGE -> jSlider.setPageTransformer(true, Hinge())
+            AnimationTypes.POP -> jSlider.setPageTransformer(true, Pop())
+            AnimationTypes.ROTATE_DOWN -> jSlider.setPageTransformer(true, RotateDown())
+            AnimationTypes.ROTATE_UP -> jSlider.setPageTransformer(true, RotateUp())
+            AnimationTypes.SPINNER -> jSlider.setPageTransformer(true, Spinner())
+            AnimationTypes.SPINNER_TRANSFORMATION -> jSlider.setPageTransformer(
+                true, SpinnerTransformation()
+            )
 
             AnimationTypes.TABLET_SLIDE -> jSlider.setPageTransformer(true, TabletSlide())
+            AnimationTypes.TOSS -> jSlider.setPageTransformer(true, Toss())
+            AnimationTypes.VERTICAL_FLIP -> jSlider.setPageTransformer(true, VerticalFlip())
+            AnimationTypes.VERTICAL_SHUT -> jSlider.setPageTransformer(true, VerticalShut())
+            AnimationTypes.ZOOM_FADE -> jSlider.setPageTransformer(true, ZoomFade())
+            AnimationTypes.ZOOM_IN -> jSlider.setPageTransformer(true, ZoomIn())
+            AnimationTypes.ZOOM_OUT -> jSlider.setPageTransformer(true, ZoomOut())
+            AnimationTypes.DEFAULT -> jSlider.setPageTransformer(true, null)
         }
+
+    }
+
+
+    /**
+     * Set the indicator update mode based on the provided IndicatorUpdateTypes.
+     *
+     * @param indicatorUpdateTypes The desired update mode for the indicator.
+     */
+    fun setIndicatorUpdateMode(indicatorUpdateTypes: IndicatorUpdateTypes) {
+        indicatorUpdateType = indicatorUpdateTypes.ordinal
     }
 
 

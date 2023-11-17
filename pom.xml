@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.Jumman04</groupId>
     <artifactId>Jummania-Slider</artifactId>
-    <version>3.2</version>
+    <version>3.3</version>
     <packaging>pom</packaging>
     <description>Empower Your UI with Seamless Slides: Introducing JSlider, the Universal Slider Library</description>
 </project>

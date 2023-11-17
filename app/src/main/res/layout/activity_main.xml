@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:indicatorPaddingBottom="22dp"
+        app:slideAnimation="CUBE_OUT"
         app:slidingDuration="2222" />
 
 
@@ -27,19 +28,19 @@
 
         <Button
             android:id="@+id/start"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="9dp"
-            android:text="Start Sliding"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="@string/start_sliding" />
 
         <Button
             android:id="@+id/stop"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="9dp"
-            android:text="Stop Sliding"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="@string/stop_sliding" />
 
     </LinearLayout>
 

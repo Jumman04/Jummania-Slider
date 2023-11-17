@@ -8,15 +8,118 @@
         <attr name="sliderPaddingLeft" format="dimension" />
         <attr name="sliderPaddingRight" format="dimension" />
         <attr name="sliderPaddingBottom" format="dimension" />
+        <attr name="indicatorPaddingTop" format="dimension" />
+        <attr name="indicatorPaddingLeft" format="dimension" />
+        <attr name="indicatorPaddingRight" format="dimension" />
         <attr name="indicatorPaddingBottom" format="dimension" />
-        <attr name="indicatorMarginHorizontal" format="dimension" />
 
+        <attr name="indicatorMarginHorizontal" format="dimension" />
 
         <attr name="enableIndicator" format="boolean" />
         <attr name="enableAutoSliding" format="boolean" />
 
         <attr name="defaultIndicatorColor" format="color|reference" />
         <attr name="selectedIndicatorColor" format="color|reference" />
+
+        <attr name="indicatorUpdateMode">
+            <!-- Indicator Update Modes -->
+            <enum name="SYNC" value="0" /> <!-- Synchronize the indicator position -->
+            <enum name="STATIC" value="1" /> <!-- Update the indicator without animation when slide change -->
+            <enum name="ANIMATED" value="2" /> <!-- Update the indicator with animation -->
+        </attr>
+
+        <attr name="indicatorAlign">
+            <!-- Indicator Alignment Options -->
+            <enum name="ALIGN_LEFT" value="9" /> <!-- Align the indicator to the left -->
+            <enum name="ALIGN_TOP" value="10" /> <!-- Align the indicator to the top -->
+            <enum name="ALIGN_RIGHT" value="11" /> <!-- Align the indicator to the right -->
+            <enum name="ALIGN_BOTTOM" value="12" /> <!-- Align the indicator to the bottom -->
+            <enum name="CENTER_IN_PARENT" value="13" /> <!-- Center the indicator in the parent -->
+            <enum name="CENTER_HORIZONTAL" value="14" /> <!-- Center the indicator horizontally -->
+            <enum name="CENTER_VERTICAL" value="15" /> <!-- Center the indicator vertically -->
+            <enum name="ALIGN_START" value="20" /> <!-- Align the indicator to the start (depends on layout direction) -->
+            <enum name="ALIGN_END" value="21" /> <!-- Align the indicator to the end (depends on layout direction) -->
+        </attr>
+
+        <attr name="indicatorGravity">
+            <!-- Push object to the top of its container, not changing its size. -->
+            <flag name="top" value="0x30" />
+            <!-- Push object to the bottom of its container, not changing its size. -->
+            <flag name="bottom" value="0x50" />
+            <!-- Push object to the left of its container, not changing its size. -->
+            <flag name="left" value="0x03" />
+            <!-- Push object to the right of its container, not changing its size. -->
+            <flag name="right" value="0x05" />
+            <!-- Place object in the vertical center of its container, not changing its size. -->
+            <flag name="center_vertical" value="0x10" />
+            <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill_vertical" value="0x70" />
+            <!-- Place object in the horizontal center of its container, not changing its size. -->
+            <flag name="center_horizontal" value="0x01" />
+            <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
+            <flag name="fill_horizontal" value="0x07" />
+            <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
+            <flag name="center" value="0x11" />
+            <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill" value="0x77" />
+            <!-- Additional option that can be set to have the top and/or bottom edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the vertical gravity: a top gravity will clip the bottom
+                 edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
+            <flag name="clip_vertical" value="0x80" />
+            <!-- Additional option that can be set to have the left and/or right edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the horizontal gravity: a left gravity will clip the right
+                 edge, a right gravity will clip the left edge, and neither will clip both edges. -->
+            <flag name="clip_horizontal" value="0x08" />
+            <!-- Push object to the beginning of its container, not changing its size. -->
+            <flag name="start" value="0x00800003" />
+            <!-- Push object to the end of its container, not changing its size. -->
+            <flag name="end" value="0x00800005" />
+        </attr>
+
+        <attr name="slideAnimation">
+            <!-- Define the enum values for AnimationTypes -->
+            <enum name="ANTI_CLOCK_SPIN" value="0" />
+            <enum name="BACKGROUND_TO_FOREGROUND" value="1" />
+            <enum name="CARD_STACK" value="2" />
+            <enum name="CLOCK_SPIN" value="3" />
+            <enum name="CUBE_IN_DEPTH" value="4" />
+            <enum name="CUBE_IN_ROTATION" value="5" />
+            <enum name="CUBE_IN_SCALING" value="6" />
+            <enum name="CUBE_OUT_DEPTH" value="7" />
+            <enum name="CUBE_OUT_ROTATION" value="8" />
+            <enum name="CUBE_OUT_SCALING" value="9" />
+            <enum name="CUBE_IN" value="10" />
+            <enum name="CUBE_OUT" value="11" />
+            <enum name="DEPTH_SLIDE" value="12" />
+            <enum name="DEPTH_SLIDE2" value="13" />
+            <enum name="DEPTH_TRANSFORMATION" value="14" />
+            <enum name="DEPTH_ZOOM_OUT" value="15" />
+            <enum name="FADEOUT" value="16" />
+            <enum name="FADE_PAGE" value="17" />
+            <enum name="FAN_TRANSFORMATION" value="18" />
+            <enum name="FIDGET_SPINNER" value="19" />
+            <enum name="FLIP_HORIZONTAL" value="20" />
+            <enum name="FLIP_VERTICAL" value="21" />
+            <enum name="FOLD_PAGE" value="22" />
+            <enum name="FOREGROUND_TO_BACKGROUND" value="23" />
+            <enum name="GATE" value="24" />
+            <enum name="HINGE" value="25" />
+            <enum name="POP" value="26" />
+            <enum name="ROTATE_DOWN" value="27" />
+            <enum name="ROTATE_UP" value="28" />
+            <enum name="SPINNER" value="29" />
+            <enum name="SPINNER_TRANSFORMATION" value="30" />
+            <enum name="TABLET_SLIDE" value="31" />
+            <enum name="TOSS" value="32" />
+            <enum name="VERTICAL_FLIP" value="33" />
+            <enum name="VERTICAL_SHUT" value="34" />
+            <enum name="ZOOM_FADE" value="35" />
+            <enum name="ZOOM_IN" value="36" />
+            <enum name="ZOOM_OUT" value="37" />
+            <enum name="DEFAULT" value="38" />
+        </attr>
 
     </declare-styleable>
 </resources>
