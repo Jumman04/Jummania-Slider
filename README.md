@@ -220,13 +220,94 @@ app:indicatorShapeTypes="CIRCLE"
 ```xml
 app:slideAnimation="CUBE_OUT"
 ```
-### Programmatic Customization
-
-- You can add animation like that, <b>38 Animations added</b>. You can check
-  in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/types/AnimationTypes.kt">
-  Animation List </a>
 ---
 
+### Programmatic Customization
+
+- Set the sliding duration:
+
+```kt
+setSlidingDuration(2222)
+```
+- Set the indicator size:
+
+```kt
+setIndicatorSize(15)
+```
+
+- Set the indicator colors:
+```kt
+setIndicatorColor(defaultColor, selectedColor)
+```
+
+- Enable or disable the indicator:
+
+```kt
+enableIndicator(true)
+```
+- Enable or disable auto-sliding:
+
+```kt
+enableAutoSliding(true)
+```
+
+- Set a custom page transformer:
+
+```kt
+setPageTransformer(true, PageTransformer())
+```
+- Set padding for the slider:
+
+```kt
+setSliderPadding(left, top, right, bottom)
+```
+- Set horizontal margin for the indicator dots:
+
+```kt
+setIndicatorMarginHorizontal(3)
+```
+- To start or stop auto-sliding:
+
+```kt
+startAutoSliding()
+stopAutoSliding()
+```
+- Slide to the next and previous page:
+
+```kt
+slideNext()
+slidePrevious()
+```
+- Check if the slider is currently sliding:
+
+```kt
+isSliding()
+```
+- Set padding for the indicator dots programmatically:
+
+```kt
+setIndicatorPadding(left, top, right, bottom)
+```
+- Set the gravity for both the dot indicators:
+
+```kt
+setIndicatorGravity(Gravity.BOTTOM)
+```
+- Set the alignment for both the dot indicators:
+
+```kt
+setIndicatorAlignment(alignment)
+```
+- Set the indicator update mode:
+
+```kt
+setIndicatorUpdateMode(IndicatorUpdateTypes.SYNC)
+```
+- Set the indicator shape types programmatically:
+
+```kt
+setIndicatorShapeTypes(IndicatorShapeTypes.CIRCLE)
+```
 
 - You can add animation like that, <b>38 Animations added</b>. You can check
   in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/types/AnimationTypes.kt">
@@ -234,32 +315,6 @@ app:slideAnimation="CUBE_OUT"
 
 ```kt
 jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
-```
-
-- You can also set ViewPager.PageTransformer by:
-
-```kt
-jSlider.setPageTransformer(boolean, TransformerClass())
-```
-
-- To start or stop autoSliding:
-
-```kt
-jSlider.startAutoSliding()
-jSlider.stopAutoSliding()
-```
-
-- to slide next or previuse:
-
-```kt
- jSlider.slideNext()
-jSlider.slidePrevious()
-```
-
-- Check if the Slider is currently sliding:
-
-```kt
-jSlider.isSliding() // True if sliding, false otherwise.
 ```
 
 - You can add 'addOnSlideChangeListener' if you really need
