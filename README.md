@@ -1,5 +1,23 @@
 <a href="https://github.com/Jumman04/Jummania-Slider">  
 
+<div align="center">
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284043638-c98bd63f-5900-42d1-9ad6-38522ae3879d.gif" width="50%"/>
+</div>
+
+# J-Slider for Android
+
+Just inflate the layout you want to slide.
+
+- Easy to use.
+- Smooth sliding transitions
+- Customizable indicator size, colors, and shapes
+- Auto-sliding functionality
+- Slide with a variety of 38+ different animations
+- Ability to add your own custom animation
+- Indicator alignment and gravity customization
+- Use with Java or Kotlin.
+
+<!--
 <img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/282801213-6919ff05-9a68-497f-b9e6-ae937ed55e09.gif" width="40%"/>  
 </a>
 
@@ -15,6 +33,8 @@
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Indicator alignment and gravity customization<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.
 <br><br>
+-->
+
 
 <p align="center"><br>
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
