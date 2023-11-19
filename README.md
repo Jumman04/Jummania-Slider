@@ -5,17 +5,23 @@
 </a>  
 <h1 align="center">J-Slider for Android!</h1>  
 <p align="center">Just inflate the layout you want to slide.</p>  
-
-- Easy to use.
-- Smooth sliding transitions
-- Customizable indicator size, colors, and shapes
-- Auto-sliding functionality
-- Slide with a variety of 38+ different animations
-- Ability to add your own custom animation
-- Indicator alignment and gravity customization
-- Use with Java or Kotlin.
-
+<p align="center">
+<p align="left">
+	
+ &#8226; &nbsp; Easy to use. <br>
+ &#8226; &nbsp; Smooth sliding transitions <br>
+ &#8226; &nbsp; Customizable indicator size, colors, and shapes <br>
+ &#8226; &nbsp; Auto-sliding functionality <br>
+ &#8226; &nbsp; Slide with a variety of 38+ different animations <br>
+ &#8226; &nbsp; Ability to add your own custom animation <br>
+ &#8226; &nbsp; Indicator alignment and gravity customization<br>
+ &#8226; &nbsp; Use with Java or Kotlin.
+<br><br>
+</p>
+</p>  
 </br>
+
+
 
 <br>
 <p align="center"><br>
