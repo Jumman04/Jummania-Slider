@@ -44,8 +44,10 @@
 
 ```xml
 
-<com.jummania.JSlider android:id="@+id/jSlider" android:layout_width="match_parent"
-    android:layout_height="222dp" />
+ <com.jummania.JSlider
+        android:id="@+id/jSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 ```
 
 - Change Duration of Slidng:
@@ -105,19 +107,22 @@
 - Choose how the indicator updates:
 
 ```xml
-           app:indicatorUpdateMode="ANIMATED"<!-- More Options STATIC | SYNC -->
+           app:indicatorUpdateMode="ANIMATED"
+<!-- More Options STATIC | SYNC -->
 ```
 
 - Set the alignment of the indicator:
 
 ```xml
-                app:indicatorAlign="ALIGN_BOTTOM"<!-- more option  ALIGN_TOP | ALIGN_START | ALIGN_END | ALIGN_LEFT | ALIGN_RIGHT | CENTER_HORIZONTAL | CENTER_VERTICAL | CENTER_IN_PARENT-->
+                app:indicatorAlign="ALIGN_BOTTOM"
+<!-- more option  ALIGN_TOP | ALIGN_START | ALIGN_END | ALIGN_LEFT | ALIGN_RIGHT | CENTER_HORIZONTAL | CENTER_VERTICAL | CENTER_IN_PARENT-->
 ```
 
 - Specify the gravity of the indicator:
 
 ```xml
-               app:indicatorGravity="bottom"<!-- More Option's top | left | right | center_vertical | fill_vertical |fill_horizontal | center_horizontal | center | fill | start | clip_horizontal | clip_vertical |end -->
+               app:indicatorGravity="bottom"
+<!-- More Option's top | left | right | center_vertical | fill_vertical |fill_horizontal | center_horizontal | center | fill | start | clip_horizontal | clip_vertical |end -->
 
 ```
 
@@ -265,11 +270,19 @@ jSlider.isSliding() // True if sliding, false otherwise.
 ## Setup
 
 ```xml ##
-allprojects {    repositories {        ...        maven { url = uri("https://jitpack.io") }    }}
+	dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
 ```
 
 ```xml
-dependencies {    implementation("com.github.Jumman04:Jummania-Slider:3.3")}
+dependencies {
+	        implementation 'com.github.Jumman04:Jummania-Slider:3.4'
+	}
 ```
 
 ## Feature Requests
