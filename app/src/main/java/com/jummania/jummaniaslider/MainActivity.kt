@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         // jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
 
-
         /** You can add animation like that, 16 Animations added. check below the list of animation:
          *     ANTI_CLOCK_SPIN,
          *     BACKGROUND_TO_FOREGROUND,
@@ -149,6 +148,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**If you want to slide reverseLess
+     * Use InfinitySlider instead DefaultSlider
+     */
+    /*
     private inner class InfinitySlider : JSlider.InfinitySlider() {
         override fun itemCount(): Int {
             return 3
@@ -179,6 +182,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    } //If you want to slide reverseLess
+    }
+     */
 
 }

@@ -6,6 +6,7 @@ import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -71,7 +72,9 @@ import com.jummania.animations.VerticalShut
 import com.jummania.animations.ZoomFade
 import com.jummania.animations.ZoomIn
 import com.jummania.animations.ZoomOut
+import com.jummania.types.Alignment
 import com.jummania.types.AnimationTypes
+import com.jummania.types.IndicatorShapeTypes
 import com.jummania.types.IndicatorUpdateTypes
 import kotlin.math.min
 
@@ -82,7 +85,7 @@ import kotlin.math.min
  *  * Dhaka, Bangladesh.
  *
  *
- * Custom Slider class that provides additional features and customization options.
+ * [JSlider] class that provides additional features and customization options.
  * This class extends RelativeLayout and provides a customizable slider view
  * with indicator dots.
  *
@@ -95,11 +98,7 @@ class JSlider @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
-    /**
-     * Created by Jummania on 08, November, 2023.
-     * Email: sharifuddinjumman@gmail.com
-     * Dhaka, Bangladesh.
-     */
+    // Class implementation...
 
     // Lazy initialization of the Slider component
     private val jSlider: Slider by lazy {
@@ -135,6 +134,13 @@ class JSlider @JvmOverloads constructor(
 
     // Runnable object for updating the dot indicator position
     private lateinit var update: Runnable
+
+    /**
+     * Represents the types of shapes that can be used for indicators.
+     * The shapes are defined in the [IndicatorShapeTypes] enum class.
+     */
+    private lateinit var indicatorShapeTypes: IndicatorShapeTypes
+
 
     // Object to store integer values related to the slider configuration
     private object IntObject {
@@ -232,15 +238,15 @@ class JSlider @JvmOverloads constructor(
         // Set slide animation based on the specified attribute
         setSlideAnimation(
             AnimationTypes.values()[typedArray.getInt(
-                R.styleable.JSlider_slideAnimation, AnimationTypes.values().size - 1
+                R.styleable.JSlider_slideAnimation, AnimationTypes.DEFAULT.ordinal
             )]
         )
 
         // Set indicator alignment based on the specified attribute
-        setIndicatorAlign(
-            typedArray.getInt(
-                R.styleable.JSlider_indicatorAlign, ALIGN_PARENT_BOTTOM
-            )
+        setIndicatorAlignment(
+            Alignment.values()[typedArray.getInt(
+                R.styleable.JSlider_indicatorAlignment, Alignment.BOTTOM.ordinal
+            )]
         )
         // Set indicator gravity based on the specified attribute
         setIndicatorGravity(typedArray.getInt(R.styleable.JSlider_indicatorGravity, Gravity.CENTER))
@@ -248,9 +254,24 @@ class JSlider @JvmOverloads constructor(
         // Set indicator update mode based on the specified attribute
         setIndicatorUpdateMode(
             IndicatorUpdateTypes.values()[typedArray.getInt(
-                R.styleable.JSlider_indicatorUpdateMode, 0
+                R.styleable.JSlider_indicatorUpdateMode, IndicatorUpdateTypes.SYNC.ordinal
             )]
         )
+
+        // Setting the indicator shape type for a JSlider.
+        // This assumes that there is an enum called IndicatorShapeTypes defined
+        // in the JSlider class or its associated class, which represents the available shape types.
+
+        // Obtain a reference to the IndicatorShapeTypes enum and set the selected shape type based on the attributes
+        // specified in the XML layout using the R.styleable.JSlider_indicatorShapeTypes attribute.
+        // If the attribute is not defined, default to IndicatorShapeTypes.CIRCLE.
+        setIndicatorShapeTypes(
+            IndicatorShapeTypes.values()[typedArray.getInt(
+                R.styleable.JSlider_indicatorShapeTypes, IndicatorShapeTypes.CIRCLE.ordinal
+            )]
+        )
+
+
         // Add the slider and indicator layout to the view
         addView(jSlider)
         addView(dotIndicatorLayout)
@@ -286,6 +307,11 @@ class JSlider @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Sets up the JSlider with indicator dots and other configurations.
+     *
+     * @param sliders get SliderItemCount.
+     */
     private fun onSliderSet(sliders: Int) {
 
         // Initialize a list to hold indicator dots
@@ -787,21 +813,39 @@ class JSlider @JvmOverloads constructor(
         dotIndicatorLayout.setPadding(left, top, right, bottom)
     }
 
+    /**
+     * Sets the gravity for both the dot and selected indicators in the JSlider.
+     * Gravity determines how the indicators are positioned within their respective layouts.
+     *
+     * @param gravity The gravity value to set. Should be one of the Gravity constants (e.g., Gravity.CENTER).
+     */
     fun setIndicatorGravity(gravity: Int) {
+        // Set the gravity for both dot and selected indicators
         dotIndicatorLayout.gravity = gravity
         selectedIndicatorLayout.gravity = gravity
     }
 
-    fun setIndicatorAlign(gravity: Int) {
+    /**
+     * Sets the alignment for both the dot and selected indicators in the JSlider.
+     * Alignment determines the positioning of the indicators within their respective layouts.
+     *
+     * @param alignment The alignment type to set. Should be one of the values defined in the Alignment enum class.
+     */
+    fun setIndicatorAlignment(alignment: Alignment) {
+        // Retrieve layout params for both dot and selected indicators
         val dotLayoutParams = dotIndicatorLayout.layoutParams as LayoutParams
         val selectedDotLayoutParams = selectedIndicatorLayout.layoutParams as LayoutParams
 
+        // Remove existing alignment rules
         for (rule in rules) dotLayoutParams.removeRule(rule)
         for (rule in rules) selectedDotLayoutParams.removeRule(rule)
 
+        // Set the new alignment for both dot and selected indicators
+        val gravity = alignment.alignment
         dotLayoutParams.addRule(gravity)
         selectedDotLayoutParams.addRule(gravity)
     }
+
 
     /**
      * Set a specific slide animation for the ViewPager.
@@ -878,6 +922,10 @@ class JSlider @JvmOverloads constructor(
         indicatorUpdateType = indicatorUpdateTypes.ordinal
     }
 
+    fun setIndicatorShapeTypes(indicatorShapeTypes: IndicatorShapeTypes) {
+        this@JSlider.indicatorShapeTypes = indicatorShapeTypes
+    }
+
 
     /**
      * Check if the Slider has been set, and throw an exception if any modification is attempted
@@ -936,10 +984,11 @@ class JSlider @JvmOverloads constructor(
      *
      * @param context The context in which the JLayout is created.
      */
-    private class JLayout(context: Context?) : LinearLayout(context) {
+    private inner class JLayout(context: Context?) : LinearLayout(context) {
 
         // Paint object used for drawing
         private val paint = Paint()
+        private val path by lazy { Path() }
 
         init {
             // Initialize the paint style
@@ -953,12 +1002,101 @@ class JSlider @JvmOverloads constructor(
          */
         override fun onDraw(canvas: Canvas) {
             // Draw a colored circle in the center of the layout
-            canvas.drawCircle(
-                (width / 2).toFloat(),
-                height.toFloat() / 2,
-                (min(width, height) / 2).toFloat(),
-                paint
-            )
+            when (indicatorShapeTypes) {
+                IndicatorShapeTypes.CIRCLE -> {
+                    canvas.drawCircle(
+                        (width / 2f), height / 2f, (min(width, height) / 2f), paint
+                    )
+                }
+
+                IndicatorShapeTypes.HEART -> {
+                    // Starting point
+                    path.moveTo(width / 2f, height / 5f)
+
+                    // Upper left path
+                    path.cubicTo(
+                        5 * width / 14f, 0f, 0f, height / 15f, width / 28f, 2 * height / 5f
+                    )
+
+                    // Lower left path
+                    path.cubicTo(
+                        width / 14f,
+                        2 * height / 3f,
+                        3 * width / 7f,
+                        5 * height / 6f,
+                        width / 2f,
+                        height.toFloat()
+                    )
+
+                    // Lower right path
+                    path.cubicTo(
+                        4 * width / 7f,
+                        5 * height / 6f,
+                        13 * width / 14f,
+                        2 * height / 3f,
+                        27 * width / 28f,
+                        2 * height / 5f
+                    )
+
+                    // Upper right path
+                    path.cubicTo(
+                        width.toFloat(), height / 15f, 9 * width / 14f, 0f, width / 2f, height / 5f
+                    )
+
+                    canvas.drawPath(path, paint)
+                }
+
+                IndicatorShapeTypes.SQUARE -> {
+                    canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
+                }
+
+                IndicatorShapeTypes.STAR -> {
+                    paint.isAntiAlias = true
+                    paint.style = Paint.Style.STROKE
+
+                    var mid = (width / 2).toFloat()
+                    val min = min(width, height).toFloat()
+                    val fat = min / 17
+                    val half = min / 2
+                    val rad = half - fat
+                    mid -= half
+
+                    paint.strokeWidth = fat
+                    paint.style = Paint.Style.STROKE
+
+                    canvas.drawCircle(mid + half, half, rad, paint)
+
+                    path.reset()
+
+                    paint.style = Paint.Style.FILL
+
+
+                    // top left
+
+
+                    // top left
+                    path.moveTo(mid + half * 0.5f, half * 0.84f)
+                    // top right
+                    // top right
+                    path.lineTo(mid + half * 1.5f, half * 0.84f)
+                    // bottom left
+                    // bottom left
+                    path.lineTo(mid + half * 0.68f, half * 1.45f)
+                    // top tip
+                    // top tip
+                    path.lineTo(mid + half * 1.0f, half * 0.5f)
+                    // bottom right
+                    // bottom right
+                    path.lineTo(mid + half * 1.32f, half * 1.45f)
+                    // top left
+                    // top left
+                    path.lineTo(mid + half * 0.5f, half * 0.84f)
+
+                    path.close()
+                    canvas.drawPath(path, paint)
+                }
+
+            }
         }
 
         /**
@@ -968,7 +1106,6 @@ class JSlider @JvmOverloads constructor(
          */
         fun setColor(color: Int) {
             paint.color = color
-            invalidate() //Invalid and force to reDraw
         }
     }
 
@@ -978,7 +1115,7 @@ class JSlider @JvmOverloads constructor(
      *
      * @param context The context in which the Slider is created.
      */
-    private class Slider(context: Context) : ViewPager(context) {
+    private inner class Slider(context: Context) : ViewPager(context) {
 
         /**
          * Override the onMeasure method to adjust the height of the ViewPager.
