@@ -1,11 +1,10 @@
 <a href="https://github.com/Jumman04/Jummania-Slider">  
 
 
-
+<h1 align="center">J-Slider for Android!</h1>  
 <a href="https://github.com/Jumman04/Jummania-Slider">  
 <img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284076921-b31614c3-e3cb-40a6-ab4b-31c9b9517dda.gif"  />  </a>  
 
-<h1 align="center">J-Slider for Android!</h1>  
 
 
 <li>Easy to use.</li>
@@ -16,7 +15,7 @@
 <li>Ability to add your own custom animation.</li>
 <li>Indicator alignment and gravity customization.</li>
 <li>Use with Java or Kotlin.</li>
-
+<br>
 	
 
 
