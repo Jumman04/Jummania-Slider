@@ -38,7 +38,6 @@ enum class AnimationTypes {
     FIDGET_SPINNER,
     FLIP_HORIZONTAL,
     FLIP_VERTICAL,
-    FOLD_PAGE,
     FOREGROUND_TO_BACKGROUND,
     GATE,
     HINGE,

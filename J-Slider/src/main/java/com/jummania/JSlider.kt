@@ -56,7 +56,6 @@ import com.jummania.animations.FanTransformation
 import com.jummania.animations.FidgetSpinner
 import com.jummania.animations.FlipHorizontal
 import com.jummania.animations.FlipVertical
-import com.jummania.animations.FoldPage
 import com.jummania.animations.ForegroundToBackground
 import com.jummania.animations.Gate
 import com.jummania.animations.Hinge
@@ -854,60 +853,59 @@ class JSlider @JvmOverloads constructor(
      */
     fun setSlideAnimation(animationType: AnimationTypes) {
         when (animationType) {
-            AnimationTypes.ANTI_CLOCK_SPIN -> jSlider.setPageTransformer(true, AntiClockSpin())
+            AnimationTypes.ANTI_CLOCK_SPIN -> jSlider.setPageTransformer(false, AntiClockSpin())
             AnimationTypes.BACKGROUND_TO_FOREGROUND -> jSlider.setPageTransformer(
-                true, BackgroundToForeground()
+                false, BackgroundToForeground()
             )
 
-            AnimationTypes.CARD_STACK -> jSlider.setPageTransformer(true, CardStack())
-            AnimationTypes.CLOCK_SPIN -> jSlider.setPageTransformer(true, ClockSpin())
-            AnimationTypes.CUBE_IN_DEPTH -> jSlider.setPageTransformer(true, CubeInDepth())
-            AnimationTypes.CUBE_IN_ROTATION -> jSlider.setPageTransformer(true, CubeInRotation())
-            AnimationTypes.CUBE_IN_SCALING -> jSlider.setPageTransformer(true, CubeInScaling())
-            AnimationTypes.CUBE_OUT_DEPTH -> jSlider.setPageTransformer(true, CubeOutDepth())
-            AnimationTypes.CUBE_OUT_ROTATION -> jSlider.setPageTransformer(true, CubeOutRotation())
-            AnimationTypes.CUBE_OUT_SCALING -> jSlider.setPageTransformer(true, CubeOutScaling())
-            AnimationTypes.CUBE_IN -> jSlider.setPageTransformer(true, CubeIn())
-            AnimationTypes.CUBE_OUT -> jSlider.setPageTransformer(true, CubeOut())
-            AnimationTypes.DEPTH_SLIDE -> jSlider.setPageTransformer(true, DepthSlide())
-            AnimationTypes.DEPTH_SLIDE2 -> jSlider.setPageTransformer(true, DepthSlide2(jSlider))
+            AnimationTypes.CARD_STACK -> jSlider.setPageTransformer(false, CardStack())
+            AnimationTypes.CLOCK_SPIN -> jSlider.setPageTransformer(false, ClockSpin())
+            AnimationTypes.CUBE_IN_DEPTH -> jSlider.setPageTransformer(false, CubeInDepth())
+            AnimationTypes.CUBE_IN_ROTATION -> jSlider.setPageTransformer(false, CubeInRotation())
+            AnimationTypes.CUBE_IN_SCALING -> jSlider.setPageTransformer(false, CubeInScaling())
+            AnimationTypes.CUBE_OUT_DEPTH -> jSlider.setPageTransformer(false, CubeOutDepth())
+            AnimationTypes.CUBE_OUT_ROTATION -> jSlider.setPageTransformer(false, CubeOutRotation())
+            AnimationTypes.CUBE_OUT_SCALING -> jSlider.setPageTransformer(false, CubeOutScaling())
+            AnimationTypes.CUBE_IN -> jSlider.setPageTransformer(false, CubeIn())
+            AnimationTypes.CUBE_OUT -> jSlider.setPageTransformer(false, CubeOut())
+            AnimationTypes.DEPTH_SLIDE -> jSlider.setPageTransformer(false, DepthSlide())
+            AnimationTypes.DEPTH_SLIDE2 -> jSlider.setPageTransformer(false, DepthSlide2(jSlider))
             AnimationTypes.DEPTH_TRANSFORMATION -> jSlider.setPageTransformer(
                 true, DepthTransformation()
             )
 
-            AnimationTypes.DEPTH_ZOOM_OUT -> jSlider.setPageTransformer(true, DepthZoomOut())
-            AnimationTypes.FADEOUT -> jSlider.setPageTransformer(true, FadeOut())
-            AnimationTypes.FADE_PAGE -> jSlider.setPageTransformer(true, FadePage())
+            AnimationTypes.DEPTH_ZOOM_OUT -> jSlider.setPageTransformer(false, DepthZoomOut())
+            AnimationTypes.FADEOUT -> jSlider.setPageTransformer(false, FadeOut())
+            AnimationTypes.FADE_PAGE -> jSlider.setPageTransformer(false, FadePage())
             AnimationTypes.FAN_TRANSFORMATION -> jSlider.setPageTransformer(
-                true, FanTransformation()
+                false, FanTransformation()
             )
 
-            AnimationTypes.FIDGET_SPINNER -> jSlider.setPageTransformer(true, FidgetSpinner())
-            AnimationTypes.FLIP_HORIZONTAL -> jSlider.setPageTransformer(true, FlipHorizontal())
-            AnimationTypes.FLIP_VERTICAL -> jSlider.setPageTransformer(true, FlipVertical())
-            AnimationTypes.FOLD_PAGE -> jSlider.setPageTransformer(true, FoldPage())
+            AnimationTypes.FIDGET_SPINNER -> jSlider.setPageTransformer(false, FidgetSpinner())
+            AnimationTypes.FLIP_HORIZONTAL -> jSlider.setPageTransformer(false, FlipHorizontal())
+            AnimationTypes.FLIP_VERTICAL -> jSlider.setPageTransformer(false, FlipVertical())
             AnimationTypes.FOREGROUND_TO_BACKGROUND -> jSlider.setPageTransformer(
-                true, ForegroundToBackground()
+                false, ForegroundToBackground()
             )
 
-            AnimationTypes.GATE -> jSlider.setPageTransformer(true, Gate())
+            AnimationTypes.GATE -> jSlider.setPageTransformer(false, Gate())
             AnimationTypes.HINGE -> jSlider.setPageTransformer(true, Hinge())
-            AnimationTypes.POP -> jSlider.setPageTransformer(true, Pop())
-            AnimationTypes.ROTATE_DOWN -> jSlider.setPageTransformer(true, RotateDown())
-            AnimationTypes.ROTATE_UP -> jSlider.setPageTransformer(true, RotateUp())
+            AnimationTypes.POP -> jSlider.setPageTransformer(false, Pop())
+            AnimationTypes.ROTATE_DOWN -> jSlider.setPageTransformer(false, RotateDown())
+            AnimationTypes.ROTATE_UP -> jSlider.setPageTransformer(false, RotateUp())
             AnimationTypes.SPINNER -> jSlider.setPageTransformer(true, Spinner())
             AnimationTypes.SPINNER_TRANSFORMATION -> jSlider.setPageTransformer(
-                true, SpinnerTransformation()
+                false, SpinnerTransformation()
             )
 
-            AnimationTypes.TABLET_SLIDE -> jSlider.setPageTransformer(true, TabletSlide())
-            AnimationTypes.TOSS -> jSlider.setPageTransformer(true, Toss())
-            AnimationTypes.VERTICAL_FLIP -> jSlider.setPageTransformer(true, VerticalFlip())
-            AnimationTypes.VERTICAL_SHUT -> jSlider.setPageTransformer(true, VerticalShut())
-            AnimationTypes.ZOOM_FADE -> jSlider.setPageTransformer(true, ZoomFade())
-            AnimationTypes.ZOOM_IN -> jSlider.setPageTransformer(true, ZoomIn())
-            AnimationTypes.ZOOM_OUT -> jSlider.setPageTransformer(true, ZoomOut())
-            AnimationTypes.DEFAULT -> jSlider.setPageTransformer(true, null)
+            AnimationTypes.TABLET_SLIDE -> jSlider.setPageTransformer(false, TabletSlide())
+            AnimationTypes.TOSS -> jSlider.setPageTransformer(false, Toss())
+            AnimationTypes.VERTICAL_FLIP -> jSlider.setPageTransformer(false, VerticalFlip())
+            AnimationTypes.VERTICAL_SHUT -> jSlider.setPageTransformer(false, VerticalShut())
+            AnimationTypes.ZOOM_FADE -> jSlider.setPageTransformer(false, ZoomFade())
+            AnimationTypes.ZOOM_IN -> jSlider.setPageTransformer(false, ZoomIn())
+            AnimationTypes.ZOOM_OUT -> jSlider.setPageTransformer(false, ZoomOut())
+            AnimationTypes.DEFAULT -> jSlider.setPageTransformer(false, null)
         }
 
     }
