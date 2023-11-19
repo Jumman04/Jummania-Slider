@@ -7,9 +7,12 @@
 <p align="center">Just inflate the layout you want to slide.</p>  
 <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Easy to use. <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Automatic scrolling for the time you set. <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Inflate any layout or view.<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; 38 different slide animations.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Smooth sliding transitions <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Customizable indicator size, colors, and shapes <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Auto-sliding functionality <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Slide with a variety of 38+ different animations <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Ability to add your own custom animation <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Indicator alignment and gravity customization<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.
 <br><br>
 
@@ -38,6 +41,31 @@
   </a>
 </p>
 
+## Setup
+
+To integrate Jummania-Slider into your Android project, follow these steps:
+
+### Step 1: Add JitPack Repository
+
+Add the JitPack repository to your project's root `settings.gradle` file:
+
+```groovy
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+## Step 2: Add the Dependency
+
+Add the Jummania-Slider dependency to your app module's `build.gradle` file:
+
+```gradle
+dependencies {
+    implementation 'com.github.Jumman04:Jummania-Slider:3.4'
+}
+```
 ## Usage
 
 ### XML
@@ -49,83 +77,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 ```
-
-- Change Duration of Slidng:
-
-```xml
-     app:slidingDuration="2222"
-```
-
-- Change indicator Size.
-
-```xml
-    app:indicatorSize="15dp"
-```
-
-- Add padding in Slider:
-
-```xml
-app:sliderPaddingRight="0dp"
-app:sliderPaddingLeft="0dp"
-app:sliderPaddingTop="0dp"
-app:sliderPaddingBottom="0dp"
-```
-
-- Change Indicator Padding bottom:
-
-```xml
-    app:indicatorPaddingBottom="22dp"
-```
-
-- Change Indicator MarginHorizontal:
-
-```xml
-    app:indicatorMarginHorizontal="3dp"
-```
-
-- You can hide or show Indicator:
-
-```xml
-    app:enableIndicator="true"
-```
-
-- You can enable or desable auto sliding:
-
-```xml
-    app:enableAutoSliding="true"
-```
-
-- Change Default Indicator Color:
-
-```xml
-    app:defaultIndicatorColor="@color/defaultColor"
-```
-
-- Change Selected Indicator Color:
-
-```xml
-    app:selectedIndicatorColor="@color/selectedColor"
-```
-
-- Choose how the indicator updates:
-
-```xml
-app:indicatorUpdateMode="ANIMATED"
-```
-
-- Set the alignment of the indicator:
-
-```xml
-app:indicatorAlign="ALIGN_BOTTOM"
-```
-
-- Specify the gravity of the indicator:
-
-```xml
-app:indicatorGravity="bottom"
-
-```
-
 #### In Activity
 
 - Add ImageSlider to your **Activity**
@@ -142,38 +93,140 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 //Out of onCreate, Create a Class for Slider
 private inner class DefaultSlider : JSlider.DefaultSlider() {
-    override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
-        return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
-    }
-
-    override fun onSliderCreate(view: View, position: Int) {
-
-        val textView: TextView = view.findViewById(R.id.text_view) //find your child
-        val imageView: ImageView = view.findViewById(R.id.image_view)
-
-        Picasso.get()
-            .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
-            .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
-            .into(imageView)
-
-        textView.text = getString(R.string.Developer_Name)
-
-        view.setOnClickListener {
-
-            Toast.makeText(
-                this@MainActivity, getString(R.string.Developer_Name), Toast.LENGTH_SHORT
-            ).show()
+        override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
+            return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
         }
 
+        override fun onSliderCreate(view: View, position: Int) {
+
+            val textView: TextView = view.findViewById(R.id.text_view) //find your child
+            val imageView: ImageView = view.findViewById(R.id.image_view)
+
+            Picasso.get()
+                .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
+                .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
+                .into(imageView)
+
+            textView.text = getString(R.string.Developer_Name)
+
+            view.setOnClickListener {
+
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.Developer_Name) + "\nItem Position: $position",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+
+        }
+
+        override fun getCount(): Int {
+            return 3
+        }
 
     }
-
-    override fun getCount(): Int {
-        return 3
-    }
-
-}
 ```
+
+## Customization
+### XML Attributes
+- Change Duration of Sliding: 
+
+```xml
+app:slidingDuration="2222"
+```
+
+- Change Indicator Size:
+
+```xml
+app:indicatorSize="15dp"
+```
+
+- Add Padding in Slider:
+
+```xml
+app:sliderPaddingRight="0dp"
+app:sliderPaddingLeft="0dp"
+app:sliderPaddingTop="0dp"
+app:sliderPaddingBottom="0dp"
+```
+
+- Change Indicator Padding:
+
+```xml
+app:indicatorPaddingTop="0dp"
+app:indicatorPaddingLeft="0dp"
+app:indicatorPaddingRight="0dp"
+app:indicatorPaddingBottom="22dp"
+
+```
+
+- Change Indicator Margin Horizontal:
+
+```xml
+app:indicatorMarginHorizontal="3dp"
+```
+
+- Hide or Show Indicator:
+
+```xml
+app:enableIndicator="true"
+```
+
+- Enable or Disable Auto Sliding:
+
+```xml
+app:enableAutoSliding="true"
+```
+
+- Change Default Indicator Color:
+
+```xml
+app:defaultIndicatorColor="@color/defaultColor"
+```
+
+- Change Selected Indicator Color:
+
+```xml
+app:selectedIndicatorColor="@color/selectedColor"
+```
+
+- Choose How the Indicator Updates:
+
+```xml
+app:indicatorUpdateMode="SYNC"
+```
+
+- Set the Alignment of the Indicator:
+
+```xml
+app:indicatorAlign="ALIGN_BOTTOM"
+```
+
+- Specify the Gravity of the Indicator:
+
+```xml
+app:indicatorGravity="center"
+```
+- Set Indicator Shape Type:
+
+```xml
+app:indicatorShapeTypes="CIRCLE"
+
+<!-- Choose one of the following options for the shape type: CIRCLE, HEART, SQUARE, or STAR. -->
+```
+- Set Slide Animation:
+
+```xml
+app:slideAnimation="CUBE_OUT"
+```
+### Programmatic Customization
+
+- You can add animation like that, <b>38 Animations added</b>. You can check
+  in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/types/AnimationTypes.kt">
+  Animation List </a>
+---
+
 
 - You can add animation like that, <b>38 Animations added</b>. You can check
   in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/types/AnimationTypes.kt">
@@ -265,24 +318,6 @@ jSlider.isSliding() // True if sliding, false otherwise.
     }
 
 }
-```
-
-## Setup
-
-```xml ##
-	dependencyResolutionManagement {
-		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-		repositories {
-			mavenCentral()
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
-
-```xml
-dependencies {
-	        implementation 'com.github.Jumman04:Jummania-Slider:3.4'
-	}
 ```
 
 ## Feature Requests
