@@ -73,6 +73,7 @@ dependencies {
     implementation 'com.github.Jumman04:Jummania-Slider:3.4'
 }
 ```
+---
 ## Usage
 
 ### XML
