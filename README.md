@@ -1,12 +1,10 @@
 <a href="https://github.com/Jumman04/Jummania-Slider">  
 
-<div align="center">
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284043638-c98bd63f-5900-42d1-9ad6-38522ae3879d.gif" width="50%"/>
-</div>
-
-# J-Slider for Android
-
-Just inflate the layout you want to slide.
+<a href="https://github.com/Jumman04/Jummania-Slider">  
+<img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284045684-57599a4b-de7c-4f2d-88e4-3dc79811382d.gif"/>  
+</a>  
+<h1 align="center">J-Slider for Android!</h1>  
+<p align="center">Just inflate the layout you want to slide.</p>  
 
 - Easy to use.
 - Smooth sliding transitions
@@ -17,25 +15,9 @@ Just inflate the layout you want to slide.
 - Indicator alignment and gravity customization
 - Use with Java or Kotlin.
 
-<!--
-<img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/282801213-6919ff05-9a68-497f-b9e6-ae937ed55e09.gif" width="40%"/>  
-</a>
+</br>
 
-<h1 align="center">J-Slider for Android</h1>  
-<p align="center">Just inflate the layout you want to slide.</p>  
 <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Easy to use. <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Smooth sliding transitions <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Customizable indicator size, colors, and shapes <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Auto-sliding functionality <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Slide with a variety of 38+ different animations <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Ability to add your own custom animation <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Indicator alignment and gravity customization<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.
-<br><br>
--->
-
-
 <p align="center"><br>
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
 	<img src="https://img.shields.io/github/v/release/Jumman04/Jummania-Slider?include_prereleases&amp;label=latest%20release" alt="Latest release"/>
