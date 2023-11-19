@@ -65,7 +65,10 @@
 - Add padding in Slider:
 
 ```xml
-    app:sliderPaddingRight="0dp"app:sliderPaddingLeft="0dp"app:sliderPaddingTop="0dp"app:sliderPaddingBottom="0dp"
+app:sliderPaddingRight="0dp"
+app:sliderPaddingLeft="0dp"
+app:sliderPaddingTop="0dp"
+app:sliderPaddingBottom="0dp"
 ```
 
 - Change Indicator Padding bottom:
@@ -107,21 +110,21 @@
 - Choose how the indicator updates:
 
 ```xml
-           app:indicatorUpdateMode="ANIMATED"
+app:indicatorUpdateMode="ANIMATED"
 <!-- More Options STATIC | SYNC -->
 ```
 
 - Set the alignment of the indicator:
 
 ```xml
-                app:indicatorAlign="ALIGN_BOTTOM"
+app:indicatorAlign="ALIGN_BOTTOM"
 <!-- more option  ALIGN_TOP | ALIGN_START | ALIGN_END | ALIGN_LEFT | ALIGN_RIGHT | CENTER_HORIZONTAL | CENTER_VERTICAL | CENTER_IN_PARENT-->
 ```
 
 - Specify the gravity of the indicator:
 
 ```xml
-               app:indicatorGravity="bottom"
+app:indicatorGravity="bottom"
 <!-- More Option's top | left | right | center_vertical | fill_vertical |fill_horizontal | center_horizontal | center | fill | start | clip_horizontal | clip_vertical |end -->
 
 ```
