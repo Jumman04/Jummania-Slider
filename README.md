@@ -2,24 +2,26 @@
 
 
 
-<p align="center">
-	<a href="https://github.com/Jumman04/Jummania-Slider">  
+
+<a href="https://github.com/Jumman04/Jummania-Slider">  
 <img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284045684-57599a4b-de7c-4f2d-88e4-3dc79811382d.gif" width="40%" />  </a>  
 
 <h1 align="center">J-Slider for Android!</h1>  
-<p align="left">
+
+
+<li>Easy to use.</li>
+<li>Smooth sliding transitions.</li>
+<li>Customizable indicator size, colors, and shapes.</li>
+<li>Auto-sliding functionality.</li>
+<li>Slide with a variety of 38+ different animations.</li>
+<li>Ability to add your own custom animation.</li>
+<li>Indicator alignment and gravity customization.</li>
+<li>Use with Java or Kotlin.</li>
+
 	
- &#8226; &nbsp; Easy to use. <br>
- &#8226; &nbsp; Smooth sliding transitions <br>
- &#8226; &nbsp; Customizable indicator size, colors, and shapes <br>
- &#8226; &nbsp; Auto-sliding functionality <br>
- &#8226; &nbsp; Slide with a variety of 38+ different animations <br>
- &#8226; &nbsp; Ability to add your own custom animation <br>
- &#8226; &nbsp; Indicator alignment and gravity customization<br>
- &#8226; &nbsp; Use with Java or Kotlin.
-<br><br>
-</p>
-</p>  
+
+
+
 
 <p align="center"><br>
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
