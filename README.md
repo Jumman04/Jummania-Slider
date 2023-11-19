@@ -9,7 +9,7 @@
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Easy to use. <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Automatic scrolling for the time you set. <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Inflate any layout or view.<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; 18 different slide animations.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; 38 different slide animations.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.
 <br><br>
 
