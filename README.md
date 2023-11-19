@@ -9,7 +9,7 @@
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Easy to use. <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Automatic scrolling for the time you set. <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Inflate any layout or view.<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; 17 different slide animations.<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; 18 different slide animations.<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &#8226; &nbsp; Use with Java or Kotlin.
 <br><br>
 
@@ -111,21 +111,18 @@ app:sliderPaddingBottom="0dp"
 
 ```xml
 app:indicatorUpdateMode="ANIMATED"
-<!-- More Options STATIC | SYNC -->
 ```
 
 - Set the alignment of the indicator:
 
 ```xml
 app:indicatorAlign="ALIGN_BOTTOM"
-<!-- more option  ALIGN_TOP | ALIGN_START | ALIGN_END | ALIGN_LEFT | ALIGN_RIGHT | CENTER_HORIZONTAL | CENTER_VERTICAL | CENTER_IN_PARENT-->
 ```
 
 - Specify the gravity of the indicator:
 
 ```xml
 app:indicatorGravity="bottom"
-<!-- More Option's top | left | right | center_vertical | fill_vertical |fill_horizontal | center_horizontal | center | fill | start | clip_horizontal | clip_vertical |end -->
 
 ```
 
@@ -178,8 +175,8 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 }
 ```
 
-- You can add animation like that, <b>16 Animations added</b>. You can check
-  in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/j_slider/animations/AnimationTypes.kt">
+- You can add animation like that, <b>38 Animations added</b>. You can check
+  in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/types/AnimationTypes.kt">
   Animation List </a>
 
 ```kt
