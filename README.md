@@ -4,7 +4,7 @@
 
 <p align="center">
 	<a href="https://github.com/Jumman04/Jummania-Slider">  
-<img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284045684-57599a4b-de7c-4f2d-88e4-3dc79811382d.gif" width="40%"  height="60%" />  </a>  
+<img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284045684-57599a4b-de7c-4f2d-88e4-3dc79811382d.gif" />  </a>  
 	<h1 align="center">J-Slider for Android!</h1>  
 <p align="center">Just inflate the layout you want to slide.</p>  
 <p align="left">
