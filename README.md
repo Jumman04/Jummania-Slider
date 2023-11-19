@@ -1,6 +1,6 @@
 <a href="https://github.com/Jumman04/Jummania-Slider">  
 
-<img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/282801213-6919ff05-9a68-497f-b9e6-ae937ed55e09.gif" width="50%"/>  
+<img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/282801213-6919ff05-9a68-497f-b9e6-ae937ed55e09.gif" width="40%"/>  
 </a>
 
 <h1 align="center">J-Slider for Android</h1>  
