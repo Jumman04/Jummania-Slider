@@ -32,13 +32,7 @@ internal abstract class JLayout(private val context: Context?, private val indic
      */
     override fun onDraw(canvas: Canvas) {
         // Draw a colored circle in the center of the layout
-
-       InternalShapeIndicator.values().forEach {
-            if(it.ordinal == indicatorShapeTypes.ordinal){
-                it.drawShape(width, height, paint, canvas)
-                return
-            }
-        }
+        InternalShapeIndicator.values()[indicatorShapeTypes.ordinal].drawShape(width, height, paint, canvas)
     }
 
     /**
