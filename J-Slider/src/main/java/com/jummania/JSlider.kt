@@ -10,7 +10,6 @@ import android.graphics.Path
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -752,10 +751,7 @@ class JSlider @JvmOverloads constructor(
         if (this@JSlider::update.isInitialized) {
             updateHandler.removeCallbacks(update)
             updateHandler.postDelayed(update, slidingDuration)
-        } else if (jSlider.adapter == null) Log.d(
-            this@JSlider.javaClass.simpleName,
-            "After setting the slider it will start sliding automatically."
-        )
+        }
     }
 
     /**
@@ -907,7 +903,6 @@ class JSlider @JvmOverloads constructor(
             AnimationTypes.ZOOM_OUT -> jSlider.setPageTransformer(false, ZoomOut())
             AnimationTypes.DEFAULT -> jSlider.setPageTransformer(false, null)
         }
-
     }
 
 
@@ -921,6 +916,7 @@ class JSlider @JvmOverloads constructor(
     }
 
     fun setIndicatorShapeTypes(indicatorShapeTypes: IndicatorShapeTypes) {
+        exception()
         this@JSlider.indicatorShapeTypes = indicatorShapeTypes
     }
 

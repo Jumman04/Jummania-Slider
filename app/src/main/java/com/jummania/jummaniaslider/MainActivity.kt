@@ -150,8 +150,7 @@ class MainActivity : AppCompatActivity() {
 
     /**If you want to slide reverseLess
      * Use InfinitySlider instead DefaultSlider
-     */
-    /*
+     *//*
     private inner class InfinitySlider : JSlider.InfinitySlider() {
         override fun itemCount(): Int {
             return 3
