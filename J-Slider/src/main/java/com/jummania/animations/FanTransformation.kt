@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class FanTransformation : ViewPager.PageTransformer {
+internal class FanTransformation : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.translationX = -position * page.width
         page.pivotX = 0f

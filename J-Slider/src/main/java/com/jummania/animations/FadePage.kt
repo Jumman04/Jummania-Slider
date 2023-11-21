@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class FadePage : ViewPager.PageTransformer {
+internal class FadePage : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.alpha = 1 - abs(position)
     }

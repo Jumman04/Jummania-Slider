@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class ClockSpin : ViewPager.PageTransformer {
+internal class ClockSpin : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.translationX = -position * page.width
         if (abs(position) <= 0.5) {

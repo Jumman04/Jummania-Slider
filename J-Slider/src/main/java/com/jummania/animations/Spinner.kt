@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class Spinner : ViewPager.PageTransformer {
+internal class Spinner : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         val angle = Math.toRadians((90 * position).toDouble())
         page.translationX = -position * page.width

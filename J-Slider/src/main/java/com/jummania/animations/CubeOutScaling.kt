@@ -10,7 +10,7 @@ import kotlin.math.max
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class CubeOutScaling : ViewPager.PageTransformer {
+internal class CubeOutScaling : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         if (position < -1)     // [-Infinity,-1)
         // This page is way off-screen to the left.

@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class VerticalShut : ViewPager.PageTransformer {
+internal class VerticalShut : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.translationX = -position * page.width
         page.cameraDistance = 1.0E9f

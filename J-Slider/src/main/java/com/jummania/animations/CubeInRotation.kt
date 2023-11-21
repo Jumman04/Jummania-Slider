@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class CubeInRotation : ViewPager.PageTransformer {
+internal class CubeInRotation : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.cameraDistance = 20000f
         if (position < -1)      // [-Infinity,-1)

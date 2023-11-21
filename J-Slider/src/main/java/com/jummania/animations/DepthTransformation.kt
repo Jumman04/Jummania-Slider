@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class DepthTransformation : ViewPager.PageTransformer {
+internal class DepthTransformation : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         if (position < -1)     // [-Infinity,-1)
         // This page is way off-screen to the left.

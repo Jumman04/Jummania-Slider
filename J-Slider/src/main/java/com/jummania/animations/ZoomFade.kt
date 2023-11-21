@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class ZoomFade : ViewPager.PageTransformer {
+internal class ZoomFade : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.alpha = 1 - abs(position)
         page.scaleX = 1 + abs(position) / 5

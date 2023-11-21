@@ -4,14 +4,28 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-internal enum class InternalShapeIndicator(private val draw: (Int, Int, Paint, Canvas) -> Unit) {
-    CIRCLE(draw = { width, height, paint, canvas ->
+/**
+ * * Sealed class representing different shape types with associated drawing functions.
+ *  * Created by Jummania on 21,November,2023.
+ *  * Specially thanks to MD Abdullah.
+ *  * Email: sharifuddinjumman@gmail.com
+ *  * Dhaka, Bangladesh.
+ *
+ * Sets the shape type for the indicator dots in the JSlider.
+ * The available shapes are defined by the [ShapeTypes] sealed class.
+ *
+ */
+sealed class ShapeTypes(val draw: (Int, Int, Paint, Canvas, Path) -> Unit) {
+
+    // Data object representing a CIRCLE shape
+    data object CIRCLE : ShapeTypes({ width, height, paint, canvas, _ ->
         canvas.drawCircle(
             (width / 2f), height / 2f, (kotlin.math.min(width, height) / 2f), paint
         )
-    }),
-    HEART(draw = { width, height, paint, canvas ->
-        val path = Path()
+    })
+
+    // Data object representing a HEART shape
+    data object HEART : ShapeTypes({ width, height, paint, canvas, path ->
         path.moveTo(width / 2f, height / 5f)
 
         // Upper left path
@@ -45,12 +59,15 @@ internal enum class InternalShapeIndicator(private val draw: (Int, Int, Paint, C
         )
 
         canvas.drawPath(path, paint)
-    }),
-    SQUARE({ width, height, paint, canvas ->
+    })
+
+    // Data object representing a SQUARE shape
+    data object SQUARE : ShapeTypes({ width, height, paint, canvas, _ ->
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
-    }),
-    STAR(draw = { width, height, paint, canvas ->
-        val path = Path()
+    })
+
+    // Data object representing a STAR shape
+    data object STAR : ShapeTypes({ width, height, paint, canvas, path ->
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
 
@@ -68,35 +85,37 @@ internal enum class InternalShapeIndicator(private val draw: (Int, Int, Paint, C
 
         path.reset()
 
-        paint.style = android.graphics.Paint.Style.FILL
+        paint.style = Paint.Style.FILL
 
-
-        // top left
-
-
-        // top left
+        // Drawing a star using path
         path.moveTo(mid + half * 0.5f, half * 0.84f)
-        // top right
-        // top right
         path.lineTo(mid + half * 1.5f, half * 0.84f)
-        // bottom left
-        // bottom left
         path.lineTo(mid + half * 0.68f, half * 1.45f)
-        // top tip
-        // top tip
         path.lineTo(mid + half * 1.0f, half * 0.5f)
-        // bottom right
-        // bottom right
         path.lineTo(mid + half * 1.32f, half * 1.45f)
-        // top left
-        // top left
         path.lineTo(mid + half * 0.5f, half * 0.84f)
 
         path.close()
         canvas.drawPath(path, paint)
-    });
+    })
 
-    fun drawShape(width: Int, height: Int, paint: Paint, canvas: Canvas) {
-        draw(width, height, paint, canvas)
+    companion object {
+        /**
+         * Function to get a ShapeTypes based on the specified position.
+         *
+         * @param position The position representing the shape type.
+         * @return The corresponding ShapeTypes object.
+         */
+        fun getTypes(position: Int): ShapeTypes {
+            return when (position) {
+                0 -> CIRCLE
+                1 -> HEART
+                2 -> SQUARE
+                3 -> STAR
+
+                // Default to CIRCLE if the position is not recognized
+                else -> CIRCLE
+            }
+        }
     }
 }

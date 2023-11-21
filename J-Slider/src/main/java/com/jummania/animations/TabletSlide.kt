@@ -12,7 +12,7 @@ import kotlin.math.abs
  * Dhaka, Bangladesh.
  */
 
-class TabletSlide : PageTransformer {
+internal class TabletSlide : PageTransformer {
     // Matrix and Camera objects used for handling 3D transformations.
     private val matrix: Matrix = Matrix()
     private val camera: Camera = Camera()

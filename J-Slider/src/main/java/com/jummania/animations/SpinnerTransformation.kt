@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class SpinnerTransformation : ViewPager.PageTransformer {
+internal class SpinnerTransformation : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.translationX = -position * page.width
         page.cameraDistance = 12000f

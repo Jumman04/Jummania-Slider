@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.Scroller
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.SCROLL_STATE_DRAGGING
@@ -30,54 +29,17 @@ import com.jummania.JSlider.IntObject.rules
 import com.jummania.JSlider.IntObject.selectedIndicatorColor
 import com.jummania.JSlider.IntObject.size
 import com.jummania.JSlider.IntObject.slidingDuration
-import com.jummania.animations.AntiClockSpin
-import com.jummania.animations.BackgroundToForeground
-import com.jummania.animations.CardStack
-import com.jummania.animations.ClockSpin
-import com.jummania.animations.CubeIn
-import com.jummania.animations.CubeInDepth
-import com.jummania.animations.CubeInRotation
-import com.jummania.animations.CubeInScaling
-import com.jummania.animations.CubeOut
-import com.jummania.animations.CubeOutDepth
-import com.jummania.animations.CubeOutRotation
-import com.jummania.animations.CubeOutScaling
-import com.jummania.animations.DepthSlide
-import com.jummania.animations.DepthSlide2
-import com.jummania.animations.DepthTransformation
-import com.jummania.animations.DepthZoomOut
-import com.jummania.animations.FadeOut
-import com.jummania.animations.FadePage
-import com.jummania.animations.FanTransformation
-import com.jummania.animations.FidgetSpinner
-import com.jummania.animations.FlipHorizontal
-import com.jummania.animations.FlipVertical
-import com.jummania.animations.ForegroundToBackground
-import com.jummania.animations.Gate
-import com.jummania.animations.Hinge
-import com.jummania.animations.Pop
-import com.jummania.animations.RotateDown
-import com.jummania.animations.RotateUp
-import com.jummania.animations.Spinner
-import com.jummania.animations.SpinnerTransformation
-import com.jummania.animations.TabletSlide
-import com.jummania.animations.Toss
-import com.jummania.animations.VerticalFlip
-import com.jummania.animations.VerticalShut
-import com.jummania.animations.ZoomFade
-import com.jummania.animations.ZoomIn
-import com.jummania.animations.ZoomOut
 import com.jummania.types.Alignment
 import com.jummania.types.AnimationTypes
-import com.jummania.types.IndicatorShapeTypes
-import com.jummania.types.IndicatorUpdateTypes
+import com.jummania.types.ShapeTypes
+import com.jummania.types.UpdateMode
+import com.jummania.widgets.MyScroller
 
 
 /**
  *  * Created by Jummania on 08,November,2023.
  *  * Email: sharifuddinjumman@gmail.com
  *  * Dhaka, Bangladesh.
- *
  *
  * [JSlider] class that provides additional features and customization options.
  * This class extends RelativeLayout and provides a customizable slider view
@@ -131,9 +93,9 @@ class JSlider @JvmOverloads constructor(
 
     /**
      * Represents the types of shapes that can be used for indicators.
-     * The shapes are defined in the [IndicatorShapeTypes] enum class.
+     * The shapes are defined in the [ShapeTypes] enum class.
      */
-    private lateinit var indicatorShapeTypes: IndicatorShapeTypes
+    private lateinit var shapeTypes: ShapeTypes
 
 
     // Object to store integer values related to the slider configuration
@@ -150,17 +112,19 @@ class JSlider @JvmOverloads constructor(
         var indicatorUpdateType: Int = 0
 
         // List of RelativeLayout rules for positioning the dot indicator
-        val rules: List<Int> = listOf(
-            ALIGN_PARENT_LEFT,
-            ALIGN_PARENT_TOP,
-            ALIGN_PARENT_RIGHT,
-            ALIGN_PARENT_BOTTOM,
-            CENTER_IN_PARENT,
-            CENTER_HORIZONTAL,
-            CENTER_VERTICAL,
-            ALIGN_PARENT_START,
-            ALIGN_PARENT_END
-        )
+        val rules: List<Int> by lazy {
+            listOf(
+                ALIGN_PARENT_LEFT,
+                ALIGN_PARENT_TOP,
+                ALIGN_PARENT_RIGHT,
+                ALIGN_PARENT_BOTTOM,
+                CENTER_IN_PARENT,
+                CENTER_HORIZONTAL,
+                CENTER_VERTICAL,
+                ALIGN_PARENT_START,
+                ALIGN_PARENT_END
+            )
+        }
 
     }
 
@@ -231,9 +195,11 @@ class JSlider @JvmOverloads constructor(
 
         // Set slide animation based on the specified attribute
         setSlideAnimation(
-            AnimationTypes.values()[typedArray.getInt(
-                R.styleable.JSlider_slideAnimation, AnimationTypes.DEFAULT.ordinal
-            )]
+            AnimationTypes.getAnimation(
+                typedArray.getInt(
+                    R.styleable.JSlider_slideAnimation, -1
+                )
+            )
         )
 
         // Set indicator alignment based on the specified attribute
@@ -247,22 +213,24 @@ class JSlider @JvmOverloads constructor(
 
         // Set indicator update mode based on the specified attribute
         setIndicatorUpdateMode(
-            IndicatorUpdateTypes.values()[typedArray.getInt(
-                R.styleable.JSlider_indicatorUpdateMode, IndicatorUpdateTypes.SYNC.ordinal
+            UpdateMode.values()[typedArray.getInt(
+                R.styleable.JSlider_indicatorUpdateMode, UpdateMode.SYNC.ordinal
             )]
         )
 
         // Setting the indicator shape type for a JSlider.
-        // This assumes that there is an enum called IndicatorShapeTypes defined
+        // This assumes that there is an enum called ShapeTypes defined
         // in the JSlider class or its associated class, which represents the available shape types.
 
-        // Obtain a reference to the IndicatorShapeTypes enum and set the selected shape type based on the attributes
+        // Obtain a reference to the ShapeTypes enum and set the selected shape type based on the attributes
         // specified in the XML layout using the R.styleable.JSlider_indicatorShapeTypes attribute.
-        // If the attribute is not defined, default to IndicatorShapeTypes.CIRCLE.
+        // If the attribute is not defined, default to ShapeTypes.CIRCLE.
         setIndicatorShapeTypes(
-            IndicatorShapeTypes.values()[typedArray.getInt(
-                R.styleable.JSlider_indicatorShapeTypes, IndicatorShapeTypes.CIRCLE.ordinal
-            )]
+            ShapeTypes.getTypes(
+                typedArray.getInt(
+                    R.styleable.JSlider_indicatorShapeTypes, 0
+                )
+            )
         )
 
 
@@ -309,10 +277,10 @@ class JSlider @JvmOverloads constructor(
     private fun onSliderSet(sliders: Int) {
 
         // Initialize a list to hold indicator dots
-        val dots: MutableList<JLayout> by lazy { mutableListOf() }
+        val dots: MutableList<com.jummania.widgets.JIndicator> by lazy { mutableListOf() }
         // Lazy initialization of the selected dot indicator
         val selectedDot by lazy {
-            JIndicator(context, indicatorShapeTypes).apply {
+            JIndicator(context, shapeTypes).apply {
                 // Set the layout parameters for the selected dot indicator
                 layoutParams = LayoutParams(
                     size, size
@@ -338,7 +306,7 @@ class JSlider @JvmOverloads constructor(
             // Create indicator dots and add them to the layout
             for (i in 0 until sliders) {
                 if (i == max) break
-                val dot =  JIndicator(context, indicatorShapeTypes)
+                val dot = JIndicator(context, shapeTypes)
                 dot.layoutParams = dotLayoutParams
                 dot.setBackgroundResource(R.drawable.indicator)
                 dot.setColor(defaultIndicatorColor)
@@ -433,7 +401,7 @@ class JSlider @JvmOverloads constructor(
         try {
             val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
             viewPagerScroller.isAccessible = true
-            viewPagerScroller[jSlider] = MyScroller(context)
+            viewPagerScroller[jSlider] = MyScroller(context, slidingDuration.toInt())
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -839,81 +807,28 @@ class JSlider @JvmOverloads constructor(
 
 
     /**
-     * Set a specific slide animation for the ViewPager.
+     * Sets the slide animation for the JSlider using the specified AnimationTypes.
      *
-     * @param animationType The type of animation to be applied.
+     * @param animationType The AnimationTypes to use for the slide animation.
      */
     fun setSlideAnimation(animationType: AnimationTypes) {
-        when (animationType) {
-            AnimationTypes.ANTI_CLOCK_SPIN -> jSlider.setPageTransformer(false, AntiClockSpin())
-            AnimationTypes.BACKGROUND_TO_FOREGROUND -> jSlider.setPageTransformer(
-                false, BackgroundToForeground()
-            )
-
-            AnimationTypes.CARD_STACK -> jSlider.setPageTransformer(false, CardStack())
-            AnimationTypes.CLOCK_SPIN -> jSlider.setPageTransformer(false, ClockSpin())
-            AnimationTypes.CUBE_IN_DEPTH -> jSlider.setPageTransformer(false, CubeInDepth())
-            AnimationTypes.CUBE_IN_ROTATION -> jSlider.setPageTransformer(false, CubeInRotation())
-            AnimationTypes.CUBE_IN_SCALING -> jSlider.setPageTransformer(false, CubeInScaling())
-            AnimationTypes.CUBE_OUT_DEPTH -> jSlider.setPageTransformer(false, CubeOutDepth())
-            AnimationTypes.CUBE_OUT_ROTATION -> jSlider.setPageTransformer(false, CubeOutRotation())
-            AnimationTypes.CUBE_OUT_SCALING -> jSlider.setPageTransformer(false, CubeOutScaling())
-            AnimationTypes.CUBE_IN -> jSlider.setPageTransformer(false, CubeIn())
-            AnimationTypes.CUBE_OUT -> jSlider.setPageTransformer(false, CubeOut())
-            AnimationTypes.DEPTH_SLIDE -> jSlider.setPageTransformer(false, DepthSlide())
-            AnimationTypes.DEPTH_SLIDE2 -> jSlider.setPageTransformer(false, DepthSlide2(jSlider))
-            AnimationTypes.DEPTH_TRANSFORMATION -> jSlider.setPageTransformer(
-                true, DepthTransformation()
-            )
-
-            AnimationTypes.DEPTH_ZOOM_OUT -> jSlider.setPageTransformer(false, DepthZoomOut())
-            AnimationTypes.FADEOUT -> jSlider.setPageTransformer(false, FadeOut())
-            AnimationTypes.FADE_PAGE -> jSlider.setPageTransformer(false, FadePage())
-            AnimationTypes.FAN_TRANSFORMATION -> jSlider.setPageTransformer(
-                false, FanTransformation()
-            )
-
-            AnimationTypes.FIDGET_SPINNER -> jSlider.setPageTransformer(false, FidgetSpinner())
-            AnimationTypes.FLIP_HORIZONTAL -> jSlider.setPageTransformer(false, FlipHorizontal())
-            AnimationTypes.FLIP_VERTICAL -> jSlider.setPageTransformer(false, FlipVertical())
-            AnimationTypes.FOREGROUND_TO_BACKGROUND -> jSlider.setPageTransformer(
-                false, ForegroundToBackground()
-            )
-
-            AnimationTypes.GATE -> jSlider.setPageTransformer(false, Gate())
-            AnimationTypes.HINGE -> jSlider.setPageTransformer(true, Hinge())
-            AnimationTypes.POP -> jSlider.setPageTransformer(false, Pop())
-            AnimationTypes.ROTATE_DOWN -> jSlider.setPageTransformer(false, RotateDown())
-            AnimationTypes.ROTATE_UP -> jSlider.setPageTransformer(false, RotateUp())
-            AnimationTypes.SPINNER -> jSlider.setPageTransformer(true, Spinner())
-            AnimationTypes.SPINNER_TRANSFORMATION -> jSlider.setPageTransformer(
-                false, SpinnerTransformation()
-            )
-
-            AnimationTypes.TABLET_SLIDE -> jSlider.setPageTransformer(false, TabletSlide())
-            AnimationTypes.TOSS -> jSlider.setPageTransformer(false, Toss())
-            AnimationTypes.VERTICAL_FLIP -> jSlider.setPageTransformer(false, VerticalFlip())
-            AnimationTypes.VERTICAL_SHUT -> jSlider.setPageTransformer(false, VerticalShut())
-            AnimationTypes.ZOOM_FADE -> jSlider.setPageTransformer(false, ZoomFade())
-            AnimationTypes.ZOOM_IN -> jSlider.setPageTransformer(false, ZoomIn())
-            AnimationTypes.ZOOM_OUT -> jSlider.setPageTransformer(false, ZoomOut())
-            AnimationTypes.DEFAULT -> jSlider.setPageTransformer(false, null)
-        }
+        // Set the page transformer for JSlider based on the provided AnimationTypes
+        jSlider.setPageTransformer(animationType.boolean, animationType.animation)
     }
 
 
     /**
-     * Set the indicator update mode based on the provided IndicatorUpdateTypes.
+     * Set the indicator update mode based on the provided UpdateMode.
      *
-     * @param indicatorUpdateTypes The desired update mode for the indicator.
+     * @param updateMode The desired update mode for the indicator.
      */
-    fun setIndicatorUpdateMode(indicatorUpdateTypes: IndicatorUpdateTypes) {
-        indicatorUpdateType = indicatorUpdateTypes.ordinal
+    fun setIndicatorUpdateMode(updateMode: UpdateMode) {
+        indicatorUpdateType = updateMode.ordinal
     }
 
-    fun setIndicatorShapeTypes(indicatorShapeTypes: IndicatorShapeTypes) {
+    fun setIndicatorShapeTypes(shapeTypes: ShapeTypes) {
         exception()
-        this@JSlider.indicatorShapeTypes = indicatorShapeTypes
+        this@JSlider.shapeTypes = shapeTypes
     }
 
 
@@ -923,28 +838,6 @@ class JSlider @JvmOverloads constructor(
      */
     private fun exception() {
         if (jSlider.adapter != null) throw IllegalArgumentException("You cannot change anything on the Slider after setSlider() method call.")
-    }
-
-
-    /**
-     * Custom Scroller class that overrides the startScroll method to use a custom sliding duration.
-     *
-     * @param context The context in which the Scroller is created.
-     */
-    private inner class MyScroller(context: Context?) : Scroller(context) {
-
-        /**
-         * Override the startScroll method to set a custom sliding duration.
-         *
-         * @param startX Starting X coordinate of the scroll.
-         * @param startY Starting Y coordinate of the scroll.
-         * @param dx Horizontal distance to travel.
-         * @param dy Vertical distance to travel.
-         * @param duration Duration of the scroll in milliseconds.
-         */
-        override fun startScroll(startX: Int, startY: Int, dx: Int, dy: Int, duration: Int) {
-            super.startScroll(startX, startY, dx, dy, slidingDuration.toInt())
-        }
     }
 
 
@@ -969,51 +862,12 @@ class JSlider @JvmOverloads constructor(
     }
 
 
-
     /**
      * Custom ViewPager with a modified onMeasure method.
      *
      * @param context The context in which the Slider is created.
      */
-    private inner class Slider(context: Context) : ViewPager(context) {
-
-        /**
-         * Override the onMeasure method to adjust the height of the ViewPager.
-         *
-         * @param widthMeasureSpec Width measurement specification.
-         * @param heightMeasureSpec Height measurement specification.
-         */
-        override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-            // Get the measurement mode for height
-            val mode = MeasureSpec.getMode(measureSpec)
-
-            // Check if the height mode is UNSPECIFIED or AT_MOST
-            if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST) {
-                // Get the first child of the ViewPager
-                val child = getChildAt(0)
-
-                // Check if the child is null
-                if (child == null) {
-                    super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-                    return
-                }
-
-                // Measure the child with an unspecified height
-                child.measure(
-                    widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-                )
-
-                // Set the height of the ViewPager based on the measured height of the child
-                super.onMeasure(
-                    widthMeasureSpec,
-                    MeasureSpec.makeMeasureSpec(child.measuredHeight, MeasureSpec.EXACTLY)
-                )
-            } else {
-                // If the height mode is EXACTLY or unspecified, use the original onMeasure
-                super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-            }
-        }
-    }
+    private inner class Slider(context: Context) : com.jummania.widgets.Slider(measureSpec, context)
 
 
     /**
@@ -1089,5 +943,16 @@ class JSlider @JvmOverloads constructor(
         this@JSlider.listener = listener
     }
 
-    private class JIndicator(private val context: Context?, private val indicatorShapeTypes: IndicatorShapeTypes): JLayout(context, indicatorShapeTypes)
+
+    /**
+     * Private class representing a custom indicator using JIndicator.
+     *
+     * @param context The context in which the indicator is created.
+     * @param shapeTypes The shape type for the indicator.
+     */
+    private class JIndicator(context: Context?, shapeTypes: ShapeTypes) :
+        com.jummania.widgets.JIndicator(context, shapeTypes)
+    // This class extends JIndicator and inherits its functionality
+    // It serves as a specific implementation of JIndicator for creating indicators
+
 }

@@ -10,7 +10,7 @@ import kotlin.math.max
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class CubeInScaling : ViewPager.PageTransformer {
+internal class CubeInScaling : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.cameraDistance = 20000f
         if (position < -1)      // [-Infinity,-1)

@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class Pop : ViewPager.PageTransformer {
+internal class Pop : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.translationX = -position * page.width
         if (abs(position) < 0.5) {

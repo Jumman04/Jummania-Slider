@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class VerticalFlip : ViewPager.PageTransformer {
+internal class VerticalFlip : ViewPager.PageTransformer {
     override fun transformPage(view: View, position: Float) {
         view.cameraDistance = 20000f
         view.rotationX = 180 * position

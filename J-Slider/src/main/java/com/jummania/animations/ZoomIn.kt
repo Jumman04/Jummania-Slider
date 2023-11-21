@@ -5,11 +5,11 @@ import androidx.viewpager.widget.ViewPager.PageTransformer
 import kotlin.math.abs
 
 /**
- * Created by denzcoskun on 03,April,2023.
- * Email: denzcoskun@hotmail.com
- * Istanbul, TURKEY.
+ * Created by Jummania on 21,November,2023.
+ * Email: sharifuddinjumman@gmail.com
+ * Dhaka, Bangladesh.
  */
-class ZoomIn : PageTransformer {
+internal class ZoomIn : PageTransformer {
 
     override fun transformPage(view: View, position: Float) {
         // Calculate the scale based on the position.

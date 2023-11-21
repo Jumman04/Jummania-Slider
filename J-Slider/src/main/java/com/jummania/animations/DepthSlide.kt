@@ -5,11 +5,11 @@ import androidx.viewpager.widget.ViewPager.PageTransformer
 import kotlin.math.abs
 
 /**
- * Created by denzcoskun on 03,April,2023.
- * Email: denzcoskun@hotmail.com
- * Istanbul, TURKEY.
+ * Created by Jummania on 21,November,2023.
+ * Email: sharifuddinjumman@gmail.com
+ * Dhaka, Bangladesh.
  */
-class DepthSlide : PageTransformer {
+internal class DepthSlide : PageTransformer {
     private val minScale = 0.75f
 
     // This method is called for each page during the transformation process.

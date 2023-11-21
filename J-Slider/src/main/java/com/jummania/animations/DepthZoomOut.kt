@@ -9,7 +9,7 @@ import kotlin.math.abs
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class DepthZoomOut : ViewPager.PageTransformer {
+internal class DepthZoomOut : ViewPager.PageTransformer {
     override fun transformPage(view: View, position: Float) {
         val scaleFactor = 0.75f.coerceAtLeast(1 - abs(position))
         val alpha = 1 - abs(position)

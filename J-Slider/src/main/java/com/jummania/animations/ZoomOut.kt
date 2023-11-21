@@ -6,11 +6,11 @@ import kotlin.math.abs
 import kotlin.math.max
 
 /**
- * Created by denzcoskun on 03,April,2023.
- * Email: denzcoskun@hotmail.com
- * Istanbul, TURKEY.
+ * Created by Jummania on 21,November,2023.
+ * Email: sharifuddinjumman@gmail.com
+ * Dhaka, Bangladesh.
  */
-class ZoomOut : PageTransformer {
+internal class ZoomOut : PageTransformer {
 
     private val scale = 0.85f // Scale factor for zooming out
     private val alpha = 0.5f // Alpha value for fading
@@ -29,13 +29,13 @@ class ZoomOut : PageTransformer {
                 // If the page is within the visible range
                 val scaleFactor = max(scale, 1 - abs(position))
                 val vertMargin = pageHeight * (1 - scaleFactor) / 2
-                val horzMargin = pageWidth * (1 - scaleFactor) / 2
+                val horizontalMargin = pageWidth * (1 - scaleFactor) / 2
 
                 // Adjust translation and scale based on position
                 if (position < 0) {
-                    view.translationX = horzMargin - vertMargin / 2
+                    view.translationX = horizontalMargin - vertMargin / 2
                 } else {
-                    view.translationX = -horzMargin + vertMargin / 2
+                    view.translationX = -horizontalMargin + vertMargin / 2
                 }
                 view.scaleX = scaleFactor
                 view.scaleY = scaleFactor

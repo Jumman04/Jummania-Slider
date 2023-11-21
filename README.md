@@ -1,11 +1,8 @@
-<a href="https://github.com/Jumman04/Jummania-Slider">  
-
+<a href="https://github.com/Jumman04/Jummania-Slider"></a>
 
 <h1 align="center">J-Slider for Android!</h1>  
 <a href="https://github.com/Jumman04/Jummania-Slider">  
 <img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284076921-b31614c3-e3cb-40a6-ab4b-31c9b9517dda.gif"  />  </a>  
-
-
 
 <li>Easy to use.</li>
 <li>Smooth sliding transitions.</li>
@@ -16,10 +13,6 @@
 <li>Indicator alignment and gravity customization.</li>
 <li>Use with Java or Kotlin.</li>
 <br>
-	
-
-
-
 
 <p align="center"><br>
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
@@ -42,8 +35,7 @@
     <img src="https://img.shields.io/github/stars/Jumman04/Jummania-Slider"/>
   </a>
     <a href="https://github.com/Jumman04/Jummania-Slider/LICENSE">
-    <img src="https://img.shields.io/github/license/Jumman04/Jummania-Slider"/>
-  </a>
+    <img src="https://img.shields.io/github/license/Jumman04/Jummania-Slider"/></a>
 </p>
 
 ## Setup
@@ -62,27 +54,31 @@ dependencyResolutionManagement {
     }
 }
 ```
+
 ## Step 2: Add the Dependency
 
 Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation 'com.github.Jumman04:Jummania-Slider:3.5'
+    implementation 'com.github.Jumman04:Jummania-Slider:3.6'
 }
 ```
+
 ---
+
 ## Usage
 
 ### XML
 
 ```xml
 
- <com.jummania.JSlider
-        android:id="@+id/jSlider"
+    <com.jummania.JSlider 
+        android:id="@+id/jSlider" 
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 ```
+
 #### In Activity
 
 - Add ImageSlider to your **Activity**
@@ -99,44 +95,41 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 //Out of onCreate, Create a Class for Slider
 private inner class DefaultSlider : JSlider.DefaultSlider() {
-        override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
-            return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
+    override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
+        return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
+    }
+
+    override fun onSliderCreate(view: View, position: Int) {
+
+        val textView: TextView = view.findViewById(R.id.text_view) //find your child
+        val imageView: ImageView = view.findViewById(R.id.image_view)
+
+        Picasso.get()
+            .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
+            .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
+            .into(imageView)
+
+        textView.text = getString(R.string.Developer_Name)
+
+        view.setOnClickListener {
+            //Apply your click Listener
         }
 
-        override fun onSliderCreate(view: View, position: Int) {
-
-            val textView: TextView = view.findViewById(R.id.text_view) //find your child
-            val imageView: ImageView = view.findViewById(R.id.image_view)
-
-            Picasso.get()
-                .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
-                .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
-                .into(imageView)
-
-            textView.text = getString(R.string.Developer_Name)
-
-            view.setOnClickListener {
-
-                Toast.makeText(
-                    this@MainActivity,
-                    getString(R.string.Developer_Name) + "\nItem Position: $position",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-
-        }
-
-        override fun getCount(): Int {
-            return 3
-        }
 
     }
+
+    override fun getCount(): Int {
+        return 3
+    }
+
+}
 ```
 
 ## Customization
+
 ### XML Attributes
-- Change Duration of Sliding: 
+
+- Change Duration of Sliding:
 
 ```xml
 app:slidingDuration="2222"
@@ -151,19 +144,13 @@ app:indicatorSize="15dp"
 - Add Padding in Slider:
 
 ```xml
-app:sliderPaddingRight="0dp"
-app:sliderPaddingLeft="0dp"
-app:sliderPaddingTop="0dp"
-app:sliderPaddingBottom="0dp"
+app:sliderPaddingRight="0dp"app:sliderPaddingLeft="0dp"app:sliderPaddingTop="0dp"app:sliderPaddingBottom="0dp"
 ```
 
 - Change Indicator Padding:
 
 ```xml
-app:indicatorPaddingTop="0dp"
-app:indicatorPaddingLeft="0dp"
-app:indicatorPaddingRight="0dp"
-app:indicatorPaddingBottom="22dp"
+app:indicatorPaddingTop="0dp"app:indicatorPaddingLeft="0dp"app:indicatorPaddingRight="0dp"app:indicatorPaddingBottom="22dp"
 
 ```
 
@@ -214,18 +201,21 @@ app:indicatorAlign="ALIGN_BOTTOM"
 ```xml
 app:indicatorGravity="center"
 ```
+
 - Set Indicator Shape Type:
 
 ```xml
-app:indicatorShapeTypes="CIRCLE"
+app:shapeTypes="CIRCLE"
 
-<!-- Choose one of the following options for the shape type: CIRCLE, HEART, SQUARE, or STAR. -->
+    <!-- Choose one of the following options for the shape type: CIRCLE, HEART, SQUARE, or STAR. -->
 ```
+
 - Set Slide Animation:
 
 ```xml
 app:slideAnimation="CUBE_OUT"
 ```
+
 ---
 
 ### Programmatic Customization
@@ -235,6 +225,7 @@ app:slideAnimation="CUBE_OUT"
 ```kt
 setSlidingDuration(2222)
 ```
+
 - Set the indicator size:
 
 ```kt
@@ -242,6 +233,7 @@ setIndicatorSize(15)
 ```
 
 - Set the indicator colors:
+
 ```kt
 setIndicatorColor(defaultColor, selectedColor)
 ```
@@ -251,6 +243,7 @@ setIndicatorColor(defaultColor, selectedColor)
 ```kt
 enableIndicator(true)
 ```
+
 - Enable or disable auto-sliding:
 
 ```kt
@@ -262,57 +255,67 @@ enableAutoSliding(true)
 ```kt
 setPageTransformer(true, PageTransformer())
 ```
+
 - Set padding for the slider:
 
 ```kt
 setSliderPadding(left, top, right, bottom)
 ```
+
 - Set horizontal margin for the indicator dots:
 
 ```kt
 setIndicatorMarginHorizontal(3)
 ```
+
 - To start or stop auto-sliding:
 
 ```kt
 startAutoSliding()
 stopAutoSliding()
 ```
+
 - Slide to the next and previous page:
 
 ```kt
 slideNext()
 slidePrevious()
 ```
+
 - Check if the slider is currently sliding:
 
 ```kt
 isSliding()
 ```
+
 - Set padding for the indicator dots programmatically:
 
 ```kt
 setIndicatorPadding(left, top, right, bottom)
 ```
+
 - Set the gravity for both the dot indicators:
 
 ```kt
 setIndicatorGravity(Gravity.BOTTOM)
 ```
+
 - Set the alignment for both the dot indicators:
 
 ```kt
 setIndicatorAlignment(alignment)
 ```
+
 - Set the indicator update mode:
 
 ```kt
-setIndicatorUpdateMode(IndicatorUpdateTypes.SYNC)
+setIndicatorUpdateMode(UpdateMode.SYNC)
 ```
+
 - Set the indicator shape types programmatically:
 
 ```kt
-setIndicatorShapeTypes(IndicatorShapeTypes.CIRCLE)
+setIndicatorShapeTypes(ShapeTypes.CIRCLE)
 ```
 
 - You can add animation like that, <b>38 Animations added</b>. You can check

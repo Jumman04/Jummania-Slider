@@ -21,7 +21,9 @@ class MainActivity : AppCompatActivity() {
         val jSlider: JSlider = findViewById(R.id.jSlider)  //find
         //  val jSlider:JSlider = JSlider(this)           // or bind the slider
 
-        // jSlider.setSlideAnimation(AnimationTypes.CUBE_OUT)
+        //  jSlider.setSlideAnimation(AnimationTypes.ANTI_CLOCK_SPIN)
+        //  jSlider.setIndicatorShapeTypes(ShapeTypes.HEART)
+        //  jSlider.setIndicatorUpdateMode(UpdateMode.ANIMATED)
 
         /** You can add animation like that, 16 Animations added. check below the list of animation:
          *     ANTI_CLOCK_SPIN,
@@ -38,7 +40,6 @@ class MainActivity : AppCompatActivity() {
          *     CUBE_OUT,
          *     DEPTH_PAGE,
          *     DEPTH_SLIDE,
-         *     DEPTH_SLIDE2,
          *     DEPTH_TRANSFORMATION,
          *     DEPTH_ZOOM_OUT,
          *     FADEOUT,

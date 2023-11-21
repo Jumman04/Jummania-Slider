@@ -5,11 +5,11 @@ import androidx.viewpager.widget.ViewPager
 import kotlin.math.abs
 
 /**
- * Created by Jummania on 17,November,2023.
+ * Created by Jummania on 21,November,2023.
  * Email: sharifuddinjumman@gmail.com
  * Dhaka, Bangladesh.
  */
-class CardStack : ViewPager.PageTransformer {
+internal class CardStack : ViewPager.PageTransformer {
     override fun transformPage(page: View, position: Float) {
         page.translationX = -position * page.width
         page.scaleX = 0.8f + abs(position) / 5

@@ -4,11 +4,11 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager.PageTransformer
 
 /**
- * Created by denzcoskun on 03,April,2023.
- * Email: denzcoskun@hotmail.com
- * Istanbul, TURKEY.
+ * Created by Jummania on 21,November,2023.
+ * Email: sharifuddinjumman@gmail.com
+ * Dhaka, Bangladesh.
  */
-class CubeIn : PageTransformer {
+internal class CubeIn : PageTransformer {
 
     // This method is called for each page during the transformation process.
     override fun transformPage(view: View, position: Float) {
