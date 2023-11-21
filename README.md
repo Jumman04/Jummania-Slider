@@ -59,11 +59,21 @@ dependencyResolutionManagement {
 
 Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
+### For Kotlin Developers
+
 ```gradle
 dependencies {
     implementation 'com.github.Jumman04:Jummania-Slider:3.6'
 }
 ```
+
+### For Java Developers
+
+```gradle
+implementation 'com.github.Jumman04:Jummania-Slider:3.5'
+```
+### Note for Java Developers:
+Our latest library may not be fully compatible with Java. You can still use it, but be aware of potential issues.
 
 ---
 
