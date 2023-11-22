@@ -1,3 +1,4 @@
+
 <a href="https://github.com/Jumman04/Jummania-Slider"></a>
 
 <h1 align="center">J-Slider for Android!</h1>  
@@ -12,8 +13,8 @@
 <li>Ability to add your own custom animation.</li>
 <li>Indicator alignment and gravity customization.</li>
 <li>Use with Java or Kotlin.</li>
-
-<p align="center"><br>
+<br>
+<p align="center">
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
 	<img src="https://img.shields.io/github/v/release/Jumman04/Jummania-Slider?include_prereleases&amp;label=latest%20release" alt="Latest release"/>
 	 <a href="https://jitpack.io/#Jumman04/Jummania-Slider">
@@ -36,6 +37,10 @@
     <a href="https://github.com/Jumman04/Jummania-Slider/LICENSE">
     <img src="https://img.shields.io/github/license/Jumman04/Jummania-Slider"/></a>
 </p>
+<br>
+
+
+---
 
 ## Setup
 
@@ -65,6 +70,7 @@ dependencies {
     implementation 'com.github.Jumman04:Jummania-Slider:3.6'
 }
 ```
+
 
 ### For Java Developers
 
