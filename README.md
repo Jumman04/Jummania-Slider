@@ -42,7 +42,9 @@
 
 ---
 
-## Setup
+<details>
+  <summary><h1>Setup</h1></summary>
+  <br>
 
 To integrate Jummania-Slider into your Android project, follow these steps:
 
@@ -63,28 +65,48 @@ dependencyResolutionManagement {
 
 Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
-### For Kotlin Developers
+---
 
-```gradle
+<details>
+  <summary>For Kotlin</summary>
+  <br>
+
+  ```gradle
 dependencies {
     implementation 'com.github.Jumman04:Jummania-Slider:3.6'
 }
 ```
+  </details>
+  
+---
 
+<details>
+  <summary>For Java</summary>
+  <br>
 
-### For Java Developers
-
-```gradle
-implementation 'com.github.Jumman04:Jummania-Slider:3.5'
+  ```gradle
+dependencies {
+    implementation 'com.github.Jumman04:Jummania-Slider:3.5'
+}
 ```
 ### Note for Java Developers:
 Our latest library may not be fully compatible with Java. You can still use it, but be aware of potential issues.
 
+  </details>
+
 ---
 
-## Usage
+ </details>
 
-### XML
+ ---
+ <details>
+  <summary><h1>Usage</h1></summary>
+
+---
+
+<details>
+  <summary>XML</summary>
+  <br>
 
 ```xml
 
@@ -93,10 +115,13 @@ Our latest library may not be fully compatible with Java. You can still use it, 
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 ```
+</details>
 
-#### In Activity
+---
 
-- Add ImageSlider to your **Activity**
+<details>
+  <summary>For Kotlin</summary>
+  <br>
 
 ```kt
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -139,11 +164,75 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 
 }
 ```
+</details>
 
-## Customization
+---
 
-### XML Attributes
+<details>
+  <summary>For Java</summary>
+  <br>
 
+ ```Java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        JSlider jSlider = findViewById(R.id.jSlider);
+        jSlider.setSlider(new DefaultSlider());
+    }
+
+    private class DefaultSlider extends JSlider.DefaultSlider {
+        @Override
+        public View getView(LayoutInflater layoutInflater, ViewGroup parent) {
+            return layoutInflater.inflate(R.layout.item_slider2, parent, false);
+        }
+
+        @Override
+        public void onSliderCreate(View view, int position) {
+            TextView textView = view.findViewById(R.id.text_view);
+            ImageView imageView = view.findViewById(R.id.image_view);
+
+            Picasso.get()
+                    .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
+                    .error(R.drawable.default_error)
+                    .placeholder(R.drawable.default_loading)
+                    .into(imageView);
+
+            textView.setText(getString(R.string.Developer_Name));
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Apply your click listener logic
+                }
+            });
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+    }
+}
+```
+</details>
+
+</details>
+
+---
+
+<details>
+  <summary><h1>Customization</h1></summary>
+
+---
+
+<details>
+  <summary>XML Attributes</summary> 
+<br>
+	
 - Change Duration of Sliding:
 
 ```xml
@@ -159,13 +248,19 @@ app:indicatorSize="15dp"
 - Add Padding in Slider:
 
 ```xml
-app:sliderPaddingRight="0dp"app:sliderPaddingLeft="0dp"app:sliderPaddingTop="0dp"app:sliderPaddingBottom="0dp"
+app:sliderPaddingRight="0dp"
+app:sliderPaddingLeft="0dp"
+app:sliderPaddingTop="0dp"
+app:sliderPaddingBottom="0dp"
 ```
 
 - Change Indicator Padding:
 
 ```xml
-app:indicatorPaddingTop="0dp"app:indicatorPaddingLeft="0dp"app:indicatorPaddingRight="0dp"app:indicatorPaddingBottom="22dp"
+app:indicatorPaddingTop="0dp"
+app:indicatorPaddingLeft="0dp"
+app:indicatorPaddingRight="0dp"
+app:indicatorPaddingBottom="22dp"
 
 ```
 
@@ -231,9 +326,16 @@ app:shapeTypes="CIRCLE"
 app:slideAnimation="CUBE_OUT"
 ```
 
+</details>
+
 ---
 
-### Programmatic Customization
+
+
+ <details>
+  <summary>For Kotlin</summary>
+  <br>
+ 
 
 - Set the sliding duration:
 
@@ -318,7 +420,7 @@ setIndicatorGravity(Gravity.BOTTOM)
 - Set the alignment for both the dot indicators:
 
 ```kt
-setIndicatorAlignment(alignment)
+setIndicatorAlignment(Alignment.BOTTOM)
 ```
 
 - Set the indicator update mode:
@@ -398,9 +500,196 @@ jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
 
 }
 ```
+</details>
 
-## Feature Requests
+---
 
+
+
+ <details>
+	
+  <summary>For Java</summary>
+	 <br>
+
+  
+- Set the sliding duration:
+
+```kt
+setSlidingDuration(2222);
+```
+
+- Set the indicator size:
+
+```kt
+setIndicatorSize(15);
+```
+
+- Set the indicator colors:
+
+```kt
+setIndicatorColor(defaultColor, selectedColor);
+```
+
+- Enable or disable the indicator:
+
+```kt
+enableIndicator(true);
+```
+
+- Enable or disable auto-sliding:
+
+```kt
+enableAutoSliding(true);
+```
+
+- Set a custom page transformer:
+
+```kt
+setPageTransformer(true, PageTransformer());
+```
+
+- Set padding for the slider:
+
+```kt
+setSliderPadding(left, top, right, bottom);
+```
+
+- Set horizontal margin for the indicator dots:
+
+```kt
+setIndicatorMarginHorizontal(3);
+```
+
+- To start or stop auto-sliding:
+
+```kt
+startAutoSliding();
+stopAutoSliding();
+```
+
+- Slide to the next and previous page:
+
+```kt
+slideNext();
+slidePrevious();
+```
+
+- Check if the slider is currently sliding:
+
+```kt
+isSliding();
+```
+
+- Set padding for the indicator dots programmatically:
+
+```kt
+setIndicatorPadding(left, top, right, bottom);
+```
+
+- Set the gravity for both the dot indicators:
+
+```kt
+setIndicatorGravity(Gravity.BOTTOM);
+```
+
+- Set the alignment for both the dot indicators:
+
+```kt
+setIndicatorAlignment(Alignment.BOTTOM);
+```
+
+- Set the indicator update mode:
+
+```kt
+setIndicatorUpdateMode(indicatorUpdateMode.SYNC);
+```
+
+- Set the indicator shape types programmatically:
+
+```kt
+setIndicatorShapeTypes(indicatorShapeTypes.CIRCLE);
+```
+
+- You can add animation like that, <b>38 Animations added</b>. You can check
+  in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/types/AnimationTypes.kt">
+  Animation List </a>
+
+```kt
+jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT);
+```
+
+- You can add 'addOnSlideChangeListener' if you really need
+
+```Java
+jSlider.addOnSlideChangeListener(new JSlider.OnSlideChangeListener() {
+    @Override
+    public void onSliderScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.d("JSlider", "position: " + position + ", positionOffset: " + positionOffset +
+                ", positionOffsetPixels: " + positionOffsetPixels);
+    }
+
+    @Override
+    public void onSliderSelected(int position) {
+        Log.d("JSlider", "position: " + position);
+    }
+
+    @Override
+    public void onSliderScrollStateChanged(int state) {
+        Log.d("JSlider", "state: " + state);
+    }
+});
+```
+
+- If you want to Reverse-less slide:
+
+```Java
+private class InfinitySlider extends JSlider.InfinitySlider {
+    @Override
+    public int itemCount() {
+        return 3;
+    }
+
+    @Override
+    public View getView(LayoutInflater layoutInflater, ViewGroup parent) {
+        return layoutInflater.inflate(R.layout.item_slider2, parent, false);
+    }
+
+    @Override
+    public void onSliderCreate(View view, int position) {
+        TextView textView = view.findViewById(R.id.text_view);
+        ImageView imageView = view.findViewById(R.id.image_view);
+
+        Picasso.get()
+                .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
+                .error(R.drawable.default_error)
+                .placeholder(R.drawable.default_loading)
+                .into(imageView);
+
+        textView.setText(getString(R.string.Developer_Name));
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, getString(R.string.Developer_Name),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
+```
+	 
+ </details>
+ 
+
+</details>
+
+---
+
+<details>
+  <summary><h1>Feature Requests</h1></summary>
+  <br>
+
+	
 If you have a feature request or a suggestion for improving this library, please feel free
 to [open an issue](https://github.com/Jumman04/Jummania-Slider/issues/new) and let us know! We
 appreciate your feedback and are always looking to make our library better.
@@ -413,9 +702,20 @@ appreciate your feedback and are always looking to make our library better.
 4. Fill in the requested information and submit the issue.
 
 Thank you for helping us improve the library!
+</details>
 
-## 📄 License
+---
 
+
+<details>
+  <summary><h1>📄 License</h1></summary>
+  <br>
+
+	
 This project is licensed under the MIT License - see
 the [LICENSE.md](https://github.com/Jumman04/Jummania-Slider/blob/master/LICENSE.md) file for
 details.
+</details>
+
+---
+
