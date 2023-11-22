@@ -14,7 +14,7 @@
 <li>Indicator alignment and gravity customization.</li>
 <li>Use with Java or Kotlin.</li>
 <br>
-<p align="center">
+<p align="left">
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
 	<img src="https://img.shields.io/github/v/release/Jumman04/Jummania-Slider?include_prereleases&amp;label=latest%20release" alt="Latest release"/>
 	 <a href="https://jitpack.io/#Jumman04/Jummania-Slider">
