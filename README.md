@@ -12,7 +12,6 @@
 <li>Ability to add your own custom animation.</li>
 <li>Indicator alignment and gravity customization.</li>
 <li>Use with Java or Kotlin.</li>
-<br>
 
 <p align="center"><br>
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
