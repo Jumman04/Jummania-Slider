@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager
  * @param measureSpec The measurement specification for height.
  * @param context The context in which the Slider is created.
  */
-internal abstract class Slider(private val measureSpec: Int, context: Context) :
+internal abstract class Slider(context: Context, private val measureSpec: Int) :
     ViewPager(context) {
 
     /**

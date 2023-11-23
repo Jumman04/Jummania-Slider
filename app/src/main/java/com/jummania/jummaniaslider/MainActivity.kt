@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         //  jSlider.setSlideAnimation(AnimationTypes.ANTI_CLOCK_SPIN)
         //  jSlider.setIndicatorShapeTypes(ShapeTypes.HEART)
-        //  jSlider.setIndicatorUpdateMode(UpdateMode.ANIMATED)
+        //  jSlider.setIndicatorUpdateMode(UpdateTypes.ANIMATED)
 
         /** You can add animation like that, 16 Animations added. check below the list of animation:
          *     ANTI_CLOCK_SPIN,

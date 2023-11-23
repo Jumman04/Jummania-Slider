@@ -1,8 +1,8 @@
 # configuration file for building snapshots and releases with jitpack.io
 jdk:
-  - openjdk17
+  - openjdk21
 before_install:
   - ./scripts/prepareJitpackEnvironment.sh
 install:
   - FILE="-Dfile=J-Slider-release.aar"
-  - mvn install:install-file $FILE -DgroupId=com.github.Jumman04 -DartifactId=Jummania-Slider -Dversion=3.6 -Dpackaging=aar -DgeneratePom=true
+  - mvn install:install-file $FILE -DgroupId=com.github.Jumman04 -DartifactId=Jummania-Slider -Dversion=3.7 -Dpackaging=aar -DgeneratePom=true

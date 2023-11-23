@@ -11,7 +11,7 @@ import android.widget.Scroller
  *
  * @param context The context in which the Scroller is created.
  */
-internal class MyScroller(context: Context?, private val slidingDuration: Int) : Scroller(context) {
+internal class JScroller(context: Context?, private val slidingDuration: Int) : Scroller(context) {
 
     /**
      * Override the startScroll method to set a custom sliding duration.

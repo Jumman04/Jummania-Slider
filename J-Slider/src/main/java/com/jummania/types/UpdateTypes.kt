@@ -11,6 +11,6 @@ package com.jummania.types
  * - [STATIC]: Update the indicator without animation when slide change.
  * - [ANIMATED]: Update the indicator with animation.
  */
-enum class UpdateMode {
+enum class UpdateTypes {
     SYNC, STATIC, ANIMATED
 }

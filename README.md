@@ -174,47 +174,47 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
  ```Java
 public class MainActivity extends AppCompatActivity {
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    JSlider jSlider = findViewById(R.id.jSlider);
+    jSlider.setSlider(new DefaultSlider());
+  }
+
+  private static class DefaultSlider extends JSlider.DefaultSlider {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        JSlider jSlider = findViewById(R.id.jSlider);
-        jSlider.setSlider(new DefaultSlider());
+    public View getView(LayoutInflater layoutInflater, ViewGroup parent) {
+      return layoutInflater.inflate(R.layout.item_slider2, parent, false);
     }
 
-    private class DefaultSlider extends JSlider.DefaultSlider {
+    @Override
+    public void onSliderCreate(View view, int position) {
+      TextView textView = view.findViewById(R.id.text_view);
+      ImageView imageView = view.findViewById(R.id.image_view);
+
+      Picasso.get()
+              .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
+              .error(R.drawable.default_error)
+              .placeholder(R.drawable.default_loading)
+              .into(imageView);
+
+      textView.setText(getString(R.string.Developer_Name));
+
+      view.setOnClickListener(new View.OnClickListener() {
         @Override
-        public View getView(LayoutInflater layoutInflater, ViewGroup parent) {
-            return layoutInflater.inflate(R.layout.item_slider2, parent, false);
+        public void onClick(View v) {
+          // Apply your click listener logic
         }
-
-        @Override
-        public void onSliderCreate(View view, int position) {
-            TextView textView = view.findViewById(R.id.text_view);
-            ImageView imageView = view.findViewById(R.id.image_view);
-
-            Picasso.get()
-                    .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
-                    .error(R.drawable.default_error)
-                    .placeholder(R.drawable.default_loading)
-                    .into(imageView);
-
-            textView.setText(getString(R.string.Developer_Name));
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Apply your click listener logic
-                }
-            });
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
+      });
     }
+
+    @Override
+    public int getCount() {
+      return 3;
+    }
+  }
 }
 ```
 </details>
@@ -425,7 +425,7 @@ setIndicatorAlignment(Alignment.BOTTOM)
 - Set the indicator update mode:
 
 ```kt
-setIndicatorUpdateMode(UpdateMode.SYNC)
+setIndicatorUpdateMode(UpdateTypes.SYNC)
 ```
 
 - Set the indicator shape types programmatically:
@@ -514,99 +514,99 @@ jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
 - Set the sliding duration:
 
 ```kt
-setSlidingDuration(2222);
+setSlidingDuration(2222)
 ```
 
 - Set the indicator size:
 
 ```kt
-setIndicatorSize(15);
+setIndicatorSize(15)
 ```
 
 - Set the indicator colors:
 
 ```kt
-setIndicatorColor(defaultColor, selectedColor);
+setIndicatorColor(defaultColor, selectedColor)
 ```
 
 - Enable or disable the indicator:
 
 ```kt
-enableIndicator(true);
+enableIndicator(true)
 ```
 
 - Enable or disable auto-sliding:
 
 ```kt
-enableAutoSliding(true);
+enableAutoSliding(true)
 ```
 
 - Set a custom page transformer:
 
 ```kt
-setPageTransformer(true, PageTransformer());
+setPageTransformer(true, PageTransformer())
 ```
 
 - Set padding for the slider:
 
 ```kt
-setSliderPadding(left, top, right, bottom);
+setSliderPadding(left, top, right, bottom)
 ```
 
 - Set horizontal margin for the indicator dots:
 
 ```kt
-setIndicatorMarginHorizontal(3);
+setIndicatorMarginHorizontal(3)
 ```
 
 - To start or stop auto-sliding:
 
 ```kt
-startAutoSliding();
-stopAutoSliding();
+startAutoSliding()
+stopAutoSliding()
 ```
 
 - Slide to the next and previous page:
 
 ```kt
-slideNext();
-slidePrevious();
+slideNext()
+slidePrevious()
 ```
 
 - Check if the slider is currently sliding:
 
 ```kt
-isSliding();
+isSliding()
 ```
 
 - Set padding for the indicator dots programmatically:
 
 ```kt
-setIndicatorPadding(left, top, right, bottom);
+setIndicatorPadding(left, top, right, bottom)
 ```
 
 - Set the gravity for both the dot indicators:
 
 ```kt
-setIndicatorGravity(Gravity.BOTTOM);
+setIndicatorGravity(Gravity.BOTTOM)
 ```
 
 - Set the alignment for both the dot indicators:
 
 ```kt
-setIndicatorAlignment(Alignment.BOTTOM);
+setIndicatorAlignment(Alignment.BOTTOM)
 ```
 
 - Set the indicator update mode:
 
 ```kt
-setIndicatorUpdateMode(indicatorUpdateMode.SYNC);
+setIndicatorUpdateMode(UpdateTypes.SYNC)
 ```
 
 - Set the indicator shape types programmatically:
 
 ```kt
-setIndicatorShapeTypes(indicatorShapeTypes.CIRCLE);
+setIndicatorShapeTypes(ShapeTypes.CIRCLE)
 ```
 
 - You can add animation like that, <b>38 Animations added</b>. You can check
@@ -614,7 +614,7 @@ setIndicatorShapeTypes(indicatorShapeTypes.CIRCLE);
   Animation List </a>
 
 ```kt
-jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT);
+jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
 ```
 
 - You can add 'addOnSlideChangeListener' if you really need
