@@ -29,43 +29,6 @@ import com.jummania.JSlider.IntObject.rules
 import com.jummania.JSlider.IntObject.selectedIndicatorColor
 import com.jummania.JSlider.IntObject.size
 import com.jummania.JSlider.IntObject.slidingDuration
-import com.jummania.animations.AntiClockSpin
-import com.jummania.animations.BackgroundToForeground
-import com.jummania.animations.CardStack
-import com.jummania.animations.ClockSpin
-import com.jummania.animations.CubeIn
-import com.jummania.animations.CubeInDepth
-import com.jummania.animations.CubeInRotation
-import com.jummania.animations.CubeInScaling
-import com.jummania.animations.CubeOut
-import com.jummania.animations.CubeOutDepth
-import com.jummania.animations.CubeOutRotation
-import com.jummania.animations.CubeOutScaling
-import com.jummania.animations.DepthSlide
-import com.jummania.animations.DepthSlide2
-import com.jummania.animations.DepthTransformation
-import com.jummania.animations.DepthZoomOut
-import com.jummania.animations.FadeOut
-import com.jummania.animations.FadePage
-import com.jummania.animations.FanTransformation
-import com.jummania.animations.FidgetSpinner
-import com.jummania.animations.FlipHorizontal
-import com.jummania.animations.FlipVertical
-import com.jummania.animations.ForegroundToBackground
-import com.jummania.animations.Gate
-import com.jummania.animations.Hinge
-import com.jummania.animations.Pop
-import com.jummania.animations.RotateDown
-import com.jummania.animations.RotateUp
-import com.jummania.animations.Spinner
-import com.jummania.animations.SpinnerTransformation
-import com.jummania.animations.TabletSlide
-import com.jummania.animations.Toss
-import com.jummania.animations.VerticalFlip
-import com.jummania.animations.VerticalShut
-import com.jummania.animations.ZoomFade
-import com.jummania.animations.ZoomIn
-import com.jummania.animations.ZoomOut
 import com.jummania.types.Alignment
 import com.jummania.types.AnimationTypes
 import com.jummania.types.ShapeTypes
@@ -848,61 +811,10 @@ class JSlider @JvmOverloads constructor(
      * @param animationType The type of animation to be applied.
      */
     fun setSlideAnimation(animationType: AnimationTypes) {
-        when (animationType) {
-            AnimationTypes.ANTI_CLOCK_SPIN -> jSlider.setPageTransformer(false, AntiClockSpin())
-            AnimationTypes.BACKGROUND_TO_FOREGROUND -> jSlider.setPageTransformer(
-                false, BackgroundToForeground()
-            )
-
-            AnimationTypes.CARD_STACK -> jSlider.setPageTransformer(false, CardStack())
-            AnimationTypes.CLOCK_SPIN -> jSlider.setPageTransformer(false, ClockSpin())
-            AnimationTypes.CUBE_IN_DEPTH -> jSlider.setPageTransformer(false, CubeInDepth())
-            AnimationTypes.CUBE_IN_ROTATION -> jSlider.setPageTransformer(false, CubeInRotation())
-            AnimationTypes.CUBE_IN_SCALING -> jSlider.setPageTransformer(false, CubeInScaling())
-            AnimationTypes.CUBE_OUT_DEPTH -> jSlider.setPageTransformer(false, CubeOutDepth())
-            AnimationTypes.CUBE_OUT_ROTATION -> jSlider.setPageTransformer(false, CubeOutRotation())
-            AnimationTypes.CUBE_OUT_SCALING -> jSlider.setPageTransformer(false, CubeOutScaling())
-            AnimationTypes.CUBE_IN -> jSlider.setPageTransformer(false, CubeIn())
-            AnimationTypes.CUBE_OUT -> jSlider.setPageTransformer(false, CubeOut())
-            AnimationTypes.DEPTH_SLIDE -> jSlider.setPageTransformer(false, DepthSlide())
-            AnimationTypes.DEPTH_SLIDE2 -> jSlider.setPageTransformer(false, DepthSlide2(jSlider))
-            AnimationTypes.DEPTH_TRANSFORMATION -> jSlider.setPageTransformer(
-                true, DepthTransformation()
-            )
-
-            AnimationTypes.DEPTH_ZOOM_OUT -> jSlider.setPageTransformer(false, DepthZoomOut())
-            AnimationTypes.FADEOUT -> jSlider.setPageTransformer(false, FadeOut())
-            AnimationTypes.FADE_PAGE -> jSlider.setPageTransformer(false, FadePage())
-            AnimationTypes.FAN_TRANSFORMATION -> jSlider.setPageTransformer(
-                false, FanTransformation()
-            )
-
-            AnimationTypes.FIDGET_SPINNER -> jSlider.setPageTransformer(false, FidgetSpinner())
-            AnimationTypes.FLIP_HORIZONTAL -> jSlider.setPageTransformer(false, FlipHorizontal())
-            AnimationTypes.FLIP_VERTICAL -> jSlider.setPageTransformer(false, FlipVertical())
-            AnimationTypes.FOREGROUND_TO_BACKGROUND -> jSlider.setPageTransformer(
-                false, ForegroundToBackground()
-            )
-
-            AnimationTypes.GATE -> jSlider.setPageTransformer(false, Gate())
-            AnimationTypes.HINGE -> jSlider.setPageTransformer(true, Hinge())
-            AnimationTypes.POP -> jSlider.setPageTransformer(false, Pop())
-            AnimationTypes.ROTATE_DOWN -> jSlider.setPageTransformer(false, RotateDown())
-            AnimationTypes.ROTATE_UP -> jSlider.setPageTransformer(false, RotateUp())
-            AnimationTypes.SPINNER -> jSlider.setPageTransformer(true, Spinner())
-            AnimationTypes.SPINNER_TRANSFORMATION -> jSlider.setPageTransformer(
-                false, SpinnerTransformation()
-            )
-
-            AnimationTypes.TABLET_SLIDE -> jSlider.setPageTransformer(false, TabletSlide())
-            AnimationTypes.TOSS -> jSlider.setPageTransformer(false, Toss())
-            AnimationTypes.VERTICAL_FLIP -> jSlider.setPageTransformer(false, VerticalFlip())
-            AnimationTypes.VERTICAL_SHUT -> jSlider.setPageTransformer(false, VerticalShut())
-            AnimationTypes.ZOOM_FADE -> jSlider.setPageTransformer(false, ZoomFade())
-            AnimationTypes.ZOOM_IN -> jSlider.setPageTransformer(false, ZoomIn())
-            AnimationTypes.ZOOM_OUT -> jSlider.setPageTransformer(false, ZoomOut())
-            AnimationTypes.DEFAULT -> jSlider.setPageTransformer(false, null)
+        animationType.getAnimation(jSlider) { reverse, animation ->
+            jSlider.setPageTransformer(reverse, animation)
         }
+
     }
 
 
