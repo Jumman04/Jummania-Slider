@@ -42,24 +42,18 @@ import com.jummania.animations.ZoomOut
 
 /**
  *
- *  * Created by Jummania on 17,November,2023.
+ *  * Created by Jummania and Edited by MD ABDULLA on 23,November,2023.
  *  * Email: sharifuddinjumman@gmail.com
  *  * Dhaka, Bangladesh.
  *
  * Enumeration representing different animation types for use in sliders.
  * Each constant corresponds to a specific animation style that can be applied to the slider.
- * - [ANTI_CLOCK_SPIN]: Animation with anti-clockwise spinning effect.
- * - [BACKGROUND_TO_FOREGROUND]: Animation transitioning from background to foreground.
- * - [CARD_STACK]: Animation simulating a card stack effect.
- * ... (other animation types)
- * - [ZOOM_OUT]: Zoom out animation effect.
- * - [DEFAULT]: Default animation type.
  */
 enum class AnimationTypes(
-    private val reverse: Boolean = false,
-    private val onGetAnim: (ViewPager) -> PageTransformer?
+    internal val reverse: Boolean = false,
+    internal val onGetAnim: (ViewPager) -> PageTransformer?
 ) {
-    ANTI_CLOCK_SPIN(onGetAnim = { AntiClockSpin() }),
+    ANTI_CLOCK_SPIN(false, { AntiClockSpin() }),
     BACKGROUND_TO_FOREGROUND(false, { BackgroundToForeground() }),
     CARD_STACK(false, { CardStack() }),
     CLOCK_SPIN(false, { ClockSpin() }),
@@ -97,8 +91,4 @@ enum class AnimationTypes(
     ZOOM_IN(false, { ZoomIn() }),
     ZOOM_OUT(false, { ZoomOut() }),
     DEFAULT(false, { null });
-
-    fun getAnimation(pager: ViewPager,onReceived:(Boolean,PageTransformer) -> Unit) {
-        onGetAnim(pager)?.let { onReceived(reverse, it) }
-    }
 }

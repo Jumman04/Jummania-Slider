@@ -10,6 +10,7 @@ import kotlin.math.abs
  * Dhaka, Bangladesh.
  */
 internal class AntiClockSpin : ViewPager.PageTransformer {
+
     override fun transformPage(page: View, position: Float) {
         page.translationX = -position * page.width
         if (abs(position) < 0.5) {

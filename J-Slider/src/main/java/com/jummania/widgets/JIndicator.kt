@@ -30,7 +30,7 @@ internal abstract class JIndicator(
     }
 
     // Path object used for drawing shapes
-    // private val path by lazy { Path() }
+    private val path by lazy { Path() }
 
     /**
      * Override the onDraw method to draw a colored shape in the center of the layout.
@@ -40,7 +40,7 @@ internal abstract class JIndicator(
     override fun onDraw(canvas: Canvas) {
         // Draw the specified shape indicator with the given color
         // Draw a colored circle in the center of the layout
-        shapeTypes.draw(width, height, paint, canvas)
+        shapeTypes.onDraw(width, height, paint, canvas, path)
     }
 
     /**

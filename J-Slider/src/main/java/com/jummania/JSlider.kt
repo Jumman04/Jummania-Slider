@@ -811,10 +811,7 @@ class JSlider @JvmOverloads constructor(
      * @param animationType The type of animation to be applied.
      */
     fun setSlideAnimation(animationType: AnimationTypes) {
-        animationType.getAnimation(jSlider) { reverse, animation ->
-            jSlider.setPageTransformer(reverse, animation)
-        }
-
+        jSlider.setPageTransformer(animationType.reverse, animationType.onGetAnim(jSlider))
     }
 
 

@@ -5,7 +5,7 @@ import android.graphics.Paint
 import android.graphics.Path
 
 /**
- *  * Created by Jummania on 17,November,2023.
+ *  * Created by Jummania and Edited by MD ABDULLA on 23,November,2023.
  *  * Email: sharifuddinjumman@gmail.com
  *  * Dhaka, Bangladesh.
  *
@@ -13,14 +13,14 @@ import android.graphics.Path
  * The available shapes are defined by the [ShapeTypes] enum class.
  *
  */
-enum class ShapeTypes(private val onDraw: (Int, Int, Paint, Canvas,) -> Unit) {
-    CIRCLE(onDraw = {width,height,paint,canvas->
+enum class ShapeTypes(internal val onDraw: (Int, Int, Paint, Canvas, Path) -> Unit) {
+
+    CIRCLE({ width, height, paint, canvas, _ ->
         canvas.drawCircle(
             (width / 2f), height / 2f, (kotlin.math.min(width, height) / 2f), paint
         )
     }),
-    HEART({width,height,paint,canvas->
-        val path = Path()
+    HEART({ width, height, paint, canvas, path ->
         // Starting point
         path.moveTo(width / 2f, height / 5f)
 
@@ -56,11 +56,10 @@ enum class ShapeTypes(private val onDraw: (Int, Int, Paint, Canvas,) -> Unit) {
 
         canvas.drawPath(path, paint)
     }),
-    SQUARE({width,height,paint,canvas->
+    SQUARE({ width, height, paint, canvas, _ ->
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
     }),
-    STAR({width,height,paint,canvas->
-        val path = Path()
+    STAR({ width, height, paint, canvas, path ->
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
 
@@ -106,7 +105,4 @@ enum class ShapeTypes(private val onDraw: (Int, Int, Paint, Canvas,) -> Unit) {
         canvas.drawPath(path, paint)
     });
 
-    fun draw(width:Int, height: Int, paint: Paint, canvas: Canvas) {
-        onDraw(width, height, paint, canvas)
-    }
 }
