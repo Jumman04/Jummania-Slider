@@ -793,8 +793,10 @@ class JSlider @JvmOverloads constructor(
         val selectedDotLayoutParams = selectedIndicatorLayout.layoutParams as LayoutParams
 
         // Remove existing alignment rules
-        for (rule in rules) dotLayoutParams.removeRule(rule)
-        for (rule in rules) selectedDotLayoutParams.removeRule(rule)
+        for (rule in rules) {
+            dotLayoutParams.removeRule(rule)
+            selectedDotLayoutParams.removeRule(rule)
+        }
 
         // Set the new alignment for both dot and selected indicators
         val gravity = alignment.alignment
