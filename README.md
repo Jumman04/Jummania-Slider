@@ -67,32 +67,11 @@ Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
 ---
 
-<details>
-  <summary>For Kotlin</summary>
-  <br>
-
-  ```gradle
+ ```gradle
 dependencies {
-    implementation 'com.github.Jumman04:Jummania-Slider:3.6'
+    implementation 'com.github.Jumman04:Jummania-Slider:3.9'
 }
 ```
-  </details>
-  
----
-
-<details>
-  <summary>For Java</summary>
-  <br>
-
-  ```gradle
-dependencies {
-    implementation 'com.github.Jumman04:Jummania-Slider:3.5'
-}
-```
-### Note for Java Developers:
-Our latest library may not be fully compatible with Java. You can still use it, but be aware of potential issues.
-
-  </details>
 
 
  </details>
@@ -332,7 +311,7 @@ app:slideAnimation="CUBE_OUT"
 
 
  <details>
-  <summary>For Kotlin</summary>
+  <summary>Programetic Attributes</summary>
   <br>
  
 
@@ -501,183 +480,8 @@ jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
 ```
 </details>
 
----
 
 
-
- <details>
-	
-  <summary>For Java</summary>
-	 <br>
-
-  
-- Set the sliding duration:
-
-```kt
-setSlidingDuration(2222)
-```
-
-- Set the indicator size:
-
-```kt
-setIndicatorSize(15)
-```
-
-- Set the indicator colors:
-
-```kt
-setIndicatorColor(defaultColor, selectedColor)
-```
-
-- Enable or disable the indicator:
-
-```kt
-enableIndicator(true)
-```
-
-- Enable or disable auto-sliding:
-
-```kt
-enableAutoSliding(true)
-```
-
-- Set a custom page transformer:
-
-```kt
-setPageTransformer(true, PageTransformer())
-```
-
-- Set padding for the slider:
-
-```kt
-setSliderPadding(left, top, right, bottom)
-```
-
-- Set horizontal margin for the indicator dots:
-
-```kt
-setIndicatorMarginHorizontal(3)
-```
-
-- To start or stop auto-sliding:
-
-```kt
-startAutoSliding()
-stopAutoSliding()
-```
-
-- Slide to the next and previous page:
-
-```kt
-slideNext()
-slidePrevious()
-```
-
-- Check if the slider is currently sliding:
-
-```kt
-isSliding()
-```
-
-- Set padding for the indicator dots programmatically:
-
-```kt
-setIndicatorPadding(left, top, right, bottom)
-```
-
-- Set the gravity for both the dot indicators:
-
-```kt
-setIndicatorGravity(Gravity.BOTTOM)
-```
-
-- Set the alignment for both the dot indicators:
-
-```kt
-setIndicatorAlignment(Alignment.BOTTOM)
-```
-
-- Set the indicator update mode:
-
-```kt
-setIndicatorUpdateMode(UpdateTypes.SYNC)
-```
-
-- Set the indicator shape types programmatically:
-
-```kt
-setIndicatorShapeTypes(ShapeTypes.CIRCLE)
-```
-
-- You can add animation like that, <b>38 Animations added</b>. You can check
-  in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/types/AnimationTypes.kt">
-  Animation List </a>
-
-```kt
-jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
-```
-
-- You can add 'addOnSlideChangeListener' if you really need
-
-```Java
-jSlider.addOnSlideChangeListener(new JSlider.OnSlideChangeListener() {
-    @Override
-    public void onSliderScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d("JSlider", "position: " + position + ", positionOffset: " + positionOffset +
-                ", positionOffsetPixels: " + positionOffsetPixels);
-    }
-
-    @Override
-    public void onSliderSelected(int position) {
-        Log.d("JSlider", "position: " + position);
-    }
-
-    @Override
-    public void onSliderScrollStateChanged(int state) {
-        Log.d("JSlider", "state: " + state);
-    }
-});
-```
-
-- If you want to Reverse-less slide:
-
-```Java
-private class InfinitySlider extends JSlider.InfinitySlider {
-    @Override
-    public int itemCount() {
-        return 3;
-    }
-
-    @Override
-    public View getView(LayoutInflater layoutInflater, ViewGroup parent) {
-        return layoutInflater.inflate(R.layout.item_slider2, parent, false);
-    }
-
-    @Override
-    public void onSliderCreate(View view, int position) {
-        TextView textView = view.findViewById(R.id.text_view);
-        ImageView imageView = view.findViewById(R.id.image_view);
-
-        Picasso.get()
-                .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
-                .error(R.drawable.default_error)
-                .placeholder(R.drawable.default_loading)
-                .into(imageView);
-
-        textView.setText(getString(R.string.Developer_Name));
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, getString(R.string.Developer_Name),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-}
-```
-	 
- </details>
  
 
 </details>
