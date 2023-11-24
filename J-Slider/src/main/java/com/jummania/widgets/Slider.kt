@@ -2,6 +2,7 @@ package com.jummania.widgets
 
 import android.content.Context
 import androidx.viewpager.widget.ViewPager
+import com.jummania.JSlider.Companion.measureSpec
 
 /**
  * Abstract class representing a custom ViewPager with adjusted height.
@@ -9,11 +10,9 @@ import androidx.viewpager.widget.ViewPager
  *  * Email: sharifuddinjumman@gmail.com
  *  * Dhaka, Bangladesh.
  *
- * @param measureSpec The measurement specification for height.
  * @param context The context in which the Slider is created.
  */
-internal abstract class Slider(context: Context, private val measureSpec: Int) :
-    ViewPager(context) {
+internal abstract class Slider(context: Context) : ViewPager(context) {
 
     /**
      * Override the onMeasure method to adjust the height of the ViewPager.

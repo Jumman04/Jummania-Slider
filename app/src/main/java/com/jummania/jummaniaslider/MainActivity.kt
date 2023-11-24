@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
          *     CUBE_OUT,
          *     DEPTH_PAGE,
          *     DEPTH_SLIDE,
+         *     DEPTH_SLIDE2,
          *     DEPTH_TRANSFORMATION,
          *     DEPTH_ZOOM_OUT,
          *     FADEOUT,

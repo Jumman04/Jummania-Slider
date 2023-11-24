@@ -24,7 +24,6 @@ import com.jummania.JSlider.BooleanObject.isSliding
 import com.jummania.JSlider.IntObject.defaultIndicatorColor
 import com.jummania.JSlider.IntObject.indicatorMarginHorizontal
 import com.jummania.JSlider.IntObject.indicatorUpdateType
-import com.jummania.JSlider.IntObject.measureSpec
 import com.jummania.JSlider.IntObject.rules
 import com.jummania.JSlider.IntObject.selectedIndicatorColor
 import com.jummania.JSlider.IntObject.size
@@ -101,7 +100,6 @@ class JSlider @JvmOverloads constructor(
 
     // Object to store integer values related to the slider configuration
     private object IntObject {
-        var measureSpec: Int = 0 // Measure spec for the slider
         var slidingDuration: Long = 1555 // Sliding duration in milliseconds
         var size = 30 // Size of the dot indicator
         var indicatorMarginHorizontal = 6 // Horizontal margin between dot indicators
@@ -869,7 +867,7 @@ class JSlider @JvmOverloads constructor(
     private inner class JIndicator(context: Context?, shapeTypes: ShapeTypes) :
         com.jummania.widgets.JIndicator(context, shapeTypes)
 
-    private inner class Slider(context: Context) : com.jummania.widgets.Slider(context, measureSpec)
+    private inner class Slider(context: Context) : com.jummania.widgets.Slider(context)
 
     /**
      * Override the onMeasure method to adjust the height of the ViewPager.
@@ -942,6 +940,10 @@ class JSlider @JvmOverloads constructor(
     fun addOnSlideChangeListener(listener: OnSlideChangeListener) {
         // Set the provided listener as the listener for slide change events in the JSlider
         this@JSlider.listener = listener
+    }
+
+    internal companion object {
+        internal var measureSpec: Int = 0
     }
 
 }
