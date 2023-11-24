@@ -309,7 +309,7 @@ app:slideAnimation="CUBE_OUT"
 
 
  <details>
-  <summary>Programetic Attributes</summary>
+  <summary>Programmatic Attributes</summary>
   <br>
  
 
