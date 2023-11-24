@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:indicatorPaddingBottom="22dp"
-        app:slideAnimation="CUBE_OUT"
+        app:slideAnimation="DEPTH_SLIDE2"
         app:slidingDuration="2222" />
 
 

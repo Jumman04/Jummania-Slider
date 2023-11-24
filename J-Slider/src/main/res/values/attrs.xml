@@ -116,30 +116,31 @@
             <enum name="CUBE_IN" value="10" />
             <enum name="CUBE_OUT" value="11" />
             <enum name="DEPTH_SLIDE" value="12" />
-            <enum name="DEPTH_TRANSFORMATION" value="13" />
-            <enum name="DEPTH_ZOOM_OUT" value="14" />
-            <enum name="FADEOUT" value="15" />
-            <enum name="FADE_PAGE" value="16" />
-            <enum name="FAN_TRANSFORMATION" value="17" />
-            <enum name="FIDGET_SPINNER" value="18" />
-            <enum name="FLIP_HORIZONTAL" value="19" />
-            <enum name="FLIP_VERTICAL" value="20" />
-            <enum name="FOREGROUND_TO_BACKGROUND" value="21" />
-            <enum name="GATE" value="22" />
-            <enum name="HINGE" value="23" />
-            <enum name="POP" value="24" />
-            <enum name="ROTATE_DOWN" value="25" />
-            <enum name="ROTATE_UP" value="26" />
-            <enum name="SPINNER" value="27" />
-            <enum name="SPINNER_TRANSFORMATION" value="28" />
-            <enum name="TABLET_SLIDE" value="29" />
-            <enum name="TOSS" value="30" />
-            <enum name="VERTICAL_FLIP" value="31" />
-            <enum name="VERTICAL_SHUT" value="32" />
-            <enum name="ZOOM_FADE" value="33" />
-            <enum name="ZOOM_IN" value="34" />
-            <enum name="ZOOM_OUT" value="35" />
-            <enum name="DEFAULT" value="-1" />
+            <enum name="DEPTH_SLIDE2" value="13" />
+            <enum name="DEPTH_TRANSFORMATION" value="14" />
+            <enum name="DEPTH_ZOOM_OUT" value="15" />
+            <enum name="FADEOUT" value="16" />
+            <enum name="FADE_PAGE" value="17" />
+            <enum name="FAN_TRANSFORMATION" value="18" />
+            <enum name="FIDGET_SPINNER" value="19" />
+            <enum name="FLIP_HORIZONTAL" value="20" />
+            <enum name="FLIP_VERTICAL" value="21" />
+            <enum name="FOREGROUND_TO_BACKGROUND" value="22" />
+            <enum name="GATE" value="23" />
+            <enum name="HINGE" value="24" />
+            <enum name="POP" value="25" />
+            <enum name="ROTATE_DOWN" value="26" />
+            <enum name="ROTATE_UP" value="27" />
+            <enum name="SPINNER" value="28" />
+            <enum name="SPINNER_TRANSFORMATION" value="29" />
+            <enum name="TABLET_SLIDE" value="30" />
+            <enum name="TOSS" value="31" />
+            <enum name="VERTICAL_FLIP" value="32" />
+            <enum name="VERTICAL_SHUT" value="33" />
+            <enum name="ZOOM_FADE" value="34" />
+            <enum name="ZOOM_IN" value="35" />
+            <enum name="ZOOM_OUT" value="36" />
+            <enum name="DEFAULT" value="37" />
         </attr>
 
     </declare-styleable>
