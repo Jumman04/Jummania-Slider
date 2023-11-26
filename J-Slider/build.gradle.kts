@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.viewpager:viewpager:1.0.0@aar")
 }
 
@@ -43,7 +42,7 @@ afterEvaluate {
             register<MavenPublication>("release") {
                 groupId = "com.github.Jumman04"
                 artifactId = "Jummania-Slider"
-                version = "Test(1)"
+                version = "2.9(alpha)"
 
                 afterEvaluate {
                     from(components["release"])
