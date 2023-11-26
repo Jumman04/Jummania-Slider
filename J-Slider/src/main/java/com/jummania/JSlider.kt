@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -139,100 +140,125 @@ class JSlider @JvmOverloads constructor(
     private lateinit var listener: OnSlideChangeListener
 
     init {
-        // Obtain styled attributes from XML
-        val typedArray: TypedArray = context.theme.obtainStyledAttributes(
-            attrs, R.styleable.JSlider, defStyleAttr, defStyleAttr
-        )
 
-        // Set sliding duration based on the attribute, default to 1555 milliseconds
-        setSlidingDuration(
-            typedArray.getInt(R.styleable.JSlider_slidingDuration, 1555).toLong()
-        )
-
-        // Set indicator size based on the attribute, default to 30 pixels
-        setIndicatorSize(
-            typedArray.getDimensionPixelSize(
-                R.styleable.JSlider_indicatorSize, 30
+        try {
+            // Obtain styled attributes from XML
+            val typedArray: TypedArray = context.theme.obtainStyledAttributes(
+                attrs, R.styleable.JSlider, defStyleAttr, defStyleAttr
             )
-        )
 
-        // Set padding for the slider based on left, top, right, and bottom attributes
-        setSliderPadding(
-            typedArray.getDimensionPixelSize(R.styleable.JSlider_sliderPaddingLeft, 0),
-            typedArray.getDimensionPixelSize(R.styleable.JSlider_sliderPaddingTop, 0),
-            typedArray.getDimensionPixelSize(R.styleable.JSlider_sliderPaddingRight, 0),
-            typedArray.getDimensionPixelSize(R.styleable.JSlider_sliderPaddingBottom, 0)
-        )
+            try {
 
-        // Enable or disable auto-sliding based on the attribute, default to true
-        enableAutoSliding(typedArray.getBoolean(R.styleable.JSlider_enableAutoSliding, true))
+                // Set sliding duration based on the attribute, default to 1555 milliseconds
+                setSlidingDuration(
+                    typedArray.getInt(R.styleable.JSlider_slidingDuration, 1555).toLong()
+                )
 
-        // Enable or disable the indicator based on the attribute, default to true
-        enableIndicator(typedArray.getBoolean(R.styleable.JSlider_enableIndicator, true))
+                // Set indicator size based on the attribute, default to 30 pixels
+                setIndicatorSize(
+                    typedArray.getDimensionPixelSize(
+                        R.styleable.JSlider_indicatorSize, 30
+                    )
+                )
 
-        // Set indicator colors based on the attributes, default to semi-transparent white and white
-        setIndicatorColor(
-            typedArray.getColor(
-                R.styleable.JSlider_defaultIndicatorColor, Color.parseColor("#90ffffff")
-            ), typedArray.getColor(R.styleable.JSlider_selectedIndicatorColor, Color.WHITE)
-        )
+                // Set padding for the slider based on left, top, right, and bottom attributes
+                setSliderPadding(
+                    typedArray.getDimensionPixelSize(R.styleable.JSlider_sliderPaddingLeft, 0),
+                    typedArray.getDimensionPixelSize(R.styleable.JSlider_sliderPaddingTop, 0),
+                    typedArray.getDimensionPixelSize(R.styleable.JSlider_sliderPaddingRight, 0),
+                    typedArray.getDimensionPixelSize(R.styleable.JSlider_sliderPaddingBottom, 0)
+                )
 
-        // Set padding for the indicator based on left, top, right, and bottom attributes
-        setIndicatorPadding(
-            typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingLeft, 0),
-            typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingTop, 0),
-            typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingRight, 0),
-            typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingBottom, 55)
-        )
+                // Enable or disable auto-sliding based on the attribute, default to true
+                enableAutoSliding(
+                    typedArray.getBoolean(
+                        R.styleable.JSlider_enableAutoSliding, true
+                    )
+                )
 
-        // Set horizontal margin for the indicator dots, default to 6 pixels
-        setIndicatorMarginHorizontal(
-            typedArray.getDimensionPixelSize(
-                R.styleable.JSlider_indicatorMarginHorizontal, 6
-            )
-        )
+                // Enable or disable the indicator based on the attribute, default to true
+                enableIndicator(typedArray.getBoolean(R.styleable.JSlider_enableIndicator, true))
 
-        // Set slide animation based on the specified attribute
-        setSlideAnimation(
-            AnimationTypes.values()[typedArray.getInt(
-                R.styleable.JSlider_slideAnimation, AnimationTypes.DEFAULT.ordinal
-            )]
-        )
+                // Set indicator colors based on the attributes, default to semi-transparent white and white
+                setIndicatorColor(
+                    typedArray.getColor(
+                        R.styleable.JSlider_defaultIndicatorColor, Color.parseColor("#90ffffff")
+                    ), typedArray.getColor(R.styleable.JSlider_selectedIndicatorColor, Color.WHITE)
+                )
 
-        // Set indicator alignment based on the specified attribute
-        setIndicatorAlignment(
-            Alignment.values()[typedArray.getInt(
-                R.styleable.JSlider_indicatorAlignment, Alignment.BOTTOM.ordinal
-            )]
-        )
-        // Set indicator gravity based on the specified attribute
-        setIndicatorGravity(typedArray.getInt(R.styleable.JSlider_indicatorGravity, Gravity.CENTER))
+                // Set padding for the indicator based on left, top, right, and bottom attributes
+                setIndicatorPadding(
+                    typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingLeft, 0),
+                    typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingTop, 0),
+                    typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingRight, 0),
+                    typedArray.getDimensionPixelSize(R.styleable.JSlider_indicatorPaddingBottom, 55)
+                )
 
-        // Set indicator update mode based on the specified attribute
-        setIndicatorUpdateTypes(
-            UpdateTypes.values()[typedArray.getInt(
-                R.styleable.JSlider_indicatorUpdateMode, UpdateTypes.SYNC.ordinal
-            )]
-        )
+                // Set horizontal margin for the indicator dots, default to 6 pixels
+                setIndicatorMarginHorizontal(
+                    typedArray.getDimensionPixelSize(
+                        R.styleable.JSlider_indicatorMarginHorizontal, 6
+                    )
+                )
 
-        // Setting the indicator shape type for a JSlider.
-        // This assumes that there is an enum called ShapeTypes defined
-        // in the JSlider class or its associated class, which represents the available shape types.
+                // Set slide animation based on the specified attribute
+                setSlideAnimation(
+                    AnimationTypes.values()[typedArray.getInt(
+                        R.styleable.JSlider_slideAnimation, AnimationTypes.DEFAULT.ordinal
+                    )]
+                )
 
-        // Obtain a reference to the ShapeTypes enum and set the selected shape type based on the attributes
-        // specified in the XML layout using the R.styleable.JSlider_indicatorShapeTypes attribute.
-        // If the attribute is not defined, default to ShapeTypes.CIRCLE.
-        setIndicatorShapeTypes(
-            ShapeTypes.values()[typedArray.getInt(
-                R.styleable.JSlider_indicatorShapeTypes, ShapeTypes.CIRCLE.ordinal
-            )]
-        )
+                // Set indicator alignment based on the specified attribute
+                setIndicatorAlignment(
+                    Alignment.values()[typedArray.getInt(
+                        R.styleable.JSlider_indicatorAlignment, Alignment.BOTTOM.ordinal
+                    )]
+                )
+                // Set indicator gravity based on the specified attribute
+                setIndicatorGravity(
+                    typedArray.getInt(
+                        R.styleable.JSlider_indicatorGravity, Gravity.CENTER
+                    )
+                )
 
+                // Set indicator update mode based on the specified attribute
+                setIndicatorUpdateTypes(
+                    UpdateTypes.values()[typedArray.getInt(
+                        R.styleable.JSlider_indicatorUpdateMode, UpdateTypes.SYNC.ordinal
+                    )]
+                )
 
-        // Add the slider and indicator layout to the view
-        addView(jSlider)
-        addView(dotIndicatorLayout)
-        addView(selectedIndicatorLayout)
+                // Setting the indicator shape type for a JSlider.
+                // This assumes that there is an enum called ShapeTypes defined
+                // in the JSlider class or its associated class, which represents the available shape types.
+
+                // Obtain a reference to the ShapeTypes enum and set the selected shape type based on the attributes
+                // specified in the XML layout using the R.styleable.JSlider_indicatorShapeTypes attribute.
+                // If the attribute is not defined, default to ShapeTypes.CIRCLE.
+                setIndicatorShapeTypes(
+                    ShapeTypes.values()[typedArray.getInt(
+                        R.styleable.JSlider_indicatorShapeTypes, ShapeTypes.CIRCLE.ordinal
+                    )]
+                )
+
+            } finally {
+                // Recycle the TypedArray to avoid memory leaks
+                typedArray.recycle()
+            }
+
+            // Add the slider and indicator layout to the view
+            addView(jSlider)
+            addView(dotIndicatorLayout)
+            addView(selectedIndicatorLayout)
+
+        } catch (e: Resources.NotFoundException) {
+            Log.e("JSlider Initialization", "Resource not found: ${e.message}")
+            e.printStackTrace()
+        } catch (e: Exception) {
+            Log.e("JSlider Initialization", "An unexpected error occurred: ${e.message}")
+            e.printStackTrace()
+        }
+
     }
 
 

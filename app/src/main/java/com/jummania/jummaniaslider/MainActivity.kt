@@ -5,12 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.jummania.JSlider
-import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
 
@@ -122,21 +119,22 @@ class MainActivity : AppCompatActivity() {
 
         override fun onSliderCreate(view: View, position: Int) {
 
+            /*
             val textView: TextView = view.findViewById(R.id.text_view) //find your child
             val imageView: ImageView = view.findViewById(R.id.image_view)
-
             Picasso.get()
                 .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
                 .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
                 .into(imageView)
 
-            textView.text = getString(R.string.Developer_Name)
+                textView.text = getString(R.string.Developer_Name)
+
+             */
 
             view.setOnClickListener {
-
                 Toast.makeText(
                     this@MainActivity,
-                    getString(R.string.Developer_Name) + "\nItem Position: $position",
+                    "Developer Name: ${getString(R.string.Developer_Name)}\nItem Position: $position",
                     Toast.LENGTH_SHORT
                 ).show()
             }

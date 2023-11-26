@@ -51,8 +51,7 @@ import com.jummania.animations.ZoomOut
  */
 enum class AnimationTypes(
     internal val reverse: Boolean = false,
-    internal val onGetAnim: (ViewPager) -> PageTransformer?
-) {
+    internal val onGetAnim: (ViewPager) -> PageTransformer?) {
     ANTI_CLOCK_SPIN(false, { AntiClockSpin() }),
     BACKGROUND_TO_FOREGROUND(false, { BackgroundToForeground() }),
     CARD_STACK(false, { CardStack() }),

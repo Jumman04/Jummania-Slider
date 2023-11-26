@@ -14,7 +14,8 @@
             android:id="@+id/image_view"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/img" />
 
         <TextView
             android:id="@+id/text_view"
@@ -27,6 +28,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="44dp"
             android:singleLine="true"
+            android:text="@string/Developer_Name"
             android:textSize="18sp"
             android:textStyle="bold" />
 

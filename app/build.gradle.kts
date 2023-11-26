@@ -11,8 +11,8 @@ android {
         applicationId = "com.jummania.jummaniaslider"
         minSdk = 17
         targetSdk = 34
-        versionCode = 3
-        versionName = "2.9(alpha)"
+        versionCode = 4
+        versionName = "4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -21,8 +21,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -41,8 +40,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation(project(":J-Slider"))
-
-    implementation("com.squareup.picasso:picasso:2.8")
 
     //./gradlew assembleRelease
 }

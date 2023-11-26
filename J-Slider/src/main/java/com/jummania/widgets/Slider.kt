@@ -45,9 +45,9 @@ internal abstract class Slider(context: Context) : ViewPager(context) {
                 widthMeasureSpec,
                 MeasureSpec.makeMeasureSpec(child.measuredHeight, MeasureSpec.EXACTLY)
             )
-        } else {
-            // If the height mode is EXACTLY or unspecified, use the original onMeasure
+        } else
+        // If the height mode is EXACTLY or unspecified, use the original onMeasure
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        }
+
     }
 }

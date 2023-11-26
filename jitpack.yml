@@ -4,5 +4,5 @@ jdk:
 before_install:
   - ./scripts/prepareJitpackEnvironment.sh
 install:
-  - FILE="-Dfile=J-Slider-debug.aar"
-  - mvn install:install-file $FILE -DgroupId=com.github.Jumman04 -DartifactId=Jummania-Slider -Dversion=2.9(alpha) -Dpackaging=aar -DgeneratePom=true
+  - FILE="-Dfile=J-Slider-release.aar"
+  - mvn install:install-file $FILE -DgroupId=com.github.Jumman04 -DartifactId=Jummania-Slider -Dversion=4.0 -Dpackaging=aar -DgeneratePom=true
