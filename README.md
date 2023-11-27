@@ -67,10 +67,29 @@ Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
  ```gradle
 dependencies {
+	//if these libraries exist and consider upgrading to their latest versions
+    implementation("androidx.appcompat:appcompat:1.6.1") 
+    implementation("com.google.android.material:material:1.10.0")
     implementation 'com.github.Jumman04:Jummania-Slider:3.9'
 }
 ```
 
+## Step 3: Configure compileSdk
+
+Make sure to set the compileSdk to 34 in your app module's build.gradle file:
+
+ ```gradle
+android {
+    compileSdk 34
+    defaultConfig {
+        // other configurations
+    }
+}
+```
+## Important Note: 
+Jummania-Slider requires at least version `1.6.1` of `androidx.appcompat` and version `1.10.0` of `com.google.android.material`.<br>
+
+**Using older versions may result in compatibility issues and could lead to app crashes.**
 
  </details>
 
