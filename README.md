@@ -1,4 +1,3 @@
-
 <a href="https://github.com/Jumman04/Jummania-Slider"></a>
 
 <h1 align="center">J-Slider for Android!</h1>  
@@ -68,9 +67,9 @@ Add the Jummania-Slider dependency to your app module's `build.gradle` file:
  ```gradle
 dependencies {
 	//if these libraries exist and consider upgrading to their latest versions
-    implementation("androidx.appcompat:appcompat:1.6.1") 
-    implementation("com.google.android.material:material:1.10.0")
-    implementation 'com.github.Jumman04:Jummania-Slider:3.9'
+    implementation("androidx.appcompat:appcompat:$latestVersion") // at least 1.6.1 to use Jummania Slider
+    implementation("com.google.android.material:material:$latestVersion") // at least 1.10.0 to use Jummania Slider
+    implementation("com.github.Jumman04:Jummania-Slider:4.0")
 }
 ```
 
