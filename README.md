@@ -1,5 +1,5 @@
 <h1 align="center">Jummania View Slider for Android!</h1>
-<h3 align="center"><b><i>Just inflate your view and start sliding!</i></b></h3><br>
+<h3 align="center"><b><i>Just inflate your view and start sliding!</i></b></h3>
 
 <a href="https://github.com/Jumman04/Jummania-Slider">  
 <img align="left" src="https://github-production-user-asset-6210df.s3.amazonaws.com/113237846/284076921-b31614c3-e3cb-40a6-ab4b-31c9b9517dda.gif"  />  </a>  
