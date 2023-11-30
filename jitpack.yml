@@ -1,9 +1,13 @@
 # configuration file for building snapshots and releases with jitpack.io
 jdk:
-  - openjdk17
+  - openjdk8  # Use openjdk8 for Android projects
 
 before_install:
   - ./scripts/prepareJitpackEnvironment.sh
 
 install:
-  - mvn install
+  - echo "Installing dependencies..."
+  - mvn clean install -P android-release
+
+# If you have custom Maven settings or repositories, you might want to include them here.
+# Add Maven configuration options as needed.
