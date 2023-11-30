@@ -153,7 +153,6 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
   <br>
 
  ```Java
-public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
     jSlider.setSlider(new DefaultSlider());
   }
 
-  private static class DefaultSlider extends JSlider.DefaultSlider {
+//Out of onCreate, Create a Class for Slider
+  private class DefaultSlider extends JSlider.DefaultSlider {
     @Override
     public View getView(LayoutInflater layoutInflater, ViewGroup parent) {
       return layoutInflater.inflate(R.layout.item_slider2, parent, false);
@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
       return 3;
     }
   }
-}
 ```
 </details>
 
