@@ -1,0 +1,107 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.github.Jumman04",
+    "module": "Jummania-Slider",
+    "version": "4.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "Jummania-Slider-4.0.aar",
+          "url": "Jummania-Slider-4.0.aar",
+          "size": 116207,
+          "sha512": "25730b4c2e35f5173c9b20b3c7677f2dc46ff550c45e4fc54a9382e81478ec62a41b6f15f9da84983a2f6d104a6340bb9d2f8e1791cdcd40707bb3fb4b4c3a65",
+          "sha256": "1924095b4ff942407d000bd1db6c8c4fbfcb64ad6d985a1747f3cbf6e57553da",
+          "sha1": "29fd3922600699cc6067d71558b366a8701246d1",
+          "md5": "d0da458a6275b6ab3e73d6d8d4c3f48d"
+        }
+      ]
+    },
+    {
+      "name": "releaseRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.viewpager",
+          "module": "viewpager",
+          "version": {
+            "requires": "1.0.0"
+          },
+          "excludes": [
+            {
+              "group": "*",
+              "module": "*"
+            }
+          ],
+          "thirdPartyCompatibility": {
+            "artifactSelector": {
+              "name": "viewpager",
+              "type": "aar",
+              "extension": "aar"
+            }
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.9.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "Jummania-Slider-4.0.aar",
+          "url": "Jummania-Slider-4.0.aar",
+          "size": 116207,
+          "sha512": "25730b4c2e35f5173c9b20b3c7677f2dc46ff550c45e4fc54a9382e81478ec62a41b6f15f9da84983a2f6d104a6340bb9d2f8e1791cdcd40707bb3fb4b4c3a65",
+          "sha256": "1924095b4ff942407d000bd1db6c8c4fbfcb64ad6d985a1747f3cbf6e57553da",
+          "sha1": "29fd3922600699cc6067d71558b366a8701246d1",
+          "md5": "d0da458a6275b6ab3e73d6d8d4c3f48d"
+        }
+      ]
+    },
+    {
+      "name": "releaseSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "Jummania-Slider-4.0-sources.jar",
+          "url": "Jummania-Slider-4.0-sources.jar",
+          "size": 72523,
+          "sha512": "0cd8395b55b5d2f9fae90608d9418884414b299e85e6383d7d4d112a1de09516305a89c59ddeb3b9f9739c75799ed19201f3a66e38e41e3340f3b6702de8647b",
+          "sha256": "cd902867cc4a199d9ff11a3ba1c0f524c3cd94c3a6b9bede9ad79a83f128c818",
+          "sha1": "c7d18927e081665ed9f48c5d5f66c92264922c08",
+          "md5": "4199059030a9d2f08fe1abb1c4fd15fa"
+        }
+      ]
+    }
+  ]
+}

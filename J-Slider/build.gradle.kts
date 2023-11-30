@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation("androidx.viewpager:viewpager:1.0.0@aar")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
 }
 
 afterEvaluate {
