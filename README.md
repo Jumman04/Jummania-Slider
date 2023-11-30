@@ -55,7 +55,7 @@ Add the JitPack repository to your project's root `settings.gradle` file:
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        maven { url 'https://jitpack.io' }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
@@ -66,29 +66,11 @@ Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
  ```gradle
 dependencies {
-	//if these libraries exist and consider upgrading to their latest versions
-    implementation("androidx.appcompat:appcompat:$latestVersion") // at least 1.6.1 to use Jummania Slider
-    implementation("com.google.android.material:material:$latestVersion") // at least 1.10.0 to use Jummania Slider
-    implementation("com.github.Jumman04:Jummania-Slider:4.0")
+    implementation("com.github.Jumman04:Jummania-Slider:4.1")
 }
 ```
 
 ## Step 3: Configure compileSdk
-
-Make sure to set the compileSdk to 34 in your app module's build.gradle file:
-
- ```gradle
-android {
-    compileSdk 34
-    defaultConfig {
-        // other configurations
-    }
-}
-```
-## Important Note: 
-Jummania-Slider requires at least version `1.6.1` of `androidx.appcompat` and version `1.10.0` of `com.google.android.material`.<br>
-
-**Using older versions may result in compatibility issues and could lead to app crashes.**
 
  </details>
 
