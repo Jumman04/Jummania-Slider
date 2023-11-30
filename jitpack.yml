@@ -1,8 +1,16 @@
 # configuration file for building snapshots and releases with jitpack.io
 jdk:
   - openjdk17
+
 before_install:
   - ./scripts/prepareJitpackEnvironment.sh
+
 install:
   - FILE="-Dfile=J-Slider-release.aar"
-  - mvn install:install-file $FILE -DgroupId=com.github.Jumman04 -DartifactId=Jummania-Slider -Dversion=4.0 -Dpackaging=aar -DgeneratePom=true -DpomFile=pom.xml
+  - mvn install:install-file $FILE -DgroupId=com.github.Jumman04 -DartifactId=Jummania-Slider -Dversion=4.0 -Dpackaging=aar -DgeneratePom=true
+
+  # Add the Kotlin and androidx.viewpager dependencies
+  - mvn dependency:get -Dartifact=org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0
+  - mvn dependency:get -Dartifact=androidx.viewpager:viewpager:1.0.0 -Dtype=aar -Dscope=runtime -Dexclusions=*
+
+# You might also want to consider specifying version ranges for dynamic updates
