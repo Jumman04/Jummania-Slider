@@ -72,8 +72,6 @@ dependencies {
 }
 ```
 
-## Step 3: Configure compileSdk
-
  </details>
 
  ---
