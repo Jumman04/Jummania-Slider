@@ -14,19 +14,6 @@
             <version>1.9.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>androidx.viewpager</groupId>
-            <artifactId>viewpager</artifactId>
-            <version>1.0.0</version>
-            <type>aar</type>
-            <scope>runtime</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>*</artifactId>
-                    <groupId>*</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
     </dependencies>
     <description>Empower Your UI with Seamless Slides: Introducing JSlider, the Universal Slider
         Library
