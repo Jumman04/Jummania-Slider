@@ -1,3 +1,7 @@
+### JSlider Attributes
+<!-- Add additional sections for other attribute categories if needed -->
+
+
 <h1 align="center">Jummania View Slider for Android!</h1>
 <h3 align="center"><b><i>Just inflate your view and start sliding!</i></b></h3>
 
@@ -208,99 +212,117 @@ public class MainActivity extends AppCompatActivity {
 <details>
   <summary>XML Attributes</summary> 
 <br>
-	
-- Change Duration of Sliding:
 
-```xml
-app:slidingDuration="2222"
-```
-
-- Change Indicator Size:
-
-```xml
-app:indicatorSize="15dp"
-```
-
-- Add Padding in Slider:
-
-```xml
-app:sliderPaddingRight="0dp"
-app:sliderPaddingLeft="0dp"
-app:sliderPaddingTop="0dp"
-app:sliderPaddingBottom="0dp"
-```
-
-- Change Indicator Padding:
-
-```xml
-app:indicatorPaddingTop="0dp"
-app:indicatorPaddingLeft="0dp"
-app:indicatorPaddingRight="0dp"
-app:indicatorPaddingBottom="22dp"
-
-```
-
-- Change Indicator Margin Horizontal:
-
-```xml
-app:indicatorMarginHorizontal="3dp"
-```
-
-- Hide or Show Indicator:
-
-```xml
-app:enableIndicator="true"
-```
-
-- Enable or Disable Auto Sliding:
-
-```xml
-app:enableAutoSliding="true"
-```
-
-- Change Default Indicator Color:
-
-```xml
-app:defaultIndicatorColor="@color/defaultColor"
-```
-
-- Change Selected Indicator Color:
-
-```xml
-app:selectedIndicatorColor="@color/selectedColor"
-```
-
-- Choose How the Indicator Updates:
-
-```xml
-app:indicatorUpdateMode="SYNC"
-```
-
-- Set the Alignment of the Indicator:
-
-```xml
-app:indicatorAlign="ALIGN_BOTTOM"
-```
-
-- Specify the Gravity of the Indicator:
-
-```xml
-app:indicatorGravity="center"
-```
-
-- Set Indicator Shape Type:
-
-```xml
-app:shapeTypes="CIRCLE"
-
-    <!-- Choose one of the following options for the shape type: CIRCLE, HEART, SQUARE, or STAR. -->
-```
-
-- Set Slide Animation:
-
-```xml
-app:slideAnimation="CUBE_OUT"
-```
+<center>
+  <table>
+    <tr>
+      <th>Attribute</th>
+      <th align="center">Format</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>slidingDuration</td>
+      <td align="center">integer</td>
+      <td>Duration for transitioning between slides</td>
+    </tr>
+    <tr>
+      <td>indicatorSize</td>
+      <td align="center">dimension</td>
+      <td>Size of the indicator shape</td>
+    </tr>
+    <tr>
+      <td>sliderPaddingTop</td>
+      <td align="center">dimension</td>
+      <td>Padding for the JSlider component - Top</td>
+    </tr>
+    <tr>
+      <td>sliderPaddingLeft</td>
+      <td align="center">dimension</td>
+      <td>Padding for the JSlider component - Left</td>
+    </tr>
+    <tr>
+      <td>sliderPaddingRight</td>
+      <td align="center">dimension</td>
+      <td>Padding for the JSlider component - Right</td>
+    </tr>
+    <tr>
+      <td>sliderPaddingBottom</td>
+      <td align="center">dimension</td>
+      <td>Padding for the JSlider component - Bottom</td>
+    </tr>
+    <tr>
+      <td>indicatorPaddingTop</td>
+      <td align="center">dimension</td>
+      <td>Padding for the indicator shape - Top</td>
+    </tr>
+    <tr>
+      <td>indicatorPaddingLeft</td>
+      <td align="center">dimension</td>
+      <td>Padding for the indicator shape - Left</td>
+    </tr>
+    <tr>
+      <td>indicatorPaddingRight</td>
+      <td align="center">dimension</td>
+      <td>Padding for the indicator shape - Right</td>
+    </tr>
+    <tr>
+      <td>indicatorPaddingBottom</td>
+      <td align="center">dimension</td>
+      <td>Padding for the indicator shape - Bottom</td>
+    </tr>
+    <tr>
+      <td>indicatorMarginHorizontal</td>
+      <td align="center">dimension</td>
+      <td>Horizontal margin between indicator shapes</td>
+    </tr>
+    <tr>
+      <td>enableIndicator</td>
+      <td align="center">boolean</td>
+      <td>Enable or disable the indicator display</td>
+    </tr>
+    <tr>
+      <td>enableAutoSliding</td>
+      <td align="center">boolean</td>
+      <td>Enable or disable auto-sliding functionality</td>
+    </tr>
+    <tr>
+      <td>defaultIndicatorColor</td>
+      <td align="center">color|reference</td>
+      <td>Color for the Default indicator shape</td>
+    </tr>
+    <tr>
+      <td>selectedIndicatorColor</td>
+      <td align="center">color|reference</td>
+      <td>Color for the selected indicator shape</td>
+    </tr>
+    <tr>
+      <td>indicatorUpdateMode</td>
+      <td align="center">enum</td>
+      <td>Indicator Update Modes: SYNC, STATIC, ANIMATED</td>
+    </tr>
+    <tr>
+      <td>indicatorShapeTypes</td>
+      <td align="center">enum</td>
+      <td>Indicator Shape Types: CIRCLE, HEART, SQUARE, STAR</td>
+    </tr>
+    <tr>
+      <td>indicatorAlignment</td>
+      <td align="center">enum</td>
+      <td>Indicator Alignment Options: ALIGN_LEFT, ALIGN_TOP, ALIGN_RIGHT, ALIGN_BOTTOM, ALIGN_CENTER, CENTER_HORIZONTAL, CENTER_VERTICAL, ALIGN_START, ALIGN_END</td>
+    </tr>
+    <tr>
+      <td>indicatorGravity</td>
+      <td align="center">flag</td>
+      <td>Indicator Gravity Options</td>
+    </tr>
+    <tr>
+      <td>slideAnimation</td>
+      <td align="center">enum</td>
+      <td>Slide Animation Types: ANTI_CLOCK_SPIN, BACKGROUND_TO_FOREGROUND, CARD_STACK, CLOCK_SPIN, CUBE_IN_DEPTH, CUBE_IN_ROTATION, CUBE_IN_SCALING, CUBE_OUT_DEPTH, CUBE_OUT_ROTATION, CUBE_OUT_SCALING, CUBE_IN, CUBE_OUT, DEPTH_SLIDE, DEPTH_SLIDE2, DEPTH_TRANSFORMATION, DEPTH_ZOOM_OUT, FADEOUT, FADE_PAGE, FAN_TRANSFORMATION, FIDGET_SPINNER, FLIP_HORIZONTAL, FLIP_VERTICAL, FOREGROUND_TO_BACKGROUND, GATE, HINGE, POP, ROTATE_DOWN, ROTATE_UP, SPINNER, SPINNER_TRANSFORMATION, TABLET_SLIDE, TOSS, VERTICAL_FLIP, VERTICAL_SHUT, ZOOM_FADE, ZOOM_IN, ZOOM_OUT, DEFAULT
+</td>
+    </tr>
+  </table>
+</center>
 
 </details>
 
