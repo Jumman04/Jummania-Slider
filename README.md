@@ -126,7 +126,8 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 
         Picasso.get()
             .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
-            .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
+            .error(R.drawable.default_error)
+            .placeholder(R.drawable.default_loading)
             .into(imageView)
 
         textView.text = getString(R.string.Developer_Name)
@@ -172,6 +173,7 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 
     @Override
     public void onSliderCreate(View view, int position) {
+
       TextView textView = view.findViewById(R.id.text_view);
       ImageView imageView = view.findViewById(R.id.image_view);
 
