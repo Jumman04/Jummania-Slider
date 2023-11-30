@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.Jumman04</groupId>
     <artifactId>Jummania-Slider</artifactId>
-    <version>39bcaae375</version>
+    <version>4.0</version>
     <packaging>aar</packaging>
     <description>POM was created from install:install-file</description>
     <dependencies>
