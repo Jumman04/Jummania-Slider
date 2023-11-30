@@ -6,7 +6,7 @@
     <groupId>com.github.Jumman04</groupId>
     <artifactId>Jummania-Slider</artifactId>
     <version>4.0</version>
-    <packaging>pom</packaging>
+    <packaging>aar</packaging>
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
