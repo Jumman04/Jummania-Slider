@@ -32,6 +32,11 @@
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>1.9.0</version> <!-- Adjust version as needed -->
         </dependency>
+        <dependency>
+            <groupId>androidx.viewpager</groupId>
+            <artifactId>viewpager</artifactId>
+            <version>1.0.0</version> <!-- Adjust version as needed -->
+        </dependency>
     </dependencies>
 
 </project>
