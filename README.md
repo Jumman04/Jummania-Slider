@@ -214,18 +214,18 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
    </tr>
    <!-- Sliding Duration -->
    <tr>
-      <td>slidingDuration="integer"</td>
+      <td>app:slidingDuration="integer"</td>
       <td><code>setSlidingDuration(int)</code></td>
       <td>Duration for transitioning between slides, default: 2222</td>
    </tr>
    <!-- Indicator Size -->
    <tr>
-      <td>indicatorSize="dimension"</td>
+      <td>app:indicatorSize="dimension"</td>
       <td><code>setIndicatorSize(int)</code></td>
       <td>Size of the indicator shape, default: 15</td>
    </tr>
    <tr>
-      <td>manualSlidable="true"</td>
+      <td>app:manualSlidable="true"</td>
       <td><code>jSlider.setManualSlidable(boolean)</code></td>
       <td>Enables or disables manual swipe. default: true</td>
    </tr>
@@ -236,25 +236,25 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
    </tr>
    <!-- Slider Padding Top -->
    <tr>
-      <td>sliderPaddingTop="dimension"</td>
+      <td>app:sliderPaddingTop="dimension"</td>
       <td><code></code></td>
       <td>Padding for the JSlider component - Top, default: 0</td>
    </tr>
    <!-- Slider Padding Left -->
    <tr>
-      <td>sliderPaddingLeft="dimension"</td>
+      <td>app:sliderPaddingLeft="dimension"</td>
       <td></td>
       <td>Padding for the JSlider component - Left, default: 0</td>
    </tr>
    <!-- Slider Padding Right -->
    <tr>
-      <td>sliderPaddingRight="dimension"</td>
+      <td>app:sliderPaddingRight="dimension"</td>
       <td></td>
       <td>Padding for the JSlider component - Right, default: 0</td>
    </tr>
    <!-- Slider Padding Bottom -->
    <tr>
-      <td>sliderPaddingBottom="dimension"</td>
+      <td>app:sliderPaddingBottom="dimension"</td>
       <td></td>
       <td>Padding for the JSlider component - Bottom, default: 0</td>
    </tr>
@@ -265,85 +265,85 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
    </tr>
    <!-- Indicator Padding Top -->
    <tr>
-      <td>indicatorPaddingTop="dimension"</td>
+      <td>app:indicatorPaddingTop="dimension"</td>
       <td><code></code></td>
       <td>Padding for the indicator shape - Top, default: 0</td>
    </tr>
    <!-- Indicator Padding Left -->
    <tr>
-      <td>indicatorPaddingLeft="dimension"</td>
+      <td>app:indicatorPaddingLeft="dimension"</td>
       <td></td>
       <td>Padding for the indicator shape - Left, default: 0</td>
    </tr>
    <!-- Indicator Padding Right -->
    <tr>
-      <td>indicatorPaddingRight="dimension"</td>
+      <td>app:indicatorPaddingRight="dimension"</td>
       <td></td>
       <td>Padding for the indicator shape - Right, default: 0</td>
    </tr>
    <!-- Indicator Padding Bottom -->
    <tr>
-      <td>indicatorPaddingBottom="dimension"</td>
+      <td>app:indicatorPaddingBottom="dimension"</td>
       <td></td>
       <td>Padding for the indicator shape - Bottom, default: 25dp</td>
    </tr>
    <!-- Indicator Margin Horizontal -->
    <tr>
-      <td>indicatorMarginHorizontal="dimension"</td>
+      <td>app:indicatorMarginHorizontal="dimension"</td>
       <td><code>setIndicatorMarginHorizontal(int)</code></td>
       <td>Horizontal margin between indicator shapes, default: 3</td>
    </tr>
    <!-- Enable Indicator -->
    <tr>
-      <td>enableIndicator="boolean"</td>
+      <td>app:enableIndicator="boolean"</td>
       <td><code>enableIndicator(boolean)</code></td>
       <td>Enable or disable the indicator display, default: true</td>
    </tr>
    <!-- Enable Auto Sliding -->
    <tr>
-      <td>enableAutoSliding="boolean"</td>
+      <td>app:enableAutoSliding="boolean"</td>
       <td><code>enableAutoSliding(boolean)</code></td>
       <td>Enable or disable auto-sliding functionality, default: true</td>
    </tr>
    <!-- Default Indicator Color -->
    <tr>
-      <td>defaultIndicatorColor="color"</td>
+      <td>app:defaultIndicatorColor="color"</td>
       <td><code>setDefaultIndicatorColor(int)</code></td>
       <td>Color for the Default indicator shape, default: "#80ffffff"</td>
    </tr>
    <!-- Selected Indicator Color -->
    <tr>
-      <td>selectedIndicatorColor="color"</td>
+      <td>app:selectedIndicatorColor="color"</td>
       <td><code>setSelectedIndicatorColor(int)</code></td>
       <td>Color for the selected indicator shape, default: Color.WHITE</td>
    </tr>
    <!-- Indicator Update Mode -->
    <tr>
-      <td>indicatorUpdateMode="SYNC"</td>
+      <td>app:indicatorUpdateMode="SYNC"</td>
       <td><code>setIndicatorUpdateMode(updateType)</code></td>
       <td>Indicator Update Modes: SYNC, STATIC, ANIMATED, default: UpdateTypes.SYNC</td>
    </tr>
    <!-- Indicator Shape Types -->
    <tr>
-      <td>indicatorShapeTypes="CIRCLE"</td>
+      <td>app:indicatorShapeTypes="CIRCLE"</td>
       <td><code>setIndicatorShapeTypes(shapeType)</code></td>
       <td>Indicator Shape Types: CIRCLE, HEART, SQUARE, STAR, ShapeTypes.CIRCLE</td>
    </tr>
    <!-- Indicator Alignment -->
    <tr>
-      <td>indicatorAlignment="ALIGN_BOTTOM"</td>
+      <td>app:indicatorAlignment="ALIGN_BOTTOM"</td>
       <td><code>setIndicatorAlignment(alignment)</code></td>
       <td>Indicator Alignment Options: ALIGN_LEFT, ALIGN_TOP, ALIGN_RIGHT, ALIGN_BOTTOM, ALIGN_CENTER, CENTER_HORIZONTAL, CENTER_VERTICAL, ALIGN_START, ALIGN_END, Alignment.BOTTOM</td>
    </tr>
    <!-- Indicator Gravity -->
    <tr>
-      <td>indicatorGravity="center"</td>
+      <td>app:indicatorGravity="center"</td>
       <td><code>setIndicatorGravity(gravity)</code></td>
       <td>Indicator Gravity Options, default: Gravity.CENTER</td>
    </tr>
    <!-- Slide Animation -->
    <tr>
-      <td>slideAnimation="DEFAULT"</td>
+      <td>app:slideAnimation="DEFAULT"</td>
       <td><code>jSlider.setSlideAnimation(animationType)</code></td>
       <td>Slide Animation Types: ANTI_CLOCK_SPIN, BACKGROUND_TO_FOREGROUND, CARD_STACK, CLOCK_SPIN, CUBE_IN_DEPTH, CUBE_IN_ROTATION, CUBE_IN_SCALING, CUBE_OUT_DEPTH, CUBE_OUT_ROTATION, CUBE_OUT_SCALING, CUBE_IN, CUBE_OUT, DEPTH_SLIDE, DEPTH_SLIDE2, DEPTH_TRANSFORMATION, DEPTH_ZOOM_OUT, FADEOUT, FADE_PAGE, FAN_TRANSFORMATION, FIDGET_SPINNER, FLIP_HORIZONTAL, FLIP_VERTICAL, FOREGROUND_TO_BACKGROUND, GATE, HINGE, POP, ROTATE_DOWN, ROTATE_UP, SPINNER, SPINNER_TRANSFORMATION, TABLET_SLIDE, TOSS, VERTICAL_FLIP, VERTICAL_SHUT, ZOOM_FADE, ZOOM_IN, ZOOM_OUT, DEFAULT, default: AnimationTypes.DEFAULT</td>
    </tr>
