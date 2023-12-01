@@ -1,7 +1,3 @@
-### JSlider Attributes
-<!-- Add additional sections for other attribute categories if needed -->
-
-
 <h1 align="center">Jummania View Slider for Android!</h1>
 <h3 align="center"><b><i>Just inflate your view and start sliding!</i></b></h3>
 
