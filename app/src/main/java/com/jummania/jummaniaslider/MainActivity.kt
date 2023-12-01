@@ -99,12 +99,12 @@ class MainActivity : AppCompatActivity() {
         val stop: Button = findViewById(R.id.stop)
 
         start.setOnClickListener {
-            jSlider.startAutoSliding()
+            jSlider.startAutoSliding() // To start autoSliding manually
             Toast.makeText(this@MainActivity, "Slider is now in motion", Toast.LENGTH_SHORT).show()
         }
 
         stop.setOnClickListener {
-            jSlider.stopAutoSliding()
+            jSlider.stopAutoSliding() // To stop autoSliding manually
             Toast.makeText(this@MainActivity, "Slider has come to a halt", Toast.LENGTH_SHORT)
                 .show()
         }
