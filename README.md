@@ -227,25 +227,25 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
     <!-- Slider Padding Top -->
     <tr>
       <td>sliderPaddingTop="dimension"</td>
-      <td><code>setSliderPaddingTop(int)</code></td>
+      <td><code>setSliderPadding(int, int, int, int)</code></td>
       <td>Padding for the JSlider component - Top, default: 10</td>
     </tr>
     <!-- Slider Padding Left -->
     <tr>
       <td>sliderPaddingLeft="dimension"</td>
-      <td><code>setSliderPaddingLeft(int)</code></td>
+      <td></td>
       <td>Padding for the JSlider component - Left, default: 5</td>
     </tr>
     <!-- Slider Padding Right -->
     <tr>
       <td>sliderPaddingRight="dimension"</td>
-      <td><code>setSliderPaddingRight(int)</code></td>
+      <td></td>
       <td>Padding for the JSlider component - Right, default: 5</td>
     </tr>
     <!-- Slider Padding Bottom -->
     <tr>
       <td>sliderPaddingBottom="dimension"</td>
-      <td><code>setSliderPaddingBottom(int)</code></td>
+      <td></td>
       <td>Padding for the JSlider component - Bottom, default: 10</td>
     </tr>
     <!-- Indicator Padding Top -->
