@@ -15,18 +15,20 @@
 <br>
 <p align="left">
 	<img src="https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat"/>
-	<img src="https://img.shields.io/github/v/release/Jumman04/Jummania-Slider?include_prereleases&amp;label=latest%20release" alt="Latest release"/>
-	 <a href="https://jitpack.io/#Jumman04/Jummania-Slider">
-    <img src="https://jitpack.io/v/Jumman04/Jummania-Slider.svg"/> </a>
-
-  <a href="https://github.com/Jumman04/Jummania-Slider/issues">
+	    <!-- <img src="https://img.shields.io/github/v/release/Jumman04/Jummania-Slider?include_prereleases&amp;label=latest%20release" alt="Latest release"/> 
+	<a href="https://github.com/Jumman04/Jummania-Slider/issues">
     <img src="https://img.shields.io/github/issues/Jumman04/Jummania-Slider"/>
   </a>
- <a href="https://github.com/Jumman04/Jummania-Slider/graphs/contributors" >
+	<a href="https://github.com/Jumman04/Jummania-Slider/graphs/contributors" >
         <img src="https://img.shields.io/github/contributors/Jumman04/Jummania-Slider" /></a>
     <a href="https://github.com/Jumman04/Jummania-Slider/pulse" >
         <img src="https://img.shields.io/github/commit-activity/m/Jumman04/Jummania-Slider" /></a>
+	-->
+	 <a href="https://jitpack.io/#Jumman04/Jummania-Slider">
+    <img src="https://jitpack.io/v/Jumman04/Jummania-Slider.svg"/> </a>
 
+  
+ 
   <a href="https://github.com/Jumman04/Jummania-Slider/network/members">
     <img src="https://img.shields.io/github/forks/Jumman04/Jummania-Slider"/>
   </a>
@@ -55,7 +57,7 @@ Add the JitPack repository to your project's root `settings.gradle` file:
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        maven { url 'https://jitpack.io' }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
@@ -66,29 +68,9 @@ Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
  ```gradle
 dependencies {
-	//if these libraries exist and consider upgrading to their latest versions
-    implementation("androidx.appcompat:appcompat:$latestVersion") // at least 1.6.1 to use Jummania Slider
-    implementation("com.google.android.material:material:$latestVersion") // at least 1.10.0 to use Jummania Slider
-    implementation("com.github.Jumman04:Jummania-Slider:4.0")
+    implementation("com.github.Jumman04:Jummania-Slider:4.1")
 }
 ```
-
-## Step 3: Configure compileSdk
-
-Make sure to set the compileSdk to 34 in your app module's build.gradle file:
-
- ```gradle
-android {
-    compileSdk 34
-    defaultConfig {
-        // other configurations
-    }
-}
-```
-## Important Note: 
-Jummania-Slider requires at least version `1.6.1` of `androidx.appcompat` and version `1.10.0` of `com.google.android.material`.<br>
-
-**Using older versions may result in compatibility issues and could lead to app crashes.**
 
  </details>
 
@@ -140,7 +122,8 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 
         Picasso.get()
             .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
-            .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
+            .error(R.drawable.default_error)
+            .placeholder(R.drawable.default_loading)
             .into(imageView)
 
         textView.text = getString(R.string.Developer_Name)
@@ -167,7 +150,6 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
   <br>
 
  ```Java
-public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
     jSlider.setSlider(new DefaultSlider());
   }
 
-  private static class DefaultSlider extends JSlider.DefaultSlider {
+//Out of onCreate, Create a Class for Slider
+  private class DefaultSlider extends JSlider.DefaultSlider {
     @Override
     public View getView(LayoutInflater layoutInflater, ViewGroup parent) {
       return layoutInflater.inflate(R.layout.item_slider2, parent, false);
@@ -186,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSliderCreate(View view, int position) {
+
       TextView textView = view.findViewById(R.id.text_view);
       ImageView imageView = view.findViewById(R.id.image_view);
 
@@ -210,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
       return 3;
     }
   }
-}
 ```
 </details>
 
@@ -220,293 +203,177 @@ public class MainActivity extends AppCompatActivity {
 
 <details>
   <summary><h1>Customization</h1></summary>
+	
+### The JSlider library provides a set of attributes that can be configured either in XML layout files or programmatically.
+
+<center>
+  <table>
+    <tr>
+      <th>XML Attribute</th>
+      <th>Programmatic Attribute</th>
+      <th>Description</th>
+    </tr>
+    <!-- Sliding Duration -->
+    <tr>
+      <td>slidingDuration="integer"</td>
+      <td><code>setSlidingDuration(int)</code></td>
+      <td>Duration for transitioning between slides, default: 2222</td>
+    </tr>
+    <!-- Indicator Size -->
+    <tr>
+      <td>indicatorSize="dimension"</td>
+      <td><code>setIndicatorSize(int)</code></td>
+      <td>Size of the indicator shape, default: 15</td>
+    </tr>
+    <!-- Slider Padding Top -->
+    <tr>
+      <td>sliderPaddingTop="dimension"</td>
+      <td><code>setSliderPaddingTop(int)</code></td>
+      <td>Padding for the JSlider component - Top, default: 10</td>
+    </tr>
+    <!-- Slider Padding Left -->
+    <tr>
+      <td>sliderPaddingLeft="dimension"</td>
+      <td><code>setSliderPaddingLeft(int)</code></td>
+      <td>Padding for the JSlider component - Left, default: 5</td>
+    </tr>
+    <!-- Slider Padding Right -->
+    <tr>
+      <td>sliderPaddingRight="dimension"</td>
+      <td><code>setSliderPaddingRight(int)</code></td>
+      <td>Padding for the JSlider component - Right, default: 5</td>
+    </tr>
+    <!-- Slider Padding Bottom -->
+    <tr>
+      <td>sliderPaddingBottom="dimension"</td>
+      <td><code>setSliderPaddingBottom(int)</code></td>
+      <td>Padding for the JSlider component - Bottom, default: 10</td>
+    </tr>
+    <!-- Indicator Padding Top -->
+    <tr>
+      <td>indicatorPaddingTop="dimension"</td>
+      <td><code>setIndicatorPaddingTop(int)</code></td>
+      <td>Padding for the indicator shape - Top, default: 3</td>
+    </tr>
+    <!-- Indicator Padding Left -->
+    <tr>
+      <td>indicatorPaddingLeft="dimension"</td>
+      <td><code>setIndicatorPaddingLeft(int)</code></td>
+      <td>Padding for the indicator shape - Left, default: 3</td>
+    </tr>
+    <!-- Indicator Padding Right -->
+    <tr>
+      <td>indicatorPaddingRight="dimension"</td>
+      <td><code>setIndicatorPaddingRight(int)</code></td>
+      <td>Padding for the indicator shape - Right, default: 3</td>
+    </tr>
+    <!-- Indicator Padding Bottom -->
+    <tr>
+      <td>indicatorPaddingBottom="dimension"</td>
+      <td><code>setIndicatorPaddingBottom(int)</code></td>
+      <td>Padding for the indicator shape - Bottom, default: 3</td>
+    </tr>
+    <!-- Indicator Margin Horizontal -->
+    <tr>
+      <td>indicatorMarginHorizontal="dimension"</td>
+      <td><code>setIndicatorMarginHorizontal(int)</code></td>
+      <td>Horizontal margin between indicator shapes, default: 3</td>
+    </tr>
+    <!-- Enable Indicator -->
+    <tr>
+      <td>enableIndicator="boolean"</td>
+      <td><code>enableIndicator(boolean)</code></td>
+      <td>Enable or disable the indicator display, default: true</td>
+    </tr>
+    <!-- Enable Auto Sliding -->
+    <tr>
+      <td>enableAutoSliding="boolean"</td>
+      <td><code>enableAutoSliding(boolean)</code></td>
+      <td>Enable or disable auto-sliding functionality, default: true</td>
+    </tr>
+    <!-- Default Indicator Color -->
+    <tr>
+      <td>defaultIndicatorColor="color"</td>
+      <td><code>setDefaultIndicatorColor(int)</code></td>
+      <td>Color for the Default indicator shape, default: "#80ffffff"</td>
+    </tr>
+    <!-- Selected Indicator Color -->
+    <tr>
+      <td>selectedIndicatorColor="color"</td>
+      <td><code>setSelectedIndicatorColor(int)</code></td>
+      <td>Color for the selected indicator shape, default: Color.WHITE</td>
+    </tr>
+    <!-- Indicator Update Mode -->
+    <tr>
+      <td>indicatorUpdateMode="SYNC"</td>
+      <td><code>setIndicatorUpdateMode(updateType)</code></td>
+      <td>Indicator Update Modes: SYNC, STATIC, ANIMATED, default: UpdateTypes.SYNC</td>
+    </tr>
+    <!-- Indicator Shape Types -->
+    <tr>
+      <td>indicatorShapeTypes="CIRCLE"</td>
+      <td><code>setIndicatorShapeTypes(shapeType)</code></td>
+      <td>Indicator Shape Types: CIRCLE, HEART, SQUARE, STAR, ShapeTypes.CIRCLE</td>
+    </tr>
+    <!-- Indicator Alignment -->
+    <tr>
+      <td>indicatorAlignment="ALIGN_BOTTOM"</td>
+      <td><code>setIndicatorAlignment(alignment)</code></td>
+      <td>Indicator Alignment Options: ALIGN_LEFT, ALIGN_TOP, ALIGN_RIGHT, ALIGN_BOTTOM, ALIGN_CENTER, CENTER_HORIZONTAL, CENTER_VERTICAL, ALIGN_START, ALIGN_END, Alignment.BOTTOM</td>
+    </tr>
+    <!-- Indicator Gravity -->
+    <tr>
+      <td>indicatorGravity="center"</td>
+      <td><code>setIndicatorGravity(gravity)</code></td>
+      <td>Indicator Gravity Options, default: Gravity.CENTER</td>
+    </tr>
+    <!-- Slide Animation -->
+    <tr>
+      <td>slideAnimation="DEFAULT"</td>
+      <td><code>jSlider.setSlideAnimation(animationType)</code></td>
+      <td>Slide Animation Types: ANTI_CLOCK_SPIN, BACKGROUND_TO_FOREGROUND, CARD_STACK, CLOCK_SPIN, CUBE_IN_DEPTH, CUBE_IN_ROTATION, CUBE_IN_SCALING, CUBE_OUT_DEPTH, CUBE_OUT_ROTATION, CUBE_OUT_SCALING, CUBE_IN, CUBE_OUT, DEPTH_SLIDE, DEPTH_SLIDE2, DEPTH_TRANSFORMATION, DEPTH_ZOOM_OUT, FADEOUT, FADE_PAGE, FAN_TRANSFORMATION, FIDGET_SPINNER, FLIP_HORIZONTAL, FLIP_VERTICAL, FOREGROUND_TO_BACKGROUND, GATE, HINGE, POP, ROTATE_DOWN, ROTATE_UP, SPINNER, SPINNER_TRANSFORMATION, TABLET_SLIDE, TOSS, VERTICAL_FLIP, VERTICAL_SHUT, ZOOM_FADE, ZOOM_IN, ZOOM_OUT, DEFAULT, default: AnimationTypes.DEFAULT
+</td>
+    </tr>
+  </table>
+</center>
+
+</details>
 
 ---
 
 <details>
-  <summary>XML Attributes</summary> 
-<br>
-	
-- Change Duration of Sliding:
+  <summary><h1>Event Listeners</h1></summary>
 
-```xml
-app:slidingDuration="2222"
-```
+  ### On Slide Change Listener
 
-- Change Indicator Size:
-
-```xml
-app:indicatorSize="15dp"
-```
-
-- Add Padding in Slider:
-
-```xml
-app:sliderPaddingRight="0dp"
-app:sliderPaddingLeft="0dp"
-app:sliderPaddingTop="0dp"
-app:sliderPaddingBottom="0dp"
-```
-
-- Change Indicator Padding:
-
-```xml
-app:indicatorPaddingTop="0dp"
-app:indicatorPaddingLeft="0dp"
-app:indicatorPaddingRight="0dp"
-app:indicatorPaddingBottom="22dp"
-
-```
-
-- Change Indicator Margin Horizontal:
-
-```xml
-app:indicatorMarginHorizontal="3dp"
-```
-
-- Hide or Show Indicator:
-
-```xml
-app:enableIndicator="true"
-```
-
-- Enable or Disable Auto Sliding:
-
-```xml
-app:enableAutoSliding="true"
-```
-
-- Change Default Indicator Color:
-
-```xml
-app:defaultIndicatorColor="@color/defaultColor"
-```
-
-- Change Selected Indicator Color:
-
-```xml
-app:selectedIndicatorColor="@color/selectedColor"
-```
-
-- Choose How the Indicator Updates:
-
-```xml
-app:indicatorUpdateMode="SYNC"
-```
-
-- Set the Alignment of the Indicator:
-
-```xml
-app:indicatorAlign="ALIGN_BOTTOM"
-```
-
-- Specify the Gravity of the Indicator:
-
-```xml
-app:indicatorGravity="center"
-```
-
-- Set Indicator Shape Type:
-
-```xml
-app:shapeTypes="CIRCLE"
-
-    <!-- Choose one of the following options for the shape type: CIRCLE, HEART, SQUARE, or STAR. -->
-```
-
-- Set Slide Animation:
-
-```xml
-app:slideAnimation="CUBE_OUT"
-```
-
-</details>
-
----
-
-
-
- <details>
-  <summary>Programmatic Attributes</summary>
-  <br>
- 
-
-- Set the sliding duration:
+You can add an `OnSlideChangeListener` to listen for slide change events. This listener provides callbacks for different slide events.
 
 ```kt
-setSlidingDuration(2222)
-```
-
-- Set the indicator size:
-
-```kt
-setIndicatorSize(15)
-```
-
-- Set the indicator colors:
-
-```kt
-setIndicatorColor(defaultColor, selectedColor)
-```
-
-- Enable or disable the indicator:
-
-```kt
-enableIndicator(true)
-```
-
-- Enable or disable auto-sliding:
-
-```kt
-enableAutoSliding(true)
-```
-
-- Set a custom page transformer:
-
-```kt
-setPageTransformer(true, PageTransformer())
-```
-
-- Set padding for the slider:
-
-```kt
-setSliderPadding(left, top, right, bottom)
-```
-
-- Set horizontal margin for the indicator dots:
-
-```kt
-setIndicatorMarginHorizontal(3)
-```
-
-- To start or stop auto-sliding:
-
-```kt
-startAutoSliding()
-stopAutoSliding()
-```
-
-- Slide to the next and previous page:
-
-```kt
-slideNext()
-slidePrevious()
-```
-
-- Check if the slider is currently sliding:
-
-```kt
-isSliding()
-```
-
-- Set padding for the indicator dots programmatically:
-
-```kt
-setIndicatorPadding(left, top, right, bottom)
-```
-
-- Set the gravity for both the dot indicators:
-
-```kt
-setIndicatorGravity(Gravity.BOTTOM)
-```
-
-- Set the alignment for both the dot indicators:
-
-```kt
-setIndicatorAlignment(Alignment.BOTTOM)
-```
-
-- Set the indicator update mode:
-
-```kt
-setIndicatorUpdateMode(UpdateTypes.SYNC)
-```
-
-- Set the indicator shape types programmatically:
-
-```kt
-setIndicatorShapeTypes(ShapeTypes.CIRCLE)
-```
-
-- You can add animation like that, <b>38 Animations added</b>. You can check
-  in <a href="https://github.com/Jumman04/Jummania-Slider/blob/master/J-Slider/src/main/java/com/jummania/types/AnimationTypes.kt">
-  Animation List </a>
-
-```kt
-jSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
-```
-
-- You can add 'addOnSlideChangeListener' if you really need
-
-```kt
- jSlider.addOnSlideChangeListener(object : JSlider.OnSlideChangeListener {
+jSlider.addOnSlideChangeListener(object : JSlider.OnSlideChangeListener {
     override fun onSliderScrolled(
-        position: Int, positionOffset: Float, positionOffsetPixels: Int
-    ) {
-        Log.d(
-            "JSlider",
-            "position: $position, positionOffset: $positionOffset, positionOffsetPixels: $positionOffsetPixels"
-        )
+        position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        
     }
 
     override fun onSliderSelected(position: Int) {
-        Log.d("JSlider", "position: $position")
+       
     }
 
     override fun onSliderScrollStateChanged(state: Int) {
-        Log.d("JSlider", "state: $state")
+        
     }
-
 })
 ```
 
-- If you want to Reverse-less slide:
-
-```kt
- private inner class InfinitySlider : JSlider.InfinitySlider() {
-    override fun itemCount(): Int {
-        return 3
-    }
-
-    override fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View {
-        return layoutInflater.inflate(R.layout.item_slider2, parent, false) //Inflate you layout
-    }
-
-    override fun onSliderCreate(view: View, position: Int) {
-        val textView: TextView = view.findViewById(R.id.text_view) //find your child
-        val imageView: ImageView = view.findViewById(R.id.image_view)
-
-        Picasso.get()
-            .load("https://jummania.com/App/BanglaNatokSamahar/Images/Cover%20Photo.jpg")
-            .error(R.drawable.default_error).placeholder(R.drawable.default_loading)
-            .into(imageView)
-
-        textView.text = getString(R.string.Developer_Name)
-
-        view.setOnClickListener {
-
-            Toast.makeText(
-                this@MainActivity, getString(R.string.Developer_Name), Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-}
-```
-</details>
-
-
-
- 
-
-</details>
-
+  </details>
+  
 ---
+	
 
 <details>
   <summary><h1>Feature Requests</h1></summary>
   <br>
+
 
 	
 If you have a feature request or a suggestion for improving this library, please feel free
