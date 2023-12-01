@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val jSlider: JSlider = findViewById(R.id.jSlider)  //find
         //  val jSlider:JSlider = JSlider(this)           // or bind the slider
 

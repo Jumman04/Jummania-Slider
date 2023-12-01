@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -241,6 +240,12 @@ class JSlider @JvmOverloads constructor(
                     )]
                 )
 
+
+                // Sets the manual sliding behavior based on the value of the custom attribute "manualSlidable" defined
+                // in the XML layout file using a TypedArray.
+
+                setManualSlidable(typedArray.getBoolean(R.styleable.JSlider_manualSlidable, true))
+
             } finally {
                 // Recycle the TypedArray to avoid memory leaks
                 typedArray.recycle()
@@ -252,7 +257,6 @@ class JSlider @JvmOverloads constructor(
             addView(selectedIndicatorLayout)
 
         } catch (e: Exception) {
-            Log.e("JSlider Initialization", "An unexpected error occurred: ${e.message}")
             e.printStackTrace()
         }
 
@@ -853,6 +857,24 @@ class JSlider @JvmOverloads constructor(
         this@JSlider.shapeTypes = shapeTypes
     }
 
+    /**
+     * Sets the flag indicating whether manual sliding is enabled.
+     *
+     * @param isEnabled If true, manual sliding is enabled; if false, it follows default behavior.
+     */
+    fun setManualSlidable(isEnabled: Boolean) {
+        manualSlidable = isEnabled
+    }
+
+    /**
+     * Checks whether manual sliding is currently enabled.
+     *
+     * @return True if manual sliding is enabled, false otherwise.
+     */
+    fun isManualSlidableEnabled(): Boolean {
+        return manualSlidable
+    }
+
 
     /**
      * Check if the Slider has been set, and throw an exception if any modification is attempted
@@ -968,8 +990,23 @@ class JSlider @JvmOverloads constructor(
         this@JSlider.listener = listener
     }
 
+
+    /**
+     * This internal companion object is used to hold shared properties related to measuring and sliding.
+     */
     internal companion object {
+        /**
+         * Represents the measure specification to be used for sizing views.
+         * Default value is set to 0.
+         */
         internal var measureSpec: Int = 0
+
+        /**
+         * A flag indicating whether manual sliding is enabled.
+         * If true, the sliding behavior is controlled manually; otherwise, it follows default behavior.
+         */
+        internal var manualSlidable = true
     }
+
 
 }

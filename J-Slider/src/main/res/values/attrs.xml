@@ -28,6 +28,9 @@
         <!-- Enable or disable auto-sliding functionality -->
         <attr name="enableAutoSliding" format="boolean" />
 
+        <!--  If set to true, the view allows manual sliding; if set to false, it follows default behavior.-->
+        <attr name="manualSlidable" format="boolean" />
+
         <!-- Default color for the indicator shape -->
         <attr name="defaultIndicatorColor" format="color|reference" />
 
