@@ -251,9 +251,6 @@ class JSlider @JvmOverloads constructor(
             addView(dotIndicatorLayout)
             addView(selectedIndicatorLayout)
 
-        } catch (e: Resources.NotFoundException) {
-            Log.e("JSlider Initialization", "Resource not found: ${e.message}")
-            e.printStackTrace()
         } catch (e: Exception) {
             Log.e("JSlider Initialization", "An unexpected error occurred: ${e.message}")
             e.printStackTrace()
@@ -339,6 +336,7 @@ class JSlider @JvmOverloads constructor(
             if (dots.isNotEmpty()) {
                 selectedDot.post {
                     selectedDot.x = dots[0].x
+                    selectedDot.y = dots[0].y
                 }
                 selectedIndicatorLayout.addView(selectedDot)
             }
@@ -877,10 +875,10 @@ class JSlider @JvmOverloads constructor(
                 // If the window gains focus and auto-sliding is enabled, start the auto-sliding
                 updateHandler.removeCallbacks(update)
                 updateHandler.postDelayed(update, slidingDuration)
-            } else {
-                // If the window loses focus or auto-sliding is disabled, stop the auto-sliding
+            } else
+            // If the window loses focus or auto-sliding is disabled, stop the auto-sliding
                 updateHandler.removeCallbacks(update)
-            }
+
         }
         super.onWindowFocusChanged(hasWindowFocus)
     }
