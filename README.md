@@ -206,7 +206,6 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 	
 ### The JSlider library provides a set of attributes that can be configured either in XML layout files or programmatically.
 
-<center>
   <table>
     <tr>
       <th>XML Attribute</th>
@@ -335,7 +334,6 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 </td>
     </tr>
   </table>
-</center>
 
 </details>
 
