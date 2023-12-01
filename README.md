@@ -226,7 +226,7 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
    </tr>
    <tr>
       <td>app:manualSlidable="true"</td>
-      <td><code>jSlider.setManualSlidable(boolean)</code></td>
+      <td><code>setManualSlidable(boolean)</code></td>
       <td>Enables or disables manual swipe. default: true</td>
    </tr>
    <tr>
