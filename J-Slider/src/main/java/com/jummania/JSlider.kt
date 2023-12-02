@@ -202,14 +202,14 @@ class JSlider @JvmOverloads constructor(
 
                 // Set slide animation based on the specified attribute
                 setSlideAnimation(
-                    AnimationTypes.values()[typedArray.getInt(
+                    AnimationTypes.entries[typedArray.getInt(
                         R.styleable.JSlider_slideAnimation, AnimationTypes.DEFAULT.ordinal
                     )]
                 )
 
                 // Set indicator alignment based on the specified attribute
                 setIndicatorAlignment(
-                    Alignment.values()[typedArray.getInt(
+                    Alignment.entries[typedArray.getInt(
                         R.styleable.JSlider_indicatorAlignment, Alignment.BOTTOM.ordinal
                     )]
                 )
@@ -222,7 +222,7 @@ class JSlider @JvmOverloads constructor(
 
                 // Set indicator update mode based on the specified attribute
                 setIndicatorUpdateTypes(
-                    UpdateTypes.values()[typedArray.getInt(
+                    UpdateTypes.entries[typedArray.getInt(
                         R.styleable.JSlider_indicatorUpdateMode, UpdateTypes.SYNC.ordinal
                     )]
                 )
@@ -235,7 +235,7 @@ class JSlider @JvmOverloads constructor(
                 // specified in the XML layout using the R.styleable.JSlider_indicatorShapeTypes attribute.
                 // If the attribute is not defined, default to ShapeTypes.CIRCLE.
                 setIndicatorShapeTypes(
-                    ShapeTypes.values()[typedArray.getInt(
+                    ShapeTypes.entries[typedArray.getInt(
                         R.styleable.JSlider_indicatorShapeTypes, ShapeTypes.CIRCLE.ordinal
                     )]
                 )
@@ -280,11 +280,17 @@ class JSlider @JvmOverloads constructor(
 
                 onSliderSet(sliders)
 
-                // Set up the auto-sliding update runnable
-                update = Runnable {
-                    if (!isDragging && autoSlidingBoolean) setCurrentItem(
-                        if (currentItem == sliders - 1) 0 else currentItem + 1, true
-                    )
+                // Handle auto-sliding
+                if (autoSlidingBoolean) {
+                    // Set up the auto-sliding update runnable
+                    update = Runnable {
+                        if (!isDragging && autoSlidingBoolean) setCurrentItem(
+                            if (currentItem == sliders - 1) 0 else currentItem + 1, true
+                        )
+                    }
+
+                    updateHandler.removeCallbacks(update)
+                    updateHandler.postDelayed(update, slidingDuration)
                 }
 
             }
@@ -454,11 +460,17 @@ class JSlider @JvmOverloads constructor(
 
                 onSliderSet(sliders)
 
-                // Set up the auto-sliding update runnable
-                update = Runnable {
-                    if (!isDragging && autoSlidingBoolean) setCurrentItem(
-                        (currentItem % slider.count) + 1, true
-                    )
+                // Handle auto-sliding
+                if (autoSlidingBoolean) {
+                    // Set up the auto-sliding update runnable
+                    update = Runnable {
+                        if (!isDragging && autoSlidingBoolean) setCurrentItem(
+                            (currentItem % slider.count) + 1, true
+                        )
+                    }
+
+                    updateHandler.removeCallbacks(update)
+                    updateHandler.postDelayed(update, slidingDuration)
                 }
 
             }
