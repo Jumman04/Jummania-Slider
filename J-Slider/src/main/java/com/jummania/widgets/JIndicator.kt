@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.widget.LinearLayout
+import android.view.View
 import com.jummania.types.ShapeTypes
 
 /**
@@ -19,7 +19,7 @@ import com.jummania.types.ShapeTypes
  */
 internal abstract class JIndicator(
     private val context: Context?, private val shapeTypes: ShapeTypes
-) : LinearLayout(context) {
+) : View(context) {
 
     // Paint object used for drawing
     private val paint by lazy {

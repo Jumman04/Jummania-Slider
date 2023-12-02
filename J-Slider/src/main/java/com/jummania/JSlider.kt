@@ -315,7 +315,6 @@ class JSlider @JvmOverloads constructor(
                 )
                 (layoutParams as LayoutParams).addRule(ALIGN_PARENT_BOTTOM) // Align to the bottom of the parent view
                 gravity = Gravity.CENTER // Center the selected dot indicator
-                orientation = LinearLayout.HORIZONTAL // Set the orientation to horizontal
                 setBackgroundResource(R.drawable.indicator)
                 setColor(selectedIndicatorColor)
             }
