@@ -101,8 +101,8 @@ class JSlider @JvmOverloads constructor(
     // Object to store integer values related to the slider configuration
     private object IntObject {
         var slidingDuration: Long = 1555 // Sliding duration in milliseconds
-        var size = 30 // Size of the dot indicator
-        var indicatorMarginHorizontal = 6 // Horizontal margin between dot indicators
+        var size = 33 // Size of the dot indicator
+        var indicatorMarginHorizontal = 4 // Horizontal margin between dot indicators
         var selectedIndicatorColor = Color.WHITE // Color of the selected dot indicator
         var defaultIndicatorColor =
             Color.parseColor("#80ffffff") // Default color of the dot indicators
@@ -156,7 +156,7 @@ class JSlider @JvmOverloads constructor(
                 // Set indicator size based on the attribute, default to 30 pixels
                 setIndicatorSize(
                     typedArray.getDimensionPixelSize(
-                        R.styleable.JSlider_indicatorSize, 30
+                        R.styleable.JSlider_indicatorSize, 33
                     )
                 )
 
@@ -196,7 +196,7 @@ class JSlider @JvmOverloads constructor(
                 // Set horizontal margin for the indicator dots, default to 6 pixels
                 setIndicatorMarginHorizontal(
                     typedArray.getDimensionPixelSize(
-                        R.styleable.JSlider_indicatorMarginHorizontal, 6
+                        R.styleable.JSlider_indicatorMarginHorizontal, 4
                     )
                 )
 
@@ -280,14 +280,15 @@ class JSlider @JvmOverloads constructor(
 
                 onSliderSet(sliders)
 
+                // Set up the auto-sliding update runnable
+                update = Runnable {
+                    if (!isDragging && autoSlidingBoolean) setCurrentItem(
+                        if (currentItem == sliders - 1) 0 else currentItem + 1, true
+                    )
+                }
+
                 // Handle auto-sliding
                 if (autoSlidingBoolean) {
-                    // Set up the auto-sliding update runnable
-                    update = Runnable {
-                        if (!isDragging && autoSlidingBoolean) setCurrentItem(
-                            if (currentItem == sliders - 1) 0 else currentItem + 1, true
-                        )
-                    }
 
                     updateHandler.removeCallbacks(update)
                     updateHandler.postDelayed(update, slidingDuration)
@@ -321,23 +322,41 @@ class JSlider @JvmOverloads constructor(
         }
 
         // Set up dot for the current position if indicator is enabled
+        // Check if indicator dots should be displayed
         if (indicatorBoolean) {
 
+            // Create layout parameters for the indicator dots
             val dotLayoutParams = LinearLayout.LayoutParams(size, size)
             dotLayoutParams.marginStart = indicatorMarginHorizontal
             dotLayoutParams.marginEnd = indicatorMarginHorizontal
 
+            // Calculate the maximum number of dots that can fit on the screen
             val max =
                 (Resources.getSystem().displayMetrics.widthPixels / (size + indicatorMarginHorizontal * 2)) - 1
 
             // Create indicator dots and add them to the layout
             for (i in 0 until sliders) {
                 if (i == max) break
+
+                // Create a new JIndicator instance for the indicator dot
                 val dot = JIndicator(context, shapeTypes)
+
+                // Set layout parameters for the indicator dot
                 dot.layoutParams = dotLayoutParams
+
+                // Set a background resource for the indicator dot (if needed)
                 dot.setBackgroundResource(R.drawable.indicator)
+
+                // Set the default color for the indicator dot
                 dot.setColor(defaultIndicatorColor)
+
+                // Set padding for the indicator dot
+                dot.addPadding()
+
+                // Add the indicator dot to the dotIndicatorLayout
                 dotIndicatorLayout.addView(dot)
+
+                // Add the indicator dot to the list for future reference
                 dots.add(dot)
             }
 
@@ -350,6 +369,7 @@ class JSlider @JvmOverloads constructor(
                 selectedIndicatorLayout.addView(selectedDot)
             }
         }
+
 
         val max = dots.size - 1
         var position: Int
@@ -459,14 +479,15 @@ class JSlider @JvmOverloads constructor(
 
                 onSliderSet(sliders)
 
+                // Set up the auto-sliding update runnable
+                update = Runnable {
+                    if (!isDragging && autoSlidingBoolean) setCurrentItem(
+                        (currentItem % slider.count) + 1, true
+                    )
+                }
+
                 // Handle auto-sliding
                 if (autoSlidingBoolean) {
-                    // Set up the auto-sliding update runnable
-                    update = Runnable {
-                        if (!isDragging && autoSlidingBoolean) setCurrentItem(
-                            (currentItem % slider.count) + 1, true
-                        )
-                    }
 
                     updateHandler.removeCallbacks(update)
                     updateHandler.postDelayed(update, slidingDuration)
