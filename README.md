@@ -396,8 +396,7 @@ appreciate your feedback and are always looking to make our library better.
 
 1. Click on the [Issues tab](https://github.com/Jumman04/Jummania-Slider/issues).
 2. Click the green "New Issue" button.
-3. Choose the "Feature Request" template.
-4. Fill in the requested information and submit the issue.
+3. Fill in the requested information and submit the issue.
 
 Thank you for helping us improve the library!
 </details>
