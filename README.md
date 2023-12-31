@@ -57,7 +57,7 @@ Add the JitPack repository to your project's root `settings.gradle` file:
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://jitpack.io") } //Add this line
     }
 }
 ```
