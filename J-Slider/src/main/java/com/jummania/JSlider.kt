@@ -273,25 +273,26 @@ class JSlider @JvmOverloads constructor(
             // Get the total number of sliders
             val sliders = slider.count
 
+
             // Check if there are sliders to display
             if (sliders > 0) {
                 // Set the adapter to the provided DefaultSlider
                 adapter = slider
+                val autoSliding = autoSlidingBoolean
 
-                onSliderSet(sliders)
+                if (onSliderSet(sliders, autoSliding)) {
+                    // Set up the auto-sliding update runnable
+                    update = Runnable {
+                        if (!isDragging && autoSliding) setCurrentItem(
+                            if (currentItem == sliders - 1) 0 else currentItem + 1, true
+                        )
+                    }
 
-                // Set up the auto-sliding update runnable
-                update = Runnable {
-                    if (!isDragging && autoSlidingBoolean) setCurrentItem(
-                        if (currentItem == sliders - 1) 0 else currentItem + 1, true
-                    )
-                }
-
-                // Handle auto-sliding
-                if (autoSlidingBoolean) {
-
-                    updateHandler.removeCallbacks(update)
-                    updateHandler.postDelayed(update, slidingDuration)
+                    // Handle auto-sliding
+                    if (autoSliding) {
+                        updateHandler.removeCallbacks(update)
+                        updateHandler.postDelayed(update, slidingDuration)
+                    }
                 }
 
             }
@@ -303,162 +304,171 @@ class JSlider @JvmOverloads constructor(
      *
      * @param sliders get SliderItemCount.
      */
-    private fun onSliderSet(sliders: Int) {
+    private fun onSliderSet(sliders: Int, autoSliding: Boolean): Boolean {
 
-        // Initialize a list to hold indicator dots
-        val dots: MutableList<JIndicator> by lazy { mutableListOf() }
-        // Lazy initialization of the selected dot indicator
-        val selectedDot by lazy {
-            JIndicator(context, shapeTypes).apply {
-                // Set the layout parameters for the selected dot indicator
-                layoutParams = LayoutParams(
-                    size, size
-                )
-                (layoutParams as LayoutParams).addRule(ALIGN_PARENT_BOTTOM) // Align to the bottom of the parent view
-                gravity = Gravity.CENTER // Center the selected dot indicator
-                setBackgroundResource(R.drawable.indicator)
-                setColor(selectedIndicatorColor)
-            }
-        }
+        if (selectedIndicatorLayout.childCount == 0 && dotIndicatorLayout.childCount == 0) {
 
-        // Set up dot for the current position if indicator is enabled
-        // Check if indicator dots should be displayed
-        if (indicatorBoolean) {
+            // Initialize a list to hold indicator dots
+            val dots: MutableList<JIndicator> by lazy { mutableListOf() }
+            // Lazy initialization of the selected dot indicator
 
-            // Create layout parameters for the indicator dots
-            val dotLayoutParams = LinearLayout.LayoutParams(size, size)
-            dotLayoutParams.marginStart = indicatorMarginHorizontal
-            dotLayoutParams.marginEnd = indicatorMarginHorizontal
-
-            // Calculate the maximum number of dots that can fit on the screen
-            val max =
-                (Resources.getSystem().displayMetrics.widthPixels / (size + indicatorMarginHorizontal * 2)) - 1
-
-            // Create indicator dots and add them to the layout
-            for (i in 0 until sliders) {
-                if (i == max) break
-
-                // Create a new JIndicator instance for the indicator dot
-                val dot = JIndicator(context, shapeTypes)
-
-                // Set layout parameters for the indicator dot
-                dot.layoutParams = dotLayoutParams
-
-                // Set a background resource for the indicator dot (if needed)
-                dot.setBackgroundResource(R.drawable.indicator)
-
-                // Set the default color for the indicator dot
-                dot.setColor(defaultIndicatorColor)
-
-                // Set padding for the indicator dot
-                dot.addPadding()
-
-                // Add the indicator dot to the dotIndicatorLayout
-                dotIndicatorLayout.addView(dot)
-
-                // Add the indicator dot to the list for future reference
-                dots.add(dot)
-            }
-
-            // Set the initial position of the selected dot
-            if (dots.isNotEmpty()) {
-                selectedDot.post {
-                    selectedDot.x = dots[0].x
-                    selectedDot.y = dots[0].y
+            val selectedDot by lazy {
+                JIndicator(context, shapeTypes).apply {
+                    // Set the layout parameters for the selected dot indicator
+                    layoutParams = LayoutParams(
+                        size, size
+                    )
+                    (layoutParams as LayoutParams).addRule(ALIGN_PARENT_BOTTOM) // Align to the bottom of the parent view
+                    gravity = Gravity.CENTER // Center the selected dot indicator
+                    setBackgroundResource(R.drawable.indicator)
+                    setColor(selectedIndicatorColor)
                 }
-                selectedIndicatorLayout.addView(selectedDot)
             }
-        }
 
+            // Set up dot for the current position if indicator is enabled
+            // Check if indicator dots should be displayed
+            if (indicatorBoolean) {
 
-        val max = dots.size - 1
-        var position: Int
-        var targetX: Float
-        // Add a listener to track page changes and update indicators
-        jSlider.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                i: Int, positionOffset: Float, positionOffsetPixels: Int
-            ) {
-                // Update the selected dot position if indicator is enabled
-                if (indicatorBoolean && dots.isNotEmpty() && indicatorUpdateType == 0) {
-                    position = i % dots.size
+                // Create layout parameters for the indicator dots
+                val dotLayoutParams = LinearLayout.LayoutParams(size, size)
+                dotLayoutParams.marginStart = indicatorMarginHorizontal
+                dotLayoutParams.marginEnd = indicatorMarginHorizontal
 
-                    // Calculate the selected dot's X position based on the current position and offset
-                    if (position == max) {
-                        targetX = dots[0].x
-                        selectedDot.x = targetX + (1 - positionOffset) * (dots[max].x - targetX)
-                    } else {
-                        targetX = dots[position].x
-                        selectedDot.x =
-                            targetX + positionOffset * ((if (position < max) dots[position + 1].x else targetX) - targetX)
+                val padding =
+                    (jSlider.paddingStart + jSlider.paddingEnd) + (paddingStart + paddingEnd) / 10
+
+                // Calculate the maximum number of dots that can fit on the screen
+                val max =
+                    (Resources.getSystem().displayMetrics.widthPixels / (size + padding + indicatorMarginHorizontal * 2)) - 1
+
+                // Create indicator dots and add them to the layout
+                if (dotIndicatorLayout.childCount == 0)
+                    for (i in 0 until sliders) {
+                        if (i == max) break
+
+                        // Create a new JIndicator instance for the indicator dot
+                        val dot = JIndicator(context, shapeTypes)
+
+                        // Set layout parameters for the indicator dot
+                        dot.layoutParams = dotLayoutParams
+
+                        // Set a background resource for the indicator dot (if needed)
+                        dot.setBackgroundResource(R.drawable.indicator)
+
+                        // Set the default color for the indicator dot
+                        dot.setColor(defaultIndicatorColor)
+
+                        // Set padding for the indicator dot
+                        dot.addPadding()
+
+                        // Add the indicator dot to the dotIndicatorLayout
+                        dotIndicatorLayout.addView(dot)
+
+                        // Add the indicator dot to the list for future reference
+                        dots.add(dot)
                     }
 
-                }
-
-                // Notify the external listener about the page scroll event
-                if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
-                    i, positionOffset, positionOffsetPixels
-                )
-            }
-
-            override fun onPageSelected(i: Int) {
-
-                // Update the selected dot position if the indicator is enabled and the update type is not zero
-                if (indicatorBoolean && dots.isNotEmpty() && indicatorUpdateType != 0) {
-                    position = i % dots.size
-
-                    // Check the indicator update type and update the selected dot's X position accordingly
-                    when (indicatorUpdateType) {
-                        1 -> selectedDot.x = dots[position].x // Instantly set the X position
-                        2 ->
-                            // Animate the transition to the new X position
-                            selectedDot.animate().x(dots[position].x).start()
-
-                        // Add more cases if additional update types are introduced in the future
+                // Set the initial position of the selected dot
+                if (dots.isNotEmpty()) {
+                    selectedDot.post {
+                        selectedDot.x = dots[0].x
+                        selectedDot.y = dots[0].y
                     }
+
+                    selectedIndicatorLayout.addView(selectedDot)
                 }
-
-
-                // Handle auto-sliding when a new page is selected
-                if (autoSlidingBoolean) {
-                    updateHandler.removeCallbacks(update)
-                    updateHandler.postDelayed(update, slidingDuration)
-                }
-
-                // Notify the external listener about the page selection event
-                if (this@JSlider::listener.isInitialized) listener.onSliderSelected(i)
             }
 
-            override fun onPageScrollStateChanged(state: Int) {
-                // Handle auto-sliding when dragging stops
-                if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
-                    updateHandler.removeCallbacks(update)
-                    updateHandler.postDelayed(update, slidingDuration)
+
+            val max = dots.size - 1
+            var position: Int
+            var targetX: Float
+            // Add a listener to track page changes and update indicators
+            jSlider.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(
+                    i: Int, positionOffset: Float, positionOffsetPixels: Int
+                ) {
+                    // Update the selected dot position if indicator is enabled
+                    if (indicatorBoolean && dots.isNotEmpty() && indicatorUpdateType == 0) {
+                        position = i % dots.size
+
+                        // Calculate the selected dot's X position based on the current position and offset
+                        if (position == max) {
+                            targetX = dots[0].x
+                            selectedDot.x = targetX + (1 - positionOffset) * (dots[max].x - targetX)
+                        } else {
+                            targetX = dots[position].x
+                            selectedDot.x =
+                                targetX + positionOffset * ((if (position < max) dots[position + 1].x else targetX) - targetX)
+                        }
+
+                    }
+
+                    // Notify the external listener about the page scroll event
+                    if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
+                        i, positionOffset, positionOffsetPixels
+                    )
                 }
 
-                // Update flags based on the scroll state
-                isDragging = state == SCROLL_STATE_DRAGGING
-                isSliding = state == SCROLL_STATE_IDLE
+                override fun onPageSelected(i: Int) {
 
-                // Notify the external listener about the scroll state change
-                if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
-                    state
-                )
+                    // Update the selected dot position if the indicator is enabled and the update type is not zero
+                    if (indicatorBoolean && dots.isNotEmpty() && indicatorUpdateType != 0) {
+                        position = i % dots.size
+
+                        // Check the indicator update type and update the selected dot's X position accordingly
+                        when (indicatorUpdateType) {
+                            1 -> selectedDot.x = dots[position].x // Instantly set the X position
+                            2 ->
+                                // Animate the transition to the new X position
+                                selectedDot.animate().x(dots[position].x).start()
+
+                            // Add more cases if additional update types are introduced in the future
+                        }
+                    }
+
+
+                    // Handle auto-sliding when a new page is selected
+                    if (autoSliding) {
+                        updateHandler.removeCallbacks(update)
+                        updateHandler.postDelayed(update, slidingDuration)
+                    }
+
+                    // Notify the external listener about the page selection event
+                    if (this@JSlider::listener.isInitialized) listener.onSliderSelected(i)
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    // Handle auto-sliding when dragging stops
+                    if (isDragging && state != SCROLL_STATE_DRAGGING && autoSliding) {
+                        updateHandler.removeCallbacks(update)
+                        updateHandler.postDelayed(update, slidingDuration)
+                    }
+
+                    // Update flags based on the scroll state
+                    isDragging = state == SCROLL_STATE_DRAGGING
+                    isSliding = state == SCROLL_STATE_IDLE
+
+                    // Notify the external listener about the scroll state change
+                    if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
+                        state
+                    )
+                }
+            })
+
+            // Set a custom scroller for smoother scrolling
+            try {
+                val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
+                viewPagerScroller.isAccessible = true
+                viewPagerScroller[jSlider] = JScroller(context, slidingDuration.toInt())
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-        })
 
-        // Set a custom scroller for smoother scrolling
-        try {
-            val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
-            viewPagerScroller.isAccessible = true
-            viewPagerScroller[jSlider] = JScroller(context, slidingDuration.toInt())
-        } catch (e: Exception) {
-            e.printStackTrace()
+            return true
         }
 
-        // Check if auto-sliding is enabled based on the number of sliders
-        if (autoSlidingBoolean) autoSlidingBoolean = sliders > 1
-
+        return false
     }
 
 
@@ -477,20 +487,21 @@ class JSlider @JvmOverloads constructor(
                 // Set the adapter to the provided InfinitySlider
                 adapter = slider
 
-                onSliderSet(sliders)
+                val autoSliding = autoSlidingBoolean
+                if (onSliderSet(sliders, autoSliding)) {
 
-                // Set up the auto-sliding update runnable
-                update = Runnable {
-                    if (!isDragging && autoSlidingBoolean) setCurrentItem(
-                        (currentItem % slider.count) + 1, true
-                    )
-                }
+                    // Set up the auto-sliding update runnable
+                    update = Runnable {
+                        if (!isDragging && autoSliding) setCurrentItem(
+                            (currentItem % slider.count) + 1, true
+                        )
+                    }
 
-                // Handle auto-sliding
-                if (autoSlidingBoolean) {
-
-                    updateHandler.removeCallbacks(update)
-                    updateHandler.postDelayed(update, slidingDuration)
+                    // Handle auto-sliding
+                    if (autoSliding) {
+                        updateHandler.removeCallbacks(update)
+                        updateHandler.postDelayed(update, slidingDuration)
+                    }
                 }
 
             }
@@ -728,7 +739,6 @@ class JSlider @JvmOverloads constructor(
      * @param boolean True to enable auto-sliding, false to disable it.
      */
     fun enableAutoSliding(boolean: Boolean) {
-        exception()
         autoSlidingBoolean = boolean
     }
 

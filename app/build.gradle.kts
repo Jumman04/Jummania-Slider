@@ -12,7 +12,7 @@ android {
         minSdk = 17
         targetSdk = 34
         versionCode = 4
-        versionName = "4.4"
+        versionName = "4.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,7 +38,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation(project(":J-Slider"))
 
     //./gradlew assembleRelease

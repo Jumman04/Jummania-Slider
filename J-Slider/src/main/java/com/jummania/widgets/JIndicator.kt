@@ -72,6 +72,6 @@ internal abstract class JIndicator(
      *
      */
     fun addPadding() {
-        padding = 3
+        padding = 2
     }
 }
