@@ -68,7 +68,7 @@ Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
  ```gradle
 dependencies {
-    implementation("com.github.Jumman04:Jummania-Slider:4.4")
+    implementation("com.github.Jumman04:Jummania-Slider:4.5")
 }
 ```
 
