@@ -29,7 +29,8 @@ internal abstract class Slider(context: Context) : ViewPager(context) {
         // Check if the height mode is UNSPECIFIED or AT_MOST
         if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST) {
             // Get the first child of the ViewPager
-            val child = getChildAt(0)
+            var child = getChildAt(currentItem)
+            if (child == null && childCount != 0) child = getChildAt(childCount - 1)
 
             // Check if the child is null
             if (child == null) {
