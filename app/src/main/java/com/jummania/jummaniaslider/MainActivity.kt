@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         val start: Button = findViewById(R.id.start)
         val stop: Button = findViewById(R.id.stop)
 
-        jSlider.slideToPosition(100, false)
+        //  jSlider.slideToPosition(100, false)
 
         start.setOnClickListener {
             jSlider.startAutoSliding() // To start autoSliding manually

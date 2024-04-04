@@ -27,8 +27,8 @@
 	 <a href="https://jitpack.io/#Jumman04/Jummania-Slider">
     <img src="https://jitpack.io/v/Jumman04/Jummania-Slider.svg"/> </a>
 
-  
- 
+
+
   <a href="https://github.com/Jumman04/Jummania-Slider/network/members">
     <img src="https://img.shields.io/github/forks/Jumman04/Jummania-Slider"/>
   </a>
@@ -68,7 +68,7 @@ Add the Jummania-Slider dependency to your app module's `build.gradle` file:
 
  ```gradle
 dependencies {
-    implementation("com.github.Jumman04:Jummania-Slider:4.5")
+    implementation("com.github.Jumman04:Jummania-Slider:4.6")
 }
 ```
 
@@ -91,6 +91,7 @@ dependencies {
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 ```
+
 </details>
 
 ---
@@ -141,6 +142,7 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 
 }
 ```
+
 </details>
 
 ---
@@ -195,6 +197,7 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
     }
   }
 ```
+
 </details>
 
 </details>
@@ -203,7 +206,7 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 
 <details>
   <summary><h1>Customization</h1></summary>
-	
+
 ### The JSlider library provides a set of attributes that can be configured either in XML layout files or programmatically.
 
 <table>
@@ -356,9 +359,10 @@ private inner class DefaultSlider : JSlider.DefaultSlider() {
 <details>
   <summary><h1>Event Listeners</h1></summary>
 
-  ### On Slide Change Listener
+### On Slide Change Listener
 
-You can add an `OnSlideChangeListener` to listen for slide change events. This listener provides callbacks for different slide events.
+You can add an `OnSlideChangeListener` to listen for slide change events. This listener provides
+callbacks for different slide events.
 
 ```kt
 jSlider.addOnSlideChangeListener(object : JSlider.OnSlideChangeListener {
@@ -380,14 +384,14 @@ jSlider.addOnSlideChangeListener(object : JSlider.OnSlideChangeListener {
   </details>
   
 ---
-	
+
 
 <details>
   <summary><h1>Feature Requests</h1></summary>
   <br>
 
 
-	
+
 If you have a feature request or a suggestion for improving this library, please feel free
 to [open an issue](https://github.com/Jumman04/Jummania-Slider/issues/new) and let us know! We
 appreciate your feedback and are always looking to make our library better.
@@ -408,7 +412,7 @@ Thank you for helping us improve the library!
   <summary><h1>📄 License</h1></summary>
   <br>
 
-	
+
 This project is licensed under the MIT License - see
 the [LICENSE.md](https://github.com/Jumman04/Jummania-Slider/blob/master/LICENSE.md) file for
 details.

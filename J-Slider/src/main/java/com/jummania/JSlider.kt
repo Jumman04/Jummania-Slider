@@ -49,7 +49,6 @@ import com.jummania.widgets.JScroller
  * @param attrs The attributes set for the Slider.
  * @param defStyleAttr An attribute in the current theme that contains a reference to a style resource.
  */
-
 class JSlider @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
@@ -61,41 +60,40 @@ class JSlider @JvmOverloads constructor(
         Slider(context)
     }
 
-    // Lazy initialization of the dot indicator layout
-    private val dotIndicatorLayout: LinearLayout by lazy {
-        LinearLayout(context).apply {
-            // Set the layout parameters for the dot indicator layout
-            layoutParams = LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
-            )
-            orientation = LinearLayout.HORIZONTAL // Set the orientation to horizontal
-        }
+
+    // initialize the dot indicator layout
+    private var dotIndicatorLayout: LinearLayout? = LinearLayout(context).apply {
+        // Set the layout parameters for the dot indicator layout
+        layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
+        )
     }
 
-    // Lazy initialization of the dot indicator layout
-    private val selectedIndicatorLayout: LinearLayout by lazy {
-        LinearLayout(context).apply {
-            // Set the layout parameters for the dot indicator layout
-            layoutParams = LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
-            )
-            orientation = LinearLayout.HORIZONTAL // Set the orientation to horizontal
-        }
+
+    // initialize the dot indicator layout
+    private var selectedIndicatorLayout: LinearLayout? = LinearLayout(context).apply {
+        // Set the layout parameters for the dot indicator layout
+        layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
+        )
     }
+
 
     // Handler for updating the dot indicator position during auto-sliding
     private val updateHandler by lazy {
         Handler(Looper.getMainLooper())
     }
 
+
     // Runnable object for updating the dot indicator position
-    private lateinit var update: Runnable
+    private var update: Runnable? = null
+
 
     /**
      * Represents the types of shapes that can be used for indicators.
      * The shapes are defined in the [ShapeTypes] enum class.
      */
-    private lateinit var shapeTypes: ShapeTypes
+    private var shapeTypes: ShapeTypes? = null
 
 
     // Object to store integer values related to the slider configuration
@@ -127,6 +125,7 @@ class JSlider @JvmOverloads constructor(
 
     }
 
+
     // Object to store boolean values related to the slider behavior
     private object BooleanObject {
         var isDragging: Boolean = false // Indicates whether the slider is being dragged
@@ -135,8 +134,10 @@ class JSlider @JvmOverloads constructor(
         var isSliding = false // Indicates whether the slider is currently sliding
     }
 
+
     // Listener for slider change events
     private var listener: OnSlideChangeListener? = null
+
 
     init {
 
@@ -253,8 +254,6 @@ class JSlider @JvmOverloads constructor(
 
             // Add the slider and indicator layout to the view
             addView(jSlider)
-            addView(dotIndicatorLayout)
-            addView(selectedIndicatorLayout)
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -278,20 +277,19 @@ class JSlider @JvmOverloads constructor(
             if (sliders > 0) {
                 // Set the adapter to the provided DefaultSlider
                 adapter = slider
-                val autoSliding = autoSlidingBoolean
 
-                if (onSliderSet(sliders, autoSliding)) {
+                if (onSliderSet(sliders)) {
                     // Set up the auto-sliding update runnable
                     update = Runnable {
-                        if (!isDragging && autoSliding) setCurrentItem(
+                        if (!isDragging && autoSlidingBoolean) setCurrentItem(
                             if (currentItem == sliders - 1) 0 else currentItem + 1, true
                         )
                     }
 
                     // Handle auto-sliding
-                    if (autoSliding) {
-                        updateHandler.removeCallbacks(update)
-                        updateHandler.postDelayed(update, slidingDuration)
+                    if (autoSlidingBoolean) {
+                        removeCallbacks()
+                        postDelayed()
                     }
                 }
 
@@ -299,14 +297,27 @@ class JSlider @JvmOverloads constructor(
         }
     }
 
+
     /**
      * Sets up the JSlider with indicator dots and other configurations.
      *
-     * @param sliders get SliderItemCount.
+     * @param sliders The number of sliders to display.
+     * @return True if the setup is successful and indicator layouts are added, false otherwise.
      */
-    private fun onSliderSet(sliders: Int, autoSliding: Boolean): Boolean {
+    private fun onSliderSet(sliders: Int): Boolean {
+        // Set a custom scroller for smoother scrolling
+        try {
+            val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
+            viewPagerScroller.isAccessible = true
+            viewPagerScroller[jSlider] = JScroller(context, slidingDuration.toInt())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
-        if (selectedIndicatorLayout.childCount == 0 && dotIndicatorLayout.childCount == 0) {
+        // Add indicator layouts to the parent view if certain conditions are met
+        if (indicatorBoolean && selectedIndicatorLayout?.childCount == 0 && dotIndicatorLayout?.childCount == 0) {
+            addView(dotIndicatorLayout)
+            addView(selectedIndicatorLayout)
 
             // Initialize a list to hold indicator dots
             val dots: MutableList<JIndicator> by lazy { mutableListOf() }
@@ -342,7 +353,7 @@ class JSlider @JvmOverloads constructor(
                     (Resources.getSystem().displayMetrics.widthPixels / (size + padding + indicatorMarginHorizontal * 2)) - 1
 
                 // Create indicator dots and add them to the layout
-                if (dotIndicatorLayout.childCount == 0) for (i in 0 until sliders) {
+                if (dotIndicatorLayout?.childCount == 0) for (i in 0 until sliders) {
                     if (i == max) break
 
                     // Create a new JIndicator instance for the indicator dot
@@ -361,7 +372,7 @@ class JSlider @JvmOverloads constructor(
                     dot.addPadding()
 
                     // Add the indicator dot to the dotIndicatorLayout
-                    dotIndicatorLayout.addView(dot)
+                    dotIndicatorLayout?.addView(dot)
 
                     // Add the indicator dot to the list for future reference
                     dots.add(dot)
@@ -374,7 +385,7 @@ class JSlider @JvmOverloads constructor(
                         selectedDot.y = dots[0].y
                     }
 
-                    selectedIndicatorLayout.addView(selectedDot)
+                    selectedIndicatorLayout?.addView(selectedDot)
                 }
             }
 
@@ -428,9 +439,9 @@ class JSlider @JvmOverloads constructor(
 
 
                     // Handle auto-sliding when a new page is selected
-                    if (autoSliding) {
-                        updateHandler.removeCallbacks(update)
-                        updateHandler.postDelayed(update, slidingDuration)
+                    if (autoSlidingBoolean) {
+                        removeCallbacks()
+                        postDelayed()
                     }
 
                     // Notify the external listener about the page selection event
@@ -439,9 +450,9 @@ class JSlider @JvmOverloads constructor(
 
                 override fun onPageScrollStateChanged(state: Int) {
                     // Handle auto-sliding when dragging stops
-                    if (isDragging && state != SCROLL_STATE_DRAGGING && autoSliding) {
-                        updateHandler.removeCallbacks(update)
-                        updateHandler.postDelayed(update, slidingDuration)
+                    if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
+                        removeCallbacks()
+                        postDelayed()
                     }
 
                     // Update flags based on the scroll state
@@ -455,18 +466,17 @@ class JSlider @JvmOverloads constructor(
                 }
             })
 
-            // Set a custom scroller for smoother scrolling
-            try {
-                val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
-                viewPagerScroller.isAccessible = true
-                viewPagerScroller[jSlider] = JScroller(context, slidingDuration.toInt())
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
+            // Return true if indicator layouts are added successfully
             return true
+        } else {
+            // Remove indicator layouts if conditions are not met
+            removeView(dotIndicatorLayout)
+            removeView(selectedIndicatorLayout)
+            dotIndicatorLayout = null
+            selectedIndicatorLayout = null
         }
 
+        // Return false if indicator layouts are not added
         return false
     }
 
@@ -486,20 +496,19 @@ class JSlider @JvmOverloads constructor(
                 // Set the adapter to the provided InfinitySlider
                 adapter = slider
 
-                val autoSliding = autoSlidingBoolean
-                if (onSliderSet(sliders, autoSliding)) {
+                if (onSliderSet(sliders)) {
 
                     // Set up the auto-sliding update runnable
                     update = Runnable {
-                        if (!isDragging && autoSliding) setCurrentItem(
+                        if (!isDragging && autoSlidingBoolean) setCurrentItem(
                             (currentItem % slider.count) + 1, true
                         )
                     }
 
                     // Handle auto-sliding
-                    if (autoSliding) {
-                        updateHandler.removeCallbacks(update)
-                        updateHandler.postDelayed(update, slidingDuration)
+                    if (autoSlidingBoolean) {
+                        removeCallbacks()
+                        postDelayed()
                     }
                 }
 
@@ -511,15 +520,12 @@ class JSlider @JvmOverloads constructor(
     /**
      * Abstract class for a default slider.
      *
+     * This class extends PagerAdapter and provides abstract methods for implementing a slider with custom views.
+     * Subclasses must implement the getView and onSliderCreate methods to define the appearance and behavior of each slider item.
+     *
      * @see PagerAdapter
      */
     abstract class DefaultSlider : PagerAdapter() {
-
-        /**
-         * Created by Jummania on 08, November, 2023.
-         * Email: sharifuddinjumman@gmail.com
-         * Dhaka, Bangladesh.
-         */
 
         /**
          * Abstract method to get the view for a slider item.
@@ -537,6 +543,8 @@ class JSlider @JvmOverloads constructor(
          * @param position The position of the slider item.
          */
         abstract fun onSliderCreate(view: View, position: Int)
+
+        // Override methods from PagerAdapter
 
         /**
          * Check if a given view is associated with a specific object.
@@ -581,15 +589,12 @@ class JSlider @JvmOverloads constructor(
     /**
      * Abstract class for an infinite slider with a dynamic number of items.
      *
-     * @see PagerAdapter
+     * This class extends DefaultSlider and provides an additional method for defining the total number of items in the slider.
+     * It overrides the getCount method to support virtually infinite scrolling by returning the maximum possible integer value.
+     *
+     * @see DefaultSlider
      */
-    abstract class InfinitySlider : PagerAdapter() {
-
-        /**
-         * Created by Jummania on 08, November, 2023.
-         * Email: sharifuddinjumman@gmail.com
-         * Dhaka, Bangladesh.
-         */
+    abstract class InfinitySlider : DefaultSlider() {
 
         /**
          * Abstract method to get the total number of items in the slider.
@@ -598,38 +603,14 @@ class JSlider @JvmOverloads constructor(
          */
         abstract fun itemCount(): Int
 
+        // Override methods from DefaultSlider
+
         /**
          * Return the total number of items in the slider (virtually infinite).
          *
          * @return The maximum possible value of an integer, representing an infinite number of items.
          */
         override fun getCount(): Int = Int.MAX_VALUE
-
-        /**
-         * Abstract method to get the view for a slider item.
-         *
-         * @param layoutInflater The layout inflater to inflate the view.
-         * @param parent The parent view group.
-         * @return The inflated view for the slider item.
-         */
-        abstract fun getView(layoutInflater: LayoutInflater, parent: ViewGroup): View
-
-        /**
-         * Abstract method called when a slider item is created.
-         *
-         * @param view The view representing the slider item.
-         * @param position The position of the slider item.
-         */
-        abstract fun onSliderCreate(view: View, position: Int)
-
-        /**
-         * Check if a given view is associated with a specific object.
-         *
-         * @param view The view to check.
-         * @param `object` The object to compare with.
-         * @return True if the view is associated with the given object, false otherwise.
-         */
-        override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
         /**
          * Instantiate a slider item at the specified position.
@@ -647,18 +628,6 @@ class JSlider @JvmOverloads constructor(
             parent.addView(view)
             return view
         }
-
-        /**
-         * Remove a slider item from the specified container.
-         *
-         * @param container The parent view group.
-         * @param position The position of the slider item to be removed.
-         * @param `object` The object associated with the slider item.
-         */
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            // Remove the view associated with the slider item from the parent view group
-            container.removeView(`object` as View)
-        }
     }
 
 
@@ -668,9 +637,10 @@ class JSlider @JvmOverloads constructor(
      * @param slidingDuration The duration in milliseconds for each slide transition.
      */
     fun setSlidingDuration(slidingDuration: Long) {
-        exception()
+        throwException()
         IntObject.slidingDuration = slidingDuration
     }
+
 
     /**
      * Get the current sliding duration.
@@ -679,15 +649,17 @@ class JSlider @JvmOverloads constructor(
      */
     fun getSlidingDuration(): Long = slidingDuration
 
+
     /**
      * Set the size of the indicator dots.
      *
      * @param size The size of the indicator dots.
      */
     fun setIndicatorSize(size: Int) {
-        exception()
+        throwException()
         IntObject.size = size
     }
+
 
     /**
      * Get the size of the indicator dots.
@@ -696,6 +668,7 @@ class JSlider @JvmOverloads constructor(
      */
     fun getIndicatorSize(): Int = size
 
+
     /**
      * Set the colors for the default and selected indicator dots.
      *
@@ -703,10 +676,11 @@ class JSlider @JvmOverloads constructor(
      * @param selectedColor The color of the selected indicator dot.
      */
     fun setIndicatorColor(defaultColor: Int, selectedColor: Int) {
-        exception()
+        throwException()
         defaultIndicatorColor = defaultColor
         selectedIndicatorColor = selectedColor
     }
+
 
     /**
      * Get the color of the default indicator dot.
@@ -715,6 +689,7 @@ class JSlider @JvmOverloads constructor(
      */
     fun getDefaultIndicatorColor(): Int = defaultIndicatorColor
 
+
     /**
      * Get the color of the selected indicator dot.
      *
@@ -722,15 +697,17 @@ class JSlider @JvmOverloads constructor(
      */
     fun getSelectedIndicatorColor(): Int = selectedIndicatorColor
 
+
     /**
      * Enable or disable the indicator dots.
      *
      * @param boolean True to enable the indicator dots, false to disable them.
      */
     fun enableIndicator(boolean: Boolean) {
-        exception()
+        throwException()
         indicatorBoolean = boolean
     }
+
 
     /**
      * Enable or disable auto-sliding between slides.
@@ -738,8 +715,13 @@ class JSlider @JvmOverloads constructor(
      * @param boolean True to enable auto-sliding, false to disable it.
      */
     fun enableAutoSliding(boolean: Boolean) {
+        // Update the auto-sliding boolean flag
         autoSlidingBoolean = boolean
+        // Start or stop auto-sliding based on the boolean value
+        if (autoSlidingBoolean) startAutoSliding()
+        else stopAutoSliding()
     }
+
 
     /**
      * Set a custom page transformer for the Slider.
@@ -747,9 +729,10 @@ class JSlider @JvmOverloads constructor(
      * @param boolean True to enable the page transformer, false to disable it.
      * @param pageTransformer The custom page transformer to be applied.
      */
-    fun setPageTransformer(boolean: Boolean, pageTransformer: ViewPager.PageTransformer) {
+    fun setPageTransformer(boolean: Boolean, pageTransformer: ViewPager.PageTransformer?) {
         jSlider.setPageTransformer(boolean, pageTransformer)
     }
+
 
     /**
      * Set padding for the Slider.
@@ -763,60 +746,72 @@ class JSlider @JvmOverloads constructor(
         jSlider.setPadding(left, top, right, bottom)
     }
 
+
     /**
      * Set horizontal margin for the indicator dots.
      *
      * @param marginHorizontal The horizontal margin in pixels.
      */
     fun setIndicatorMarginHorizontal(marginHorizontal: Int) {
-        exception()
+        throwException()
         indicatorMarginHorizontal = marginHorizontal
     }
+
 
     /**
      * Start auto-sliding with the specified interval.
      */
     fun startAutoSliding() {
         autoSlidingBoolean = true
-        if (this@JSlider::update.isInitialized) {
-            updateHandler.removeCallbacks(update)
-            updateHandler.postDelayed(update, slidingDuration)
-        }
+        removeCallbacks()
+        postDelayed()
     }
+
 
     /**
      * Stop auto-sliding.
      */
     fun stopAutoSliding() {
         autoSlidingBoolean = false
-        if (this@JSlider::update.isInitialized) updateHandler.removeCallbacks(update)
+        removeCallbacks()
     }
+
 
     /**
      * Slide to the next page.
      */
     fun slideNext() {
-        val slider = jSlider.adapter
-        if (slider is DefaultSlider) jSlider.setCurrentItem(
-            if (jSlider.currentItem == slider.count - 1) 0 else jSlider.currentItem + 1, true
-        )
-        else if (slider is InfinitySlider) jSlider.setCurrentItem(
-            (jSlider.currentItem % slider.count) + 1, true
-        )
+        // Get the adapter associated with the slider
+        val sliderAdapter = jSlider.adapter
+        // Check if the slider adapter is not null
+        if (sliderAdapter != null) {
+            // Set the current item of the slider to the next index, with smooth scrolling
+            jSlider.setCurrentItem(
+                // Calculate the index of the next page to be shown
+                if (jSlider.currentItem == sliderAdapter.count - 1) sliderAdapter.count - 1
+                else jSlider.currentItem + 1, true
+            )
+        }
     }
+
 
     /**
      * Slide to the previous page.
      */
     fun slidePrevious() {
-        val slider = jSlider.adapter
-        if (slider is DefaultSlider) jSlider.setCurrentItem(
-            if (jSlider.currentItem == 0) slider.count - 1 else jSlider.currentItem - 1, true
-        )
-        else if (slider is InfinitySlider) jSlider.setCurrentItem(
-            (jSlider.currentItem % slider.count) - 1, true
-        )
+        // Get the adapter associated with the slider
+        val sliderAdapter = jSlider.adapter
+        // Check if the slider adapter is not null
+        if (sliderAdapter != null) {
+            // Set the current item of the slider to the previous index, with smooth scrolling
+            jSlider.setCurrentItem(
+                // Calculate the index of the previous page to be shown
+                if (jSlider.currentItem == 0) 0
+                else jSlider.currentItem - 1, true
+            )
+        }
     }
+
 
     /**
      * Check if the Slider is currently sliding.
@@ -824,6 +819,7 @@ class JSlider @JvmOverloads constructor(
      * @return false if sliding, True otherwise.
      */
     fun isSliding(): Boolean = !isSliding
+
 
     /**
      * Set padding for the indicator dots.
@@ -834,9 +830,10 @@ class JSlider @JvmOverloads constructor(
      * @param bottom The bottom padding in pixels.
      */
     fun setIndicatorPadding(left: Int, top: Int, right: Int, bottom: Int) {
-        selectedIndicatorLayout.setPadding(left, top, right, bottom)
-        dotIndicatorLayout.setPadding(left, top, right, bottom)
+        selectedIndicatorLayout?.setPadding(left, top, right, bottom)
+        dotIndicatorLayout?.setPadding(left, top, right, bottom)
     }
+
 
     /**
      * Sets the gravity for both the dot and selected indicators in the JSlider.
@@ -846,9 +843,10 @@ class JSlider @JvmOverloads constructor(
      */
     fun setIndicatorGravity(gravity: Int) {
         // Set the gravity for both dot and selected indicators
-        dotIndicatorLayout.gravity = gravity
-        selectedIndicatorLayout.gravity = gravity
+        dotIndicatorLayout?.gravity = gravity
+        selectedIndicatorLayout?.gravity = gravity
     }
+
 
     /**
      * Sets the alignment for both the dot and selected indicators in the JSlider.
@@ -858,8 +856,8 @@ class JSlider @JvmOverloads constructor(
      */
     fun setIndicatorAlignment(alignment: Alignment) {
         // Retrieve layout params for both dot and selected indicators
-        val dotLayoutParams = dotIndicatorLayout.layoutParams as LayoutParams
-        val selectedDotLayoutParams = selectedIndicatorLayout.layoutParams as LayoutParams
+        val dotLayoutParams = dotIndicatorLayout?.layoutParams as LayoutParams
+        val selectedDotLayoutParams = selectedIndicatorLayout?.layoutParams as LayoutParams
 
         // Remove existing alignment rules
         for (rule in rules) {
@@ -893,10 +891,12 @@ class JSlider @JvmOverloads constructor(
         indicatorUpdateType = updateTypes.ordinal
     }
 
+
     fun setIndicatorShapeTypes(shapeTypes: ShapeTypes) {
-        exception()
+        throwException()
         this@JSlider.shapeTypes = shapeTypes
     }
+
 
     /**
      * Sets the flag indicating whether manual sliding is enabled.
@@ -906,6 +906,7 @@ class JSlider @JvmOverloads constructor(
     fun setManualSlidable(isEnabled: Boolean) {
         manualSlidable = isEnabled
     }
+
 
     /**
      * Checks whether manual sliding is currently enabled.
@@ -918,10 +919,20 @@ class JSlider @JvmOverloads constructor(
 
 
     /**
+     * Retrieves the ViewPager used by the JSlider.
+     *
+     * @return The ViewPager instance.
+     */
+    fun getSlider(): ViewPager {
+        return jSlider
+    }
+
+
+    /**
      * Check if the Slider has been set, and throw an exception if any modification is attempted
      * after the setSlider() method call.
      */
-    private fun exception() {
+    private fun throwException() {
         if (jSlider.adapter != null) throw IllegalArgumentException("You cannot change anything on the Slider after setSlider() method call.")
     }
 
@@ -932,31 +943,40 @@ class JSlider @JvmOverloads constructor(
      * @param hasWindowFocus True if the window hosting the view has focus, false otherwise.
      */
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
-        if (this@JSlider::update.isInitialized) {
-            // Check if the update Runnable is initialized
-            if (hasWindowFocus && autoSlidingBoolean) {
-                // If the window gains focus and auto-sliding is enabled, start the auto-sliding
-                updateHandler.removeCallbacks(update)
-                updateHandler.postDelayed(update, slidingDuration)
-            } else
-            // If the window loses focus or auto-sliding is disabled, stop the auto-sliding
-                updateHandler.removeCallbacks(update)
+        // Check the window has focus and auto-sliding is enabled
+        if (hasWindowFocus && autoSlidingBoolean) {
+            // If the window gains focus and auto-sliding is enabled, start the auto-sliding
+            removeCallbacks()
+            postDelayed()
+        } else
+        // If the window loses focus or auto-sliding is disabled, stop the auto-sliding
+            removeCallbacks()
 
-        }
         super.onWindowFocusChanged(hasWindowFocus)
     }
 
 
     /**
-     * Custom LinearLayout that draws a colored circle.
+     * Custom LinearLayout that represents an indicator for the JSlider.
+     *
+     * This class extends com.jummania.widgets.JIndicator and provides functionality to draw a colored circle.
      *
      * @param context The context in which the JIndicator is created.
+     * @param shapeTypes The type of shape for the indicator.
      */
-
-    private inner class JIndicator(context: Context?, shapeTypes: ShapeTypes) :
+    private inner class JIndicator(context: Context?, shapeTypes: ShapeTypes?) :
         com.jummania.widgets.JIndicator(context, shapeTypes)
 
+
+    /**
+     * Inner class representing the slider within the JSlider.
+     *
+     * This class extends com.jummania.widgets.Slider and provides functionality for the slider component.
+     *
+     * @param context The context in which the Slider is created.
+     */
     private inner class Slider(context: Context) : com.jummania.widgets.Slider(context)
+
 
     /**
      * Override the onMeasure method to adjust the height of the ViewPager.
@@ -1004,22 +1024,29 @@ class JSlider @JvmOverloads constructor(
          * @param positionOffset The fractional offset of the slider's position.
          * @param positionOffsetPixels The offset of the slider's position in pixels.
          */
-        fun onSliderScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int)
+        fun onSliderScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            // Default implementation (empty)
+        }
 
         /**
          * Called when a new slider position is selected.
          *
          * @param position The newly selected position of the slider.
          */
-        fun onSliderSelected(position: Int)
+        fun onSliderSelected(position: Int) {
+            // Default implementation (empty)
+        }
 
         /**
          * Called when the scroll state of the slider changes.
          *
          * @param state The new scroll state. It can be SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, or SCROLL_STATE_SETTLING.
          */
-        fun onSliderScrollStateChanged(state: Int)
+        fun onSliderScrollStateChanged(state: Int) {
+            // Default implementation (empty)
+        }
     }
+
 
     /**
      * Adds an [OnSlideChangeListener] to the JSlider to receive slide change callbacks.
@@ -1030,6 +1057,17 @@ class JSlider @JvmOverloads constructor(
         // Set the provided listener as the listener for slide change events in the JSlider
         this@JSlider.listener = listener
     }
+
+
+    /**
+     * Retrieves the currently set OnSlideChangeListener for the JSlider.
+     *
+     * @return The OnSlideChangeListener currently set for the JSlider, or null if none is set.
+     */
+    fun getOnSlideChangeListener(): OnSlideChangeListener? {
+        return listener
+    }
+
 
     /**
      * Slides the custom slider to the specified position.
@@ -1058,6 +1096,32 @@ class JSlider @JvmOverloads constructor(
          * If true, the sliding behavior is controlled manually; otherwise, it follows default behavior.
          */
         internal var manualSlidable = true
+    }
+
+
+    /**
+     * Removes any pending updates from the updateHandler.
+     * If the 'update' function reference is not null, it removes any pending callbacks for it from the updateHandler.
+     */
+    private fun removeCallbacks() {
+        if (update != null) {
+            // Remove any pending callbacks for the 'update' function from the updateHandler
+            updateHandler.removeCallbacks(update!!)
+        }
+    }
+
+
+    /**
+     * Posts a delayed update to the updateHandler.
+     * If the 'update' function reference is not null, it posts a delayed callback for it to the updateHandler.
+     * The delay duration is specified by 'slidingDuration'.
+     */
+    private fun postDelayed() {
+        if (update != null) {
+            // Post a delayed callback for the 'update' function to the updateHandler
+            // The delay duration is specified by 'slidingDuration'
+            updateHandler.postDelayed(update!!, slidingDuration)
+        }
     }
 
 

@@ -21,7 +21,7 @@ import com.jummania.types.ShapeTypes
  * @param shapeTypes The shape type for the indicator.
  */
 internal abstract class JIndicator(
-    private val context: Context?, private val shapeTypes: ShapeTypes
+    private val context: Context?, private val shapeTypes: ShapeTypes?
 ) : View(context) {
 
     // Paint object used for drawing
@@ -52,7 +52,7 @@ internal abstract class JIndicator(
 
         // Draw the specified shape indicator with the given color
         // Adjust the width and height by subtracting padding
-        shapeTypes.onDraw(width - 2 * padding, height - 2 * padding, paint, canvas, path)
+        shapeTypes?.onDraw?.invoke(width - 2 * padding, height - 2 * padding, paint, canvas, path)
     }
 
     /**
