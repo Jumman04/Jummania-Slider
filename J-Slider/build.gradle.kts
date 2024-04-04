@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.jummania"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 17
@@ -43,7 +43,7 @@ afterEvaluate {
             register<MavenPublication>("release") {
                 groupId = "com.github.Jumman04"
                 artifactId = "Jummania-Slider"
-                version = "4.5"
+                version = "4.6"
 
                 afterEvaluate {
                     from(components["release"])

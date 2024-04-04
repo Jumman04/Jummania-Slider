@@ -136,7 +136,7 @@ class JSlider @JvmOverloads constructor(
     }
 
     // Listener for slider change events
-    private lateinit var listener: OnSlideChangeListener
+    private var listener: OnSlideChangeListener? = null
 
     init {
 
@@ -342,31 +342,30 @@ class JSlider @JvmOverloads constructor(
                     (Resources.getSystem().displayMetrics.widthPixels / (size + padding + indicatorMarginHorizontal * 2)) - 1
 
                 // Create indicator dots and add them to the layout
-                if (dotIndicatorLayout.childCount == 0)
-                    for (i in 0 until sliders) {
-                        if (i == max) break
+                if (dotIndicatorLayout.childCount == 0) for (i in 0 until sliders) {
+                    if (i == max) break
 
-                        // Create a new JIndicator instance for the indicator dot
-                        val dot = JIndicator(context, shapeTypes)
+                    // Create a new JIndicator instance for the indicator dot
+                    val dot = JIndicator(context, shapeTypes)
 
-                        // Set layout parameters for the indicator dot
-                        dot.layoutParams = dotLayoutParams
+                    // Set layout parameters for the indicator dot
+                    dot.layoutParams = dotLayoutParams
 
-                        // Set a background resource for the indicator dot (if needed)
-                        dot.setBackgroundResource(R.drawable.indicator)
+                    // Set a background resource for the indicator dot (if needed)
+                    dot.setBackgroundResource(R.drawable.indicator)
 
-                        // Set the default color for the indicator dot
-                        dot.setColor(defaultIndicatorColor)
+                    // Set the default color for the indicator dot
+                    dot.setColor(defaultIndicatorColor)
 
-                        // Set padding for the indicator dot
-                        dot.addPadding()
+                    // Set padding for the indicator dot
+                    dot.addPadding()
 
-                        // Add the indicator dot to the dotIndicatorLayout
-                        dotIndicatorLayout.addView(dot)
+                    // Add the indicator dot to the dotIndicatorLayout
+                    dotIndicatorLayout.addView(dot)
 
-                        // Add the indicator dot to the list for future reference
-                        dots.add(dot)
-                    }
+                    // Add the indicator dot to the list for future reference
+                    dots.add(dot)
+                }
 
                 // Set the initial position of the selected dot
                 if (dots.isNotEmpty()) {
@@ -405,7 +404,7 @@ class JSlider @JvmOverloads constructor(
                     }
 
                     // Notify the external listener about the page scroll event
-                    if (this@JSlider::listener.isInitialized) listener.onSliderScrolled(
+                    listener?.onSliderScrolled(
                         i, positionOffset, positionOffsetPixels
                     )
                 }
@@ -435,7 +434,7 @@ class JSlider @JvmOverloads constructor(
                     }
 
                     // Notify the external listener about the page selection event
-                    if (this@JSlider::listener.isInitialized) listener.onSliderSelected(i)
+                    listener?.onSliderSelected(i)
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {
@@ -450,7 +449,7 @@ class JSlider @JvmOverloads constructor(
                     isSliding = state == SCROLL_STATE_IDLE
 
                     // Notify the external listener about the scroll state change
-                    if (this@JSlider::listener.isInitialized) listener.onSliderScrollStateChanged(
+                    listener?.onSliderScrollStateChanged(
                         state
                     )
                 }
@@ -1027,9 +1026,20 @@ class JSlider @JvmOverloads constructor(
      *
      * @param listener The listener to be added.
      */
-    fun addOnSlideChangeListener(listener: OnSlideChangeListener) {
+    fun addOnSlideChangeListener(listener: OnSlideChangeListener?) {
         // Set the provided listener as the listener for slide change events in the JSlider
         this@JSlider.listener = listener
+    }
+
+    /**
+     * Slides the custom slider to the specified position.
+     *
+     * @param position The position to which the slider should be moved.
+     * @param smoothScroll Determines if the transition should be smooth.
+     */
+    fun slideToPosition(position: Int, smoothScroll: Boolean) {
+        // Set the current item of the custom slider to the specified position with optional smooth scroll
+        jSlider.setCurrentItem(position, smoothScroll)
     }
 
 
