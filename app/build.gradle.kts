@@ -11,8 +11,8 @@ android {
         applicationId = "com.jummania.jummaniaslider"
         minSdk = 17
         targetSdk = 34
-        versionCode = 5
-        versionName = "4.6"
+        versionCode = 6
+        versionName = "4.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

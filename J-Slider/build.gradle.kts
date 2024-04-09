@@ -43,7 +43,7 @@ afterEvaluate {
             register<MavenPublication>("release") {
                 groupId = "com.github.Jumman04"
                 artifactId = "Jummania-Slider"
-                version = "4.6"
+                version = "4.7"
 
                 afterEvaluate {
                     from(components["release"])

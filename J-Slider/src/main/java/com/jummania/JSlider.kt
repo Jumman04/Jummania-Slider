@@ -86,7 +86,7 @@ class JSlider @JvmOverloads constructor(
 
 
     // Runnable object for updating the dot indicator position
-    private var update: Runnable? = null
+    private var runnable: Runnable? = null
 
 
     /**
@@ -280,7 +280,7 @@ class JSlider @JvmOverloads constructor(
 
                 if (onSliderSet(sliders)) {
                     // Set up the auto-sliding update runnable
-                    update = Runnable {
+                    runnable = Runnable {
                         if (!isDragging && autoSlidingBoolean) setCurrentItem(
                             if (currentItem == sliders - 1) 0 else currentItem + 1, true
                         )
@@ -305,14 +305,6 @@ class JSlider @JvmOverloads constructor(
      * @return True if the setup is successful and indicator layouts are added, false otherwise.
      */
     private fun onSliderSet(sliders: Int): Boolean {
-        // Set a custom scroller for smoother scrolling
-        try {
-            val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
-            viewPagerScroller.isAccessible = true
-            viewPagerScroller[jSlider] = JScroller(context, slidingDuration.toInt())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
 
         // Add indicator layouts to the parent view if certain conditions are met
         if (indicatorBoolean && selectedIndicatorLayout?.childCount == 0 && dotIndicatorLayout?.childCount == 0) {
@@ -346,11 +338,11 @@ class JSlider @JvmOverloads constructor(
                 dotLayoutParams.marginEnd = indicatorMarginHorizontal
 
                 val padding =
-                    (jSlider.paddingStart + jSlider.paddingEnd) + (paddingStart + paddingEnd) / 10
+                    (jSlider.paddingStart + jSlider.paddingEnd + paddingStart + paddingEnd) / 10
 
                 // Calculate the maximum number of dots that can fit on the screen
                 val max =
-                    (Resources.getSystem().displayMetrics.widthPixels / (size + padding + indicatorMarginHorizontal * 2)) - 1
+                    (Resources.getSystem().displayMetrics.widthPixels / (size + padding + indicatorMarginHorizontal)) - 1
 
                 // Create indicator dots and add them to the layout
                 if (dotIndicatorLayout?.childCount == 0) for (i in 0 until sliders) {
@@ -393,8 +385,9 @@ class JSlider @JvmOverloads constructor(
             val max = dots.size - 1
             var position: Int
             var targetX: Float
-            // Add a listener to track page changes and update indicators
-            jSlider.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+            // Add an OnPageChangeListener to handle page scrolling and selection events
+            jSlider.addOnPageChangeListener(object : OnPageChangeListener() {
                 override fun onPageScrolled(
                     i: Int, positionOffset: Float, positionOffsetPixels: Int
                 ) {
@@ -414,14 +407,10 @@ class JSlider @JvmOverloads constructor(
 
                     }
 
-                    // Notify the external listener about the page scroll event
-                    listener?.onSliderScrolled(
-                        i, positionOffset, positionOffsetPixels
-                    )
+                    super.onPageScrolled(i, positionOffset, positionOffsetPixels)
                 }
 
                 override fun onPageSelected(i: Int) {
-
                     // Update the selected dot position if the indicator is enabled and the update type is not zero
                     if (indicatorBoolean && dots.isNotEmpty() && indicatorUpdateType != 0) {
                         position = i % dots.size
@@ -437,47 +426,39 @@ class JSlider @JvmOverloads constructor(
                         }
                     }
 
-
-                    // Handle auto-sliding when a new page is selected
-                    if (autoSlidingBoolean) {
-                        removeCallbacks()
-                        postDelayed()
-                    }
-
-                    // Notify the external listener about the page selection event
-                    listener?.onSliderSelected(i)
-                }
-
-                override fun onPageScrollStateChanged(state: Int) {
-                    // Handle auto-sliding when dragging stops
-                    if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
-                        removeCallbacks()
-                        postDelayed()
-                    }
-
-                    // Update flags based on the scroll state
-                    isDragging = state == SCROLL_STATE_DRAGGING
-                    isSliding = state == SCROLL_STATE_IDLE
-
-                    // Notify the external listener about the scroll state change
-                    listener?.onSliderScrollStateChanged(
-                        state
-                    )
+                    super.onPageSelected(i)
                 }
             })
 
-            // Return true if indicator layouts are added successfully
-            return true
         } else {
+
             // Remove indicator layouts if conditions are not met
             removeView(dotIndicatorLayout)
             removeView(selectedIndicatorLayout)
             dotIndicatorLayout = null
             selectedIndicatorLayout = null
+
+            // Conditionally attaches an OnPageChangeListener to the jSlider based on specified conditions.
+            // Check if autoSlidingBoolean is true or if listener is not null
+            if (autoSlidingBoolean || listener != null) {
+                // Add an anonymous implementation of OnPageChangeListener to jSlider
+                jSlider.addOnPageChangeListener(object : OnPageChangeListener() {
+                    // No additional methods are overridden here, as this is an anonymous implementation
+                    // of OnPageChangeListener. The listener behavior is defined externally.
+                })
+            }
+
         }
 
-        // Return false if indicator layouts are not added
-        return false
+        // Set a custom scroller for smoother scrolling
+        try {
+            val viewPagerScroller = ViewPager::class.java.getDeclaredField("mScroller")
+            viewPagerScroller.isAccessible = true
+            viewPagerScroller[jSlider] = JScroller(context, slidingDuration.toInt())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return autoSlidingBoolean
     }
 
 
@@ -497,9 +478,8 @@ class JSlider @JvmOverloads constructor(
                 adapter = slider
 
                 if (onSliderSet(sliders)) {
-
                     // Set up the auto-sliding update runnable
-                    update = Runnable {
+                    runnable = Runnable {
                         if (!isDragging && autoSlidingBoolean) setCurrentItem(
                             (currentItem % slider.count) + 1, true
                         )
@@ -1012,6 +992,66 @@ class JSlider @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, measureSpec)
     }
 
+    /**
+     * An internal implementation of ViewPager.OnPageChangeListener used by JSlider to
+     * handle page scroll events, page selection, and scroll state changes.
+     */
+    private open inner class OnPageChangeListener : ViewPager.OnPageChangeListener {
+
+        /**
+         * Called when a page is scrolled.
+         *
+         * @param i The current position of the page being scrolled.
+         * @param positionOffset The fractional offset of the page position.
+         * @param positionOffsetPixels The offset of the page position in pixels.
+         */
+        override fun onPageScrolled(
+            i: Int, positionOffset: Float, positionOffsetPixels: Int
+        ) {
+            // Notify the external listener about the page scroll event
+            listener?.onSliderScrolled(i, positionOffset, positionOffsetPixels)
+        }
+
+        /**
+         * Called when a new page is selected.
+         *
+         * @param i The newly selected position of the page.
+         */
+        override fun onPageSelected(i: Int) {
+            // Handle auto-sliding when a new page is selected
+            if (autoSlidingBoolean) {
+                removeCallbacks()
+                postDelayed()
+            }
+
+            // Notify the external listener about the page selection event
+            listener?.onSliderSelected(i)
+        }
+
+        /**
+         * Called when the scroll state changes.
+         *
+         * @param state The new scroll state. Possible values are:
+         *              - SCROLL_STATE_IDLE: No scrolling is in progress.
+         *              - SCROLL_STATE_DRAGGING: The user is dragging the pager.
+         *              - SCROLL_STATE_SETTLING: The pager is settling to a final position.
+         */
+        override fun onPageScrollStateChanged(state: Int) {
+            // Handle auto-sliding when dragging stops
+            if (isDragging && state != SCROLL_STATE_DRAGGING && autoSlidingBoolean) {
+                removeCallbacks()
+                postDelayed()
+            }
+
+            // Update flags based on the scroll state
+            isDragging = state == SCROLL_STATE_DRAGGING
+            isSliding = state == SCROLL_STATE_IDLE
+
+            // Notify the external listener about the scroll state change
+            listener?.onSliderScrollStateChanged(state)
+        }
+    }
+
 
     /**
      * Interface to define callbacks for slide change events in the JSlider.
@@ -1104,9 +1144,9 @@ class JSlider @JvmOverloads constructor(
      * If the 'update' function reference is not null, it removes any pending callbacks for it from the updateHandler.
      */
     private fun removeCallbacks() {
-        if (update != null) {
+        if (runnable != null) {
             // Remove any pending callbacks for the 'update' function from the updateHandler
-            updateHandler.removeCallbacks(update!!)
+            updateHandler.removeCallbacks(runnable!!)
         }
     }
 
@@ -1117,10 +1157,10 @@ class JSlider @JvmOverloads constructor(
      * The delay duration is specified by 'slidingDuration'.
      */
     private fun postDelayed() {
-        if (update != null) {
+        if (runnable != null) {
             // Post a delayed callback for the 'update' function to the updateHandler
             // The delay duration is specified by 'slidingDuration'
-            updateHandler.postDelayed(update!!, slidingDuration)
+            updateHandler.postDelayed(runnable!!, slidingDuration)
         }
     }
 
